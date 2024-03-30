@@ -39,9 +39,7 @@ const ChooseDateandTime = ({
   };
 
   const handleNavigation = () => {
-    navigation.navigate(id === -1 ? 'chooseclinic' : 'chooseclinic', {
-      id: id,
-    });
+    navigation.navigate('appoinmentlist');
   };
 
   return (
@@ -63,19 +61,16 @@ const ChooseDateandTime = ({
       <Button
         mode="contained"
         onPress={() => {
-          navigation.navigate(id === -1 ? 'makepayment' : 'makepayment', {
-            id: id,
-          });
-          dispatch(
-            updateAppoinmentForm({
-              appointDate: selectedDateId.value,
-              appoinmentTime: selectedTimeSlot.value,
-            }),
+          navigation.navigate(
+            id === -1 ? 'appoinmentdetails' : 'appoinmentdetails',
+            {
+              id: id,
+            },
           );
         }}
         style={styles.button}
         labelStyle={styles.buttonLabel}>
-        Next
+        Reschedule
       </Button>
     </Layout>
   );

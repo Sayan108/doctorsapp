@@ -33,7 +33,7 @@ const AppoinmentList = (props: any) => {
   const {navigation, setIndex} = props;
 
   const conditionalFunction = () => {
-    setIndex(0);
+    setIndex !== undefined ? setIndex(0) : navigation.navigate('home');
   };
 
   return (
@@ -51,8 +51,9 @@ const AppoinmentList = (props: any) => {
               }}>
               <View style={styles.card} key={item?.appoinmentId}>
                 <View style={styles.textContainer}>
-                  <Text style={styles.addressHeader}>{item.doctorName}</Text>
-                  <Text style={styles.address}>{item.patientName}</Text>
+                  <Text style={styles.addressHeader}>{item.patientName}</Text>
+                  <Text style={styles.address}>{item.doctorName}</Text>
+
                   <View
                     style={{
                       display: 'flex',
@@ -127,7 +128,6 @@ const AppoinmentList = (props: any) => {
             </Pressable>
           ))}
       </ScrollView>
-      <AddAppoinmentButton navigation={navigation} />
     </Layout>
   );
 };

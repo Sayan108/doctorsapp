@@ -3,7 +3,7 @@ import {Button} from 'react-native-paper';
 import React, {useRef, useState} from 'react';
 import {colors, style} from '../styles';
 import {useSelector} from 'react-redux';
-import {RootState} from '../redux/silces';
+import {RootState} from '../redux';
 
 import useAuthService from '../hooks/useAuthServices';
 import Timer from '../components/otpTimer';

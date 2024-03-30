@@ -31,7 +31,10 @@ const AppoinmentCard = ({navigation}: {navigation: any}) => {
             style={{
               height: 186,
               width: '98%',
-              backgroundColor: 'rgba(245, 71, 73, 0.1)',
+              borderColor: colors.primaryColor,
+              borderWidth: 1,
+              backgroundColor: 'rgba(245, 71, 73, 0.025)',
+
               display: 'flex',
               flexDirection: 'column',
               padding: 10,
@@ -41,7 +44,7 @@ const AppoinmentCard = ({navigation}: {navigation: any}) => {
             }}>
             <View style={{display: 'flex', flexDirection: 'row'}}>
               <Icon
-                name="doctor"
+                name="account-circle"
                 color="black"
                 style={{color: 'black', justifyContent: 'space-between'}}
                 size={45}
@@ -78,7 +81,8 @@ const AppoinmentCard = ({navigation}: {navigation: any}) => {
                   height: 'auto',
                   width: 'auto',
                   borderRadius: 20,
-                  backgroundColor: 'rgba(245, 71, 73, 0.3)',
+                  borderColor: colors.textColor,
+                  borderWidth: 1,
                   display: 'flex',
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
@@ -108,7 +112,8 @@ const AppoinmentCard = ({navigation}: {navigation: any}) => {
                   height: 'auto',
                   width: 'auto',
                   borderRadius: 20,
-                  backgroundColor: 'rgba(245, 71, 73, 0.3)',
+                  borderColor: colors.textColor,
+                  borderWidth: 1,
                   display: 'flex',
                   flexDirection: 'row',
                   justifyContent: 'flex-end',
@@ -140,7 +145,8 @@ const AppoinmentCard = ({navigation}: {navigation: any}) => {
                 height: 'auto',
                 width: 'auto',
                 borderRadius: 20,
-                backgroundColor: 'rgba(245, 71, 73, 0.3)',
+                borderColor: colors.textColor,
+                borderWidth: 1,
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'flex-start',

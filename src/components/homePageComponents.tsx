@@ -7,6 +7,7 @@ import AppoinmentCard from './appoinmentCard';
 import AddAppoinmentButton from './addAppoinmentButton';
 
 import LogoutDialoge from './logOutDialogue';
+import AppoinmentOverView from './appoinmentOverView';
 
 const HomePageComponent = (props: any) => {
   const {setIndex, navigation} = props;
@@ -59,24 +60,7 @@ const HomePageComponent = (props: any) => {
                 setvisible(!visible);
               }}
             />
-            <List.Item
-              title="About the doctor"
-              titleStyle={{
-                color: 'black', // Text color
-              }}
-              left={() => (
-                <Icon
-                  style={{paddingLeft: 10}}
-                  name="doctor"
-                  size={35}
-                  color={colors.textColor}
-                />
-              )}
-              onPress={() => {
-                navigation.navigate('aboutdoctor');
-                setvisible(!visible);
-              }}
-            />
+
             <List.Item
               title="Log out"
               titleStyle={{
@@ -103,6 +87,19 @@ const HomePageComponent = (props: any) => {
         <LogoutDialoge visible={showLogout} setVisible={setshowLogout} />
       ) : (
         <View>
+          <View style={{marginTop: 10, marginLeft: 10, marginBottom: 10}}>
+            <Text
+              style={{
+                color: colors.textColor,
+                justifyContent: 'flex-start',
+                fontSize: 18,
+                marginBottom: 5,
+              }}>
+              Appoinment overview
+            </Text>
+            <AppoinmentOverView navigation={navigation} />
+          </View>
+
           <View
             style={{
               display: 'flex',
@@ -138,7 +135,6 @@ const HomePageComponent = (props: any) => {
           </View>
         </View>
       )}
-      {!showLogout ? <AddAppoinmentButton navigation={navigation} /> : null}
     </View>
   );
 };

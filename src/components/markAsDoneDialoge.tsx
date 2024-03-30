@@ -9,7 +9,7 @@ interface ILogInDialogeProps {
   setVisible: React.Dispatch<React.SetStateAction<any>>;
 }
 
-const CancelAppoinmentDialoge = (props: ILogInDialogeProps) => {
+const MarkAsDoneDialoge = (props: ILogInDialogeProps) => {
   const dispatch = useDispatch();
   const {visible, setVisible} = props;
 
@@ -25,12 +25,12 @@ const CancelAppoinmentDialoge = (props: ILogInDialogeProps) => {
             style={{backgroundColor: 'white'}}>
             <Dialog.Title>
               <Text style={{color: 'black', fontSize: 20, fontWeight: '600'}}>
-                Cancel Appoinment
+                Mark as done
               </Text>
             </Dialog.Title>
             <Dialog.Content>
               <Text style={{color: 'black', fontSize: 18, fontWeight: '600'}}>
-                Are you sure you want to cancel this appoinment ?
+                Are you sure you want to mark this appoinment done?
               </Text>
             </Dialog.Content>
             <Dialog.Actions>
@@ -60,4 +60,4 @@ const CancelAppoinmentDialoge = (props: ILogInDialogeProps) => {
   );
 };
 
-export default CancelAppoinmentDialoge;
+export default MarkAsDoneDialoge;

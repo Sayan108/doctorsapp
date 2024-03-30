@@ -9,14 +9,12 @@ import OTPInputScreen from './screens/otpScreen';
 import HomeScreen from './screens/homeScreen';
 import AddAppoinment from './screens/adddAppoinment';
 import ChooseDateandTime from './screens/chooseDateandTime';
-import ClinicLocation from './screens/clinicLocation';
-import BookingDetails from './screens/bookingDetails';
+
 import AppoinmentList from './screens/appoinmentList';
-import AppointmenSuccess from './screens/appoinmentSuccess';
+
 import MyProfile from './screens/myProfile';
-import AboutDoctor from './screens/aboutDoctor';
+
 import AppoinmentDetails from './screens/appoinmentDetails';
-import Payment from './screens/paymentScreent';
 
 const Routes = () => {
   const {isAuthenticated} = useSelector((state: RootState) => state.auth);
@@ -40,43 +38,18 @@ const Routes = () => {
             name="appoinmentlist"
             component={isAuthenticated ? AppoinmentList : PhoneInputScreen}
           />
+
           <Stack.Screen
-            name="addappoinment"
-            component={isAuthenticated ? AddAppoinment : PhoneInputScreen}
-          />
-          <Stack.Screen
-            name="choosedateandtime"
+            name="reschedule"
             component={isAuthenticated ? ChooseDateandTime : PhoneInputScreen}
             initialParams={{id: -1}}
           />
-          <Stack.Screen
-            name="chooseclinic"
-            component={isAuthenticated ? ClinicLocation : PhoneInputScreen}
-            initialParams={{id: -1}}
-          />
-          <Stack.Screen
-            name="makepayment"
-            component={isAuthenticated ? Payment : PhoneInputScreen}
-            initialParams={{id: -1}}
-          />
-          <Stack.Screen
-            name="bookingdetails"
-            component={isAuthenticated ? BookingDetails : PhoneInputScreen}
-            initialParams={{id: -1}}
-          />
-          <Stack.Screen
-            name="appoinmentsuccess"
-            component={isAuthenticated ? AppointmenSuccess : PhoneInputScreen}
-            initialParams={{id: -1}}
-          />
+
           <Stack.Screen
             name="myprofile"
             component={isAuthenticated ? MyProfile : PhoneInputScreen}
           />
-          <Stack.Screen
-            name="aboutdoctor"
-            component={isAuthenticated ? AboutDoctor : PhoneInputScreen}
-          />
+
           <Stack.Screen
             name="appoinmentdetails"
             component={isAuthenticated ? AppoinmentDetails : PhoneInputScreen}

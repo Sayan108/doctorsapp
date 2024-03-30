@@ -4,11 +4,15 @@ import Layout from '../components/layOut';
 import {colors} from '../styles';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {List} from 'react-native-paper';
+import {List, Button} from 'react-native-paper';
 import CancelAppoinmentDialoge from '../components/cancelAppoinmentDialogue';
 import {useSelector} from 'react-redux';
 import {RootState} from '../redux';
-
+import MarkAsDoneDialoge from '../components/markAsDoneDialoge';
+interface modalSate {
+  isOpen: boolean;
+  text: string;
+}
 const AppoinmentDetails = ({
   navigation,
   route,
@@ -18,6 +22,7 @@ const AppoinmentDetails = ({
 }) => {
   const [visible, setvisible] = useState<boolean>(false);
   const [showCancelModal, setshowCancelModal] = useState<boolean>(false);
+  const [showMarkAssDoneModal, setshowMarkAssDoneModal] = useState(false);
   const {id} = route.params;
 
   const handleNavigation = () => {
@@ -32,6 +37,11 @@ const AppoinmentDetails = ({
         <CancelAppoinmentDialoge
           visible={showCancelModal}
           setVisible={setshowCancelModal}
+        />
+      ) : showMarkAssDoneModal ? (
+        <MarkAsDoneDialoge
+          visible={showMarkAssDoneModal}
+          setVisible={setshowMarkAssDoneModal}
         />
       ) : (
         <ScrollView>
@@ -72,24 +82,6 @@ const AppoinmentDetails = ({
                     shadowColor: 'black',
                   }}>
                   <List.Section>
-                    <List.Item
-                      title="Reschedule"
-                      titleStyle={{
-                        color: 'black', // Text color
-                      }}
-                      left={() => (
-                        <Icon
-                          style={{paddingLeft: 10}}
-                          name="calendar-arrow-right"
-                          size={35}
-                          color={colors.textColor}
-                        />
-                      )}
-                      onPress={() => {
-                        navigation.navigate('chooseclinic', {id: id});
-                        setvisible(!visible);
-                      }}
-                    />
                     <List.Item
                       title="Cancel"
                       titleStyle={{
@@ -151,6 +143,24 @@ const AppoinmentDetails = ({
               <Text style={styles.sectionDetails}>{data?.problem}</Text>
             </View>
           </View>
+          <Button
+            mode="contained"
+            onPress={() => {
+              setshowMarkAssDoneModal(true);
+            }}
+            style={styles.button}
+            labelStyle={styles.buttonLabel}>
+            Mark as done
+          </Button>
+          <Button
+            mode="outlined"
+            onPress={() => {
+              navigation.navigate('reschedule');
+            }}
+            style={styles.buttonOutline}
+            labelStyle={styles.buttonLabelOutline}>
+            Reschedule
+          </Button>
         </ScrollView>
       )}
     </Layout>
@@ -189,8 +199,16 @@ const styles = StyleSheet.create({
     marginTop: 24,
     backgroundColor: colors.primaryColor,
   },
+  buttonOutline: {
+    marginTop: 24,
+    backgroundColor: 'transparent',
+  },
   buttonLabel: {
     color: 'white',
+    fontWeight: 'bold',
+  },
+  buttonLabelOutline: {
+    color: 'black',
     fontWeight: 'bold',
   },
 });

@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import React, {useState} from 'react';
 import Layout from '../components/layOut';
 import {colors} from '../styles';
@@ -9,10 +9,9 @@ const MyProfile = ({navigation}: {navigation: any}) => {
     navigation.navigate('home');
   };
 
-  const [appointmentDetails, setAppointmentDetails] = useState<any>({
+  const [profileDetails, setprofileDetails] = useState<any>({
     fullname: ' Jane Austine',
-    age: '23',
-    gender: 'Female',
+
     phone: '9876543210',
   });
   const [editMode, setEditMode] = useState<boolean>(true);
@@ -21,11 +20,11 @@ const MyProfile = ({navigation}: {navigation: any}) => {
       <TextInput
         maxLength={50}
         disabled={editMode}
-        value={appointmentDetails?.fullname}
+        value={profileDetails?.fullname}
         label="Full name"
         mode="outlined"
         onChangeText={(text: string) => {
-          setAppointmentDetails({...appointmentDetails, fullname: text});
+          setprofileDetails({...profileDetails, fullname: text});
         }}
         style={styles.input}
         placeholder="Jhon Doe"
@@ -36,43 +35,12 @@ const MyProfile = ({navigation}: {navigation: any}) => {
       <TextInput
         disabled={editMode}
         activeOutlineColor={colors.primaryColor}
-        maxLength={2}
-        value={appointmentDetails?.age}
-        label="Age"
-        mode="outlined"
-        onChangeText={(text: string) => {
-          setAppointmentDetails({...appointmentDetails, age: text});
-        }}
-        style={styles.input}
-        placeholder="69"
-        placeholderTextColor="gray"
-        keyboardType="numeric"
-      />
-
-      <TextInput
-        disabled={editMode}
-        activeOutlineColor={colors.primaryColor}
-        maxLength={15}
-        value={appointmentDetails?.gender}
-        label="Gender"
-        mode="outlined"
-        onChangeText={(text: string) => {
-          setAppointmentDetails({...appointmentDetails, gender: text});
-        }}
-        style={styles.input}
-        placeholder="Male"
-        placeholderTextColor="gray"
-      />
-
-      <TextInput
-        disabled={editMode}
-        activeOutlineColor={colors.primaryColor}
         maxLength={10}
-        value={appointmentDetails?.phone}
+        value={profileDetails?.phone}
         label="Phone"
         mode="outlined"
         onChangeText={(text: string) => {
-          setAppointmentDetails({...appointmentDetails, phone: text});
+          setprofileDetails({...profileDetails, phone: text});
         }}
         style={styles.input}
         placeholder="1234567890"
