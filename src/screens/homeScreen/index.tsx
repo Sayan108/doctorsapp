@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {BottomNavigation, TouchableRipple} from 'react-native-paper';
-import HomePageComponent from '../components/homePageComponents';
-import AppoinmentList from './appoinmentList';
+import HomePageComponent from './homePageComponents';
+import AppoinmentList from '../appoinmentList';
 import {StyleSheet} from 'react-native';
-import {colors} from '../styles';
+import {colors} from '../../styles';
 
 const HomeScreen = ({navigation}: {navigation: any}) => {
   const [index, setIndex] = React.useState(0);
@@ -39,14 +39,14 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
     home: homePageRoute,
     appointments: allAppointmentList,
   });
-  const customRenderTouchableRipple = (props: any) => {
-    return (
-      <TouchableRipple
-        {...props}
-        rippleColor="rgba(245, 71, 73, 0.1)" // Change YOUR_RIPPLE_COLOR to your desired color
-      />
-    );
-  };
+  // const customRenderTouchableRipple = (props: any) => {
+  //   return (
+  //     <TouchableRipple
+  //       {...props}
+  //       rippleColor="rgba(245, 71, 73, 0.1)" // Change YOUR_RIPPLE_COLOR to your desired color
+  //     />
+  //   );
+  // };
 
   return (
     <BottomNavigation
