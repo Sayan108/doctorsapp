@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {Appbar, List} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '../styles';
-import AppoinmentCard from './appoinmentCard';
+import AppointmentCard from './appoinmentCard';
 import AddAppoinmentButton from './addAppoinmentButton';
 
 import LogoutDialoge from './logOutDialogue';
@@ -131,7 +131,7 @@ const HomePageComponent = (props: any) => {
           </View>
 
           <View style={{marginTop: 10, marginLeft: 10, height: '100%'}}>
-            <AppoinmentCard navigation={navigation} />
+            <AppointmentCard navigation={navigation} />
           </View>
         </View>
       )}

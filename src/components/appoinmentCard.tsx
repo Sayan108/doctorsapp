@@ -1,182 +1,191 @@
-import {View, Text, Pressable} from 'react-native';
+import {View, Pressable} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Text} from 'react-native-paper';
 
 import {colors} from '../styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../redux';
 import {getAppoinmentDetailsRequested} from '../redux/silces/userdata.slice';
+import {PaperProvider, Surface, useTheme} from 'react-native-paper';
+import {theme} from '../theme/theme';
+import UserAvatar from './userAvataricon';
 
-const AppoinmentCard = ({navigation}: {navigation: any}) => {
+const AppointmentCard = ({navigation}: {navigation: any}) => {
+  // const theme = useTheme();
+
   const dispatch = useDispatch();
-  const appoinmentDetails = useSelector(
+  const appointmentDetails = useSelector(
     (state: RootState) => state.userdata.upcomingAppoinment.data,
   );
 
   return (
-    <>
-      {appoinmentDetails && (
-        <Pressable
-          onPress={() => {
-            dispatch(
-              getAppoinmentDetailsRequested(
-                parseInt(appoinmentDetails.appoinmentId) - 1,
-              ),
-            );
-            navigation.navigate('appoinmentdetails', {
-              id: appoinmentDetails.appoinmentId,
-            });
-          }}>
-          <View
-            style={{
-              height: 186,
-              width: '98%',
-              borderColor: colors.primaryColor,
-              borderWidth: 1,
-              backgroundColor: 'rgba(245, 71, 73, 0.025)',
-
-              display: 'flex',
-              flexDirection: 'column',
-              padding: 10,
-              paddingRight: 10,
-              borderRadius: 20,
-              alignItems: 'flex-start',
+    <PaperProvider theme={theme}>
+      <>
+        {appointmentDetails && (
+          <Pressable
+            onPress={() => {
+              dispatch(
+                getAppoinmentDetailsRequested(
+                  parseInt(appointmentDetails.appoinmentId) - 1,
+                ),
+              );
+              navigation.navigate('appoinmentdetails', {
+                id: appointmentDetails.appoinmentId,
+              });
             }}>
-            <View style={{display: 'flex', flexDirection: 'row'}}>
-              <Icon
-                name="account-circle"
-                color="black"
-                style={{color: 'black', justifyContent: 'space-between'}}
-                size={45}
-              />
-              <View style={{justifyContent: 'space-between'}}>
-                <View style={{paddingLeft: 20}}>
+            {/* upcomingAppointment surface */}
+            <Surface
+              style={{
+                height: 192,
+                backgroundColor: theme.colors.surface,
+                display: 'flex',
+                flexDirection: 'column',
+                padding: 10,
+                paddingBottom:16,
+                paddingTop:16,
+                borderRadius: 10,
+                alignItems: 'flex-start',
+                justifyContent: 'space-between',
+                // gap: 16,
+              }}>
+              {/* icon, patient name  */}
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 16,
+                }}>
+                <Icon
+                  name="account-circle"
+                  color="black"
+                  style={{color: theme.colors.primary}}
+                  size={44}
+                />
+
+                <Text variant="titleMedium" style={{}}>
+                  {appointmentDetails.patientName}
+                </Text>
+              </View>
+
+              {/* date and time */}
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  gap: 24,
+                }}>
+                {/* date icon and text */}
+                <View
+                  style={{
+                    height: 'auto',
+                    width: 'auto',
+                    padding: 4,
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    borderRadius: 20,
+                    backgroundColor: theme.colors.primary,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    gap: 8,
+                  }}>
+                  {/* date icon */}
+                  <Icon
+                    name="calendar-blank"
+                    style={{
+                      color: theme.colors.onPrimary,
+                    }}
+                    size={24}
+                  />
+
+                  {/* date text */}
                   <Text
                     style={{
-                      color: colors.textColor,
-                      fontSize: 16,
-                      fontWeight: '600',
+                      color: theme.colors.onPrimary,
                     }}>
-                    {appoinmentDetails.patientName}
+                    {appointmentDetails.appoinmentDate}
                   </Text>
+                </View>
+
+                {/* clock icon and text */}
+                <View
+                  style={{
+                    height: 'auto',
+                    width: 'auto',
+                    padding: 4,
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    borderRadius: 20,
+                    backgroundColor: theme.colors.primary,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    gap: 8,
+                  }}>
+                  {/* clock icon */}
+                  <Icon
+                    name="clock-outline"
+                    style={{
+                      color: theme.colors.onPrimary,
+                    }}
+                    size={24}
+                  />
+
+                  {/* clock text */}
                   <Text
                     style={{
-                      color: colors.textColor,
-                      fontSize: 14,
-                      paddingTop: 5,
+                      color: theme.colors.onPrimary,
                     }}>
-                    {appoinmentDetails.doctorName}
+                    {appointmentDetails.appoinmentTime}
                   </Text>
                 </View>
               </View>
-            </View>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                paddingTop: 10,
-              }}>
+
+              {/* address */}
               <View
                 style={{
                   height: 'auto',
                   width: 'auto',
                   borderRadius: 20,
-                  borderColor: colors.textColor,
-                  borderWidth: 1,
+                  padding: 4,
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  backgroundColor: theme.colors.primary,
                   display: 'flex',
                   flexDirection: 'row',
-                  justifyContent: 'flex-start',
                   alignItems: 'center',
                 }}>
+
+                  {/* address icon */}
                 <Icon
-                  name="calendar-blank"
+                  name="map-marker-outline"
                   color="black"
                   style={{
-                    color: 'black',
-                    justifyContent: 'space-between',
-                    paddingLeft: 5,
+                    color: theme.colors.onPrimary,
                   }}
-                  size={25}
+                  size={24}
                 />
+
+                {/* address text */}
                 <Text
-                  style={{
-                    color: 'black',
-                    justifyContent: 'space-between',
-                    padding: 6,
+                   style={{
+                    color: theme.colors.onPrimary,
                   }}>
-                  {appoinmentDetails.appoinmentDate}
+                  {appointmentDetails.clinicAddress}
                 </Text>
+                
               </View>
-              <View
-                style={{
-                  height: 'auto',
-                  width: 'auto',
-                  borderRadius: 20,
-                  borderColor: colors.textColor,
-                  borderWidth: 1,
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'flex-end',
-                  alignItems: 'center',
-                  marginLeft: 60,
-                }}>
-                <Icon
-                  name="clock-outline"
-                  color="black"
-                  style={{
-                    color: 'black',
-                    justifyContent: 'space-between',
-                    paddingLeft: 5,
-                  }}
-                  size={25}
-                />
-                <Text
-                  style={{
-                    color: 'black',
-                    justifyContent: 'space-between',
-                    padding: 6,
-                  }}>
-                  {appoinmentDetails.appoinmentTime}
-                </Text>
-              </View>
-            </View>
-            <View
-              style={{
-                height: 'auto',
-                width: 'auto',
-                borderRadius: 20,
-                borderColor: colors.textColor,
-                borderWidth: 1,
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                marginTop: 25,
-              }}>
-              <Icon
-                name="map-marker-outline"
-                color="black"
-                style={{
-                  color: 'black',
-                  justifyContent: 'space-between',
-                  paddingLeft: 5,
-                }}
-                size={25}
-              />
-              <Text
-                style={{
-                  color: 'black',
-                  justifyContent: 'flex-start',
-                  padding: 6,
-                }}>
-                {appoinmentDetails.clinicAddress}
-              </Text>
-            </View>
-          </View>
-        </Pressable>
-      )}
-    </>
+            </Surface>
+          </Pressable>
+        )}
+      </>
+    </PaperProvider>
   );
 };
 
-export default AppoinmentCard;
+export default AppointmentCard;
