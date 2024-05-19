@@ -8,6 +8,8 @@ import {RootState} from '../../redux';
 import {theme} from '../../theme/theme';
 import UserAvatar from '../../components/userAvataricon';
 import {getAppointmentDetailsRequested} from '../../redux/silces/userdata.slice';
+import {formatDateString} from '../../util/funtions.util';
+import useResponsiveSize from '../../components/useResponsiveSize';
 
 const AppointmentCard = ({navigation}: {navigation: any}) => {
   const dispatch = useDispatch();
@@ -56,17 +58,17 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
                 <Icon
                   name="calendar-blank"
                   style={{color: theme.colors.onSurfaceVariant}}
-                  size={24}
+                  size={useResponsiveSize(24)}
                 />
                 <Text style={{color: theme.colors.onSurfaceVariant}}>
-                  {appointmentDetails.appointmentDate}
+                  {formatDateString(appointmentDetails.appointmentDate)}
                 </Text>
               </View>
               <View style={styles.detailItem}>
                 <Icon
                   name="clock-outline"
                   style={{color: theme.colors.onSurfaceVariant}}
-                  size={24}
+                  size={useResponsiveSize(24)}
                 />
                 <Text style={{color: theme.colors.onSurfaceVariant}}>
                   {appointmentDetails.appointmentTime}
@@ -78,7 +80,7 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
               <Icon
                 name="map-marker-outline"
                 style={{color: theme.colors.onSurfaceVariant}}
-                size={24}
+                size={useResponsiveSize(24)}
               />
               <Text style={{color: theme.colors.onSurfaceVariant}}>
                 {appointmentDetails.clinicAddress}
@@ -93,14 +95,13 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
 
 const styles = StyleSheet.create({
   surface: {
-    height: 180,
+    height: 172,
     display: 'flex',
     flexDirection: 'column',
     padding: 10,
     borderRadius: 10,
     alignItems: 'flex-start',
-    gap: 20,
-  
+    gap: 16,
   },
   iconContainer: {
     display: 'flex',
@@ -112,14 +113,14 @@ const styles = StyleSheet.create({
   detailsRow: {
     display: 'flex',
     flexDirection: 'row',
-    gap: 24,
+    gap: 16,
   },
   detailItem: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    gap: 8,
+    gap: 4,
   },
   addressContainer: {
     display: 'flex',
