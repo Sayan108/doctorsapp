@@ -33,12 +33,12 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
           <Surface
             style={[
               styles.surface,
-              {backgroundColor: theme.colors.surface},
+              {backgroundColor: theme.colors.surfaceVariant},
             ]}>
             <View style={styles.iconContainer}>
               <Icon
                 name="account-circle"
-                style={{color: theme.colors.onSurface}}
+                style={{color: theme.colors.onSurfaceVariant}}
                 size={44}
               />
               <View>
@@ -55,20 +55,20 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
               <View style={styles.detailItem}>
                 <Icon
                   name="calendar-blank"
-                  style={{color: theme.colors.onSurface}}
+                  style={{color: theme.colors.onSurfaceVariant}}
                   size={24}
                 />
-                <Text style={{color: theme.colors.onSurface}}>
+                <Text style={{color: theme.colors.onSurfaceVariant}}>
                   {appointmentDetails.appointmentDate}
                 </Text>
               </View>
               <View style={styles.detailItem}>
                 <Icon
                   name="clock-outline"
-                  style={{color: theme.colors.onSurface}}
+                  style={{color: theme.colors.onSurfaceVariant}}
                   size={24}
                 />
-                <Text style={{color: theme.colors.onSurface}}>
+                <Text style={{color: theme.colors.onSurfaceVariant}}>
                   {appointmentDetails.appointmentTime}
                 </Text>
               </View>
@@ -77,10 +77,10 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
             <View style={styles.addressContainer}>
               <Icon
                 name="map-marker-outline"
-                style={{color: theme.colors.onSurface}}
+                style={{color: theme.colors.onSurfaceVariant}}
                 size={24}
               />
-              <Text style={{color: theme.colors.onSurface}}>
+              <Text style={{color: theme.colors.onSurfaceVariant}}>
                 {appointmentDetails.clinicAddress}
               </Text>
             </View>
