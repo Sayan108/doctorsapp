@@ -7,14 +7,10 @@ import {useSelector} from 'react-redux';
 import {RootState} from './redux';
 import OTPInputScreen from './screens/otpScreen';
 import HomeScreen from './screens/homeScreen';
-import AddAppoinment from './screens/adddAppoinment';
-import ChooseDateandTime from './screens/chooseDateandTime';
-
-import AppoinmentList from './screens/appoinmentList';
-
+import ChooseDateAndTime from './screens/chooseDateandTime';
 import MyProfile from './screens/myProfile';
-
-import AppoinmentDetails from './screens/appoinmentDetails';
+import AppointmentDetails from './screens/appoinmentDetails';
+import AppointmentList from './screens/appoinmentList';
 
 const Routes = () => {
   const {isAuthenticated} = useSelector((state: RootState) => state.auth);
@@ -35,13 +31,13 @@ const Routes = () => {
             component={isAuthenticated ? HomeScreen : PhoneInputScreen}
           />
           <Stack.Screen
-            name="appoinmentlist"
-            component={isAuthenticated ? AppoinmentList : PhoneInputScreen}
+            name="appointmentlist"
+            component={isAuthenticated ? AppointmentList : PhoneInputScreen}
           />
 
           <Stack.Screen
             name="reschedule"
-            component={isAuthenticated ? ChooseDateandTime : PhoneInputScreen}
+            component={isAuthenticated ? ChooseDateAndTime : PhoneInputScreen}
             initialParams={{id: -1}}
           />
 
@@ -51,8 +47,8 @@ const Routes = () => {
           />
 
           <Stack.Screen
-            name="appoinmentdetails"
-            component={isAuthenticated ? AppoinmentDetails : PhoneInputScreen}
+            name="appointmentdetails"
+            component={isAuthenticated ? AppointmentDetails : PhoneInputScreen}
             initialParams={{id: -1}}
           />
         </Stack.Group>

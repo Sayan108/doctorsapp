@@ -2,14 +2,13 @@ import * as React from 'react';
 import {View} from 'react-native';
 import {Button, Dialog, Portal, PaperProvider, Text} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import {logOut} from '../redux/silces/auth.silce';
 import {colors} from '../styles';
-interface ILogInDialogeProps {
+interface ILogInDialogProps {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<any>>;
 }
 
-const CancelAppoinmentDialoge = (props: ILogInDialogeProps) => {
+const CancelAppointmentDialog = (props: ILogInDialogProps) => {
   const dispatch = useDispatch();
   const {visible, setVisible} = props;
 
@@ -25,12 +24,12 @@ const CancelAppoinmentDialoge = (props: ILogInDialogeProps) => {
             style={{backgroundColor: 'white'}}>
             <Dialog.Title>
               <Text style={{color: 'black', fontSize: 20, fontWeight: '600'}}>
-                Cancel Appoinment
+                Cancel Appointment
               </Text>
             </Dialog.Title>
             <Dialog.Content>
               <Text style={{color: 'black', fontSize: 18, fontWeight: '600'}}>
-                Are you sure you want to cancel this appoinment ?
+                Are you sure you want to cancel this appointment ?
               </Text>
             </Dialog.Content>
             <Dialog.Actions>
@@ -60,4 +59,4 @@ const CancelAppoinmentDialoge = (props: ILogInDialogeProps) => {
   );
 };
 
-export default CancelAppoinmentDialoge;
+export default CancelAppointmentDialog;

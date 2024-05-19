@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {BottomNavigation, TouchableRipple} from 'react-native-paper';
 import HomePageComponent from './homePageComponents';
-import AppoinmentList from '../appoinmentList';
 import {StyleSheet} from 'react-native';
 import {colors} from '../../styles';
+import AppointmentList from '../appoinmentList';
 
 const HomeScreen = ({navigation}: {navigation: any}) => {
   const [index, setIndex] = React.useState(0);
@@ -17,7 +17,7 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
   );
 
   const allAppointmentList = () => (
-    <AppoinmentList navigation={navigation} setIndex={handleIndexChange} />
+    <AppointmentList navigation={navigation} setIndex={handleIndexChange} />
   );
 
   const [routes] = React.useState([

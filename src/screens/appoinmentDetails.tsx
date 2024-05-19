@@ -5,15 +5,15 @@ import {colors} from '../styles';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {List, Button} from 'react-native-paper';
-import CancelAppoinmentDialoge from '../components/cancelAppoinmentDialogue';
 import {useSelector} from 'react-redux';
 import {RootState} from '../redux';
-import MarkAsDoneDialoge from '../components/markAsDoneDialoge';
+import CancelAppointmentDialog from '../components/cancelAppoinmentDialogue';
+import MarkAsDoneDialog from '../components/markAsDoneDialog';
 interface modalSate {
   isOpen: boolean;
   text: string;
 }
-const AppoinmentDetails = ({
+const AppointmentDetails = ({
   navigation,
   route,
 }: {
@@ -29,17 +29,17 @@ const AppoinmentDetails = ({
     navigation.navigate('home');
   };
   const {data} = useSelector(
-    (state: RootState) => state.userdata.currentAppoinmentDetails,
+    (state: RootState) => state.userdata.currentAppointmentDetails,
   );
   return (
     <Layout headerText="Booking details" navigation={handleNavigation}>
       {showCancelModal ? (
-        <CancelAppoinmentDialoge
+        <CancelAppointmentDialog
           visible={showCancelModal}
           setVisible={setshowCancelModal}
         />
       ) : showMarkAssDoneModal ? (
-        <MarkAsDoneDialoge
+        <MarkAsDoneDialog
           visible={showMarkAssDoneModal}
           setVisible={setshowMarkAssDoneModal}
         />
@@ -117,13 +117,13 @@ const AppoinmentDetails = ({
             <Text style={styles.sectionHeading}>Booking Details</Text>
             <View style={styles.section}>
               <Text style={styles.sectionDetails}>
-                Booking id: {data?.appoinmentId}
+                Booking id: {data?.appointmentId}
               </Text>
               <Text style={styles.sectionDetails}>
-                Date: {data?.appoinmentDate}
+                Date: {data?.appointmentDate}
               </Text>
               <Text style={styles.sectionDetails}>
-                Time: {data?.appoinmentTime}
+                Time: {data?.appointmentTime}
               </Text>
             </View>
             <Text style={styles.sectionHeading}>Payment Details</Text>
@@ -213,4 +213,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppoinmentDetails;
+export default AppointmentDetails;

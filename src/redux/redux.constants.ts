@@ -32,27 +32,27 @@ export const IApplicationStatesInitialStates: IApplicationStates = {
   homeScreenTab: 0,
 };
 
-export interface IAppoinment {
+export interface IAppointment {
   doctorName: string;
   clinicPhone: string;
-  appoinmentId: string;
+  appointmentId: string;
   patientName: string;
   clinicAddress: string;
-  appoinmentTime: string;
-  appoinmentDate: string;
+  appointmentTime: string;
+  appointmentDate: string;
   paymentDetails?: IPaymentDetails | null;
   gender?: string;
   age?: string | number;
   problem?: string;
 }
 
-export const IAppoinmentInitialState: IAppoinment = {
+export const IAppointmentInitialState: IAppointment = {
   doctorName: '',
-  appoinmentId: '',
+  appointmentId: '',
   patientName: '',
   clinicAddress: '',
-  appoinmentDate: '',
-  appoinmentTime: '',
+  appointmentDate: '',
+  appointmentTime: '',
   gender: '',
   age: '',
   problem: '',
@@ -86,13 +86,13 @@ export interface ITimeslots {
   value: string;
 }
 
-export interface IAppoinmentForm {
+export interface IAppointmentForm {
   patientPhone?: string;
   loading: boolean;
   patientName?: string;
   clinicAddress?: string;
-  appoinmentTime?: string;
-  appoinmentDate?: string;
+  appointmentTime?: string;
+  appointmentDate?: string;
   paymentDetails?: IPaymentDetails;
   gender?: string;
   age?: string | number;
@@ -102,40 +102,40 @@ export interface IAppoinmentForm {
 export interface Clinic {}
 
 export interface UserData {
-  upcomingAppoinment: {data: IAppoinment | null; loading: boolean; error: any};
-  appoinmentList: {data: IAppoinment[]; loading: boolean; error: any};
+  upcomingAppointment: {data: IAppointment | null; loading: boolean; error: any};
+  appointmentList: {data: IAppointment[]; loading: boolean; error: any};
   dateSlots: {data: IDateSlots[]; loading: boolean; error: any};
   timeSlots: {data: ITimeslots[]; loading: boolean; error: any};
-  currentAppoinmentDetails: {
-    data: IAppoinment | null;
+  currentAppointmentDetails: {
+    data: IAppointment | null;
     loading: boolean;
     error: any;
   };
 
-  appoinmentForm?: IAppoinmentForm;
+  appointmentForm?: IAppointmentForm;
 }
 
 export const UserDataInitialState: UserData = {
-  upcomingAppoinment: {
+  upcomingAppointment: {
     data: null,
     loading: false,
     error: null,
   },
-  appoinmentList: {data: [], loading: false, error: null},
+  appointmentList: {data: [], loading: false, error: null},
   dateSlots: {data: [], loading: false, error: null},
   timeSlots: {data: [], loading: false, error: null},
-  currentAppoinmentDetails: {data: null, loading: false, error: null},
+  currentAppointmentDetails: {data: null, loading: false, error: null},
 };
 
-export const appointments: IAppoinment[] = [
+export const appointments: IAppointment[] = [
   {
-    appoinmentId: '1',
+    appointmentId: '1',
     doctorName: 'Dr. Debabrata Bera',
     clinicPhone: '9876543210',
     patientName: 'John Doe',
     clinicAddress: '123 Clinic St, City, Country',
-    appoinmentTime: '10:00 AM',
-    appoinmentDate: '2024-02-25',
+    appointmentTime: '10:00 AM',
+    appointmentDate: '2024-02-25',
     paymentDetails: {
       paymentId: 'p1',
       ammount: '50',
@@ -147,13 +147,13 @@ export const appointments: IAppoinment[] = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut quam vitae odio ullamcorper dapibus vel eget ligula. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed non neque elit. Sed ut imperdiet nisi. Proin condimentum fermentum nunc. Etiam pharetra, erat sed fermentum feugiat, velit mauris egestas quam, ut aliquam massa nisl quis neque. Suspendisse in orci enim.',
   },
   {
-    appoinmentId: '2',
+    appointmentId: '2',
     patientName: 'Jane Smith',
     doctorName: 'Dr. Debabrata Bera',
     clinicPhone: '9876543210',
     clinicAddress: '456 Clinic Ave, City, Country',
-    appoinmentTime: '2:00 PM',
-    appoinmentDate: '2024-02-26',
+    appointmentTime: '2:00 PM',
+    appointmentDate: '2024-02-26',
     paymentDetails: {
       paymentId: 'p2',
       ammount: '75',
@@ -165,13 +165,13 @@ export const appointments: IAppoinment[] = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut quam vitae odio ullamcorper dapibus vel eget ligula. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed non neque elit. Sed ut imperdiet nisi. Proin condimentum fermentum nunc. Etiam pharetra, erat sed fermentum feugiat, velit mauris egestas quam, ut aliquam massa nisl quis neque. Suspendisse in orci enim.',
   },
   {
-    appoinmentId: '3',
+    appointmentId: '3',
     patientName: 'Michael Johnson',
     doctorName: 'Dr. Debabrata Bera',
     clinicPhone: '9876543210',
     clinicAddress: '789 Medical Center Rd, Town, Country',
-    appoinmentTime: '3:30 PM',
-    appoinmentDate: '2024-02-27',
+    appointmentTime: '3:30 PM',
+    appointmentDate: '2024-02-27',
     paymentDetails: {
       paymentId: 'p3',
       ammount: '100',
@@ -183,13 +183,13 @@ export const appointments: IAppoinment[] = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut quam vitae odio ullamcorper dapibus vel eget ligula. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed non neque elit. Sed ut imperdiet nisi. Proin condimentum fermentum nunc. Etiam pharetra, erat sed fermentum feugiat, velit mauris egestas quam, ut aliquam massa nisl quis neque. Suspendisse in orci enim.',
   },
   {
-    appoinmentId: '4',
+    appointmentId: '4',
     patientName: 'Emily Davis',
     doctorName: 'Dr. Debabrata Bera',
     clinicPhone: '9876543210',
     clinicAddress: '101 Hospital Ave, Village, Country',
-    appoinmentTime: '9:00 AM',
-    appoinmentDate: '2024-02-28',
+    appointmentTime: '9:00 AM',
+    appointmentDate: '2024-02-28',
     paymentDetails: {
       paymentId: 'p4',
       ammount: '60',
@@ -201,13 +201,13 @@ export const appointments: IAppoinment[] = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut quam vitae odio ullamcorper dapibus vel eget ligula. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed non neque elit. Sed ut imperdiet nisi. Proin condimentum fermentum nunc. Etiam pharetra, erat sed fermentum feugiat, velit mauris egestas quam, ut aliquam massa nisl quis neque. Suspendisse in orci enim.',
   },
   {
-    appoinmentId: '5',
+    appointmentId: '5',
     patientName: 'Christopher Martinez',
     doctorName: 'Dr. Debabrata Bera',
     clinicPhone: '9876543210',
     clinicAddress: '222 Health Center Blvd, City, Country',
-    appoinmentTime: '11:30 AM',
-    appoinmentDate: '2024-02-29',
+    appointmentTime: '11:30 AM',
+    appointmentDate: '2024-02-29',
     paymentDetails: {
       paymentId: 'p5',
       ammount: '90',
@@ -219,13 +219,13 @@ export const appointments: IAppoinment[] = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut quam vitae odio ullamcorper dapibus vel eget ligula. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed non neque elit. Sed ut imperdiet nisi. Proin condimentum fermentum nunc. Etiam pharetra, erat sed fermentum feugiat, velit mauris egestas quam, ut aliquam massa nisl quis neque. Suspendisse in orci enim.',
   },
   {
-    appoinmentId: '6',
+    appointmentId: '6',
     patientName: 'Emma Brown',
     doctorName: 'Dr. Debabrata Bera',
     clinicPhone: '9876543210',
     clinicAddress: '333 Wellness St, Town, Country',
-    appoinmentTime: '4:45 PM',
-    appoinmentDate: '2024-03-01',
+    appointmentTime: '4:45 PM',
+    appointmentDate: '2024-03-01',
     paymentDetails: {
       paymentId: 'p6',
       ammount: '80',
@@ -237,13 +237,13 @@ export const appointments: IAppoinment[] = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut quam vitae odio ullamcorper dapibus vel eget ligula. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed non neque elit. Sed ut imperdiet nisi. Proin condimentum fermentum nunc. Etiam pharetra, erat sed fermentum feugiat, velit mauris egestas quam, ut aliquam massa nisl quis neque. Suspendisse in orci enim.',
   },
   {
-    appoinmentId: '7',
+    appointmentId: '7',
     patientName: 'Daniel Wilson',
     doctorName: 'Dr. Debabrata Bera',
     clinicPhone: '9876543210',
     clinicAddress: '444 Medical Rd, City, Country',
-    appoinmentTime: '1:15 PM',
-    appoinmentDate: '2024-03-02',
+    appointmentTime: '1:15 PM',
+    appointmentDate: '2024-03-02',
     paymentDetails: {
       paymentId: 'p7',
       ammount: '70',
@@ -255,13 +255,13 @@ export const appointments: IAppoinment[] = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut quam vitae odio ullamcorper dapibus vel eget ligula. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed non neque elit. Sed ut imperdiet nisi. Proin condimentum fermentum nunc. Etiam pharetra, erat sed fermentum feugiat, velit mauris egestas quam, ut aliquam massa nisl quis neque. Suspendisse in orci enim.',
   },
   {
-    appoinmentId: '8',
+    appointmentId: '8',
     patientName: 'Olivia Taylor',
     doctorName: 'Dr. Debabrata Bera',
     clinicPhone: '9876543210',
     clinicAddress: '555 Hospital Ave, Town, Country',
-    appoinmentTime: '10:30 AM',
-    appoinmentDate: '2024-03-03',
+    appointmentTime: '10:30 AM',
+    appointmentDate: '2024-03-03',
     paymentDetails: {
       paymentId: 'p8',
       ammount: '55',
@@ -273,13 +273,13 @@ export const appointments: IAppoinment[] = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut quam vitae odio ullamcorper dapibus vel eget ligula. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed non neque elit. Sed ut imperdiet nisi. Proin condimentum fermentum nunc. Etiam pharetra, erat sed fermentum feugiat, velit mauris egestas quam, ut aliquam massa nisl quis neque. Suspendisse in orci enim.',
   },
   {
-    appoinmentId: '9',
+    appointmentId: '9',
     patientName: 'William Anderson',
     doctorName: 'Dr. Debabrata Bera',
     clinicPhone: '9876543210',
     clinicAddress: '666 Health Center Rd, City, Country',
-    appoinmentTime: '3:00 PM',
-    appoinmentDate: '2024-03-04',
+    appointmentTime: '3:00 PM',
+    appointmentDate: '2024-03-04',
     paymentDetails: {
       paymentId: 'p9',
       ammount: '120',
@@ -291,13 +291,13 @@ export const appointments: IAppoinment[] = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut quam vitae odio ullamcorper dapibus vel eget ligula. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed non neque elit. Sed ut imperdiet nisi. Proin condimentum fermentum nunc. Etiam pharetra, erat sed fermentum feugiat, velit mauris egestas quam, ut aliquam massa nisl quis neque. Suspendisse in orci enim.',
   },
   {
-    appoinmentId: '10',
+    appointmentId: '10',
     patientName: 'Sophia Thomas',
     doctorName: 'Dr. Debabrata Bera',
     clinicPhone: '9876543210',
     clinicAddress: '777 Wellness Blvd, Village, Country',
-    appoinmentTime: '11:00 AM',
-    appoinmentDate: '2024-03-05',
+    appointmentTime: '11:00 AM',
+    appointmentDate: '2024-03-05',
     paymentDetails: {
       paymentId: 'p10',
       ammount: '95',

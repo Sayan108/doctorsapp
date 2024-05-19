@@ -6,7 +6,7 @@ import HelperText from '../components/helperText';
 import {colors} from '../styles';
 import Layout from '../components/layOut';
 import {useDispatch} from 'react-redux';
-import {updateAppoinmentForm} from '../redux/silces/userdata.slice';
+import {updateAppointmentForm} from '../redux/silces/userdata.slice';
 
 const AddAppointment = ({navigation}: {navigation: any}) => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const AddAppointment = ({navigation}: {navigation: any}) => {
     navigation.navigate('home');
   };
   return (
-    <Layout navigation={handleNavigation} headerText="Add an appoinment">
+    <Layout navigation={handleNavigation} headerText="Add an appointment">
       <TextInput
         maxLength={50}
         autoFocus
@@ -161,7 +161,7 @@ const AddAppointment = ({navigation}: {navigation: any}) => {
         mode="contained"
         onPress={() => {
           navigation.navigate('chooseclinic');
-          dispatch(updateAppoinmentForm(appointmentDetails));
+          dispatch(updateAppointmentForm(appointmentDetails));
         }}
         style={styles.button}
         labelStyle={styles.buttonLabel}>

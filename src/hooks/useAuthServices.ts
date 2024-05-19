@@ -9,14 +9,14 @@ import {
 } from '../redux/silces/auth.silce';
 import {changehomeScreenTab} from '../redux/silces/application.slice';
 import {
-  appoinmentListRequested,
-  appoinmentListSucess,
+  appointmentListRequested,
+  appointmentListSucess,
   dateSlotRequested,
   dateSlotSucess,
   timeSlotRequested,
   timeSlotSucess,
-  upcomingAppoinmentRequested,
-  upcomingAppoinmentSucess,
+  upcomingAppointmentRequested,
+  upcomingAppointmentSucess,
 } from '../redux/silces/userdata.slice';
 import {RootState} from '../redux';
 import {appointments, dateSlots, timeSlots} from '../redux/redux.constants';
@@ -46,8 +46,8 @@ const useAuthService = () => {
       dispatch(authSuccess({}));
       //r dispatch(changehomeScreenTab(1));
 
-      dispatch(upcomingAppoinmentRequested());
-      dispatch(appoinmentListRequested());
+      dispatch(upcomingAppointmentRequested());
+      dispatch(appointmentListRequested());
       dispatch(dateSlotRequested());
       dispatch(timeSlotRequested());
 

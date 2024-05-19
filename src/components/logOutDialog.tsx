@@ -6,12 +6,12 @@ import {logOut} from '../redux/silces/auth.silce';
 import {colors} from '../styles';
 import {clearUserData} from '../redux/silces/userdata.slice';
 import {RootState} from '../redux';
-interface ILogInDialogeProps {
+interface ILogInDialogProps {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const LogoutDialogue = (props: ILogInDialogeProps) => {
+const LogoutDialogue = (props: ILogInDialogProps) => {
   const dispatch = useDispatch();
   const {visible, setVisible} = props;
   const userData = useSelector((state: RootState) => state.userdata);

@@ -1,7 +1,7 @@
 import {type PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {
-  IAppoinment,
-  IAppoinmentInitialState,
+  IAppointment,
+  IAppointmentInitialState,
   IDateSlots,
   IDateSlotsInitialStates,
   ITimeslots,
@@ -14,22 +14,22 @@ export const userDataSlice = createSlice({
   initialState: UserDataInitialState,
 
   reducers: {
-    upcomingAppoinmentRequested: (state: UserData) => {
+    upcomingAppointmentRequested: (state: UserData) => {
       return {
         ...state,
-        upcomingAppoinment: {
-          ...state.upcomingAppoinment,
+        upcomingAppointment: {
+          ...state.upcomingAppointment,
           loading: true,
         },
       };
     },
-    upcomingAppoinmentSucess: (
+    upcomingAppointmentSucess: (
       state: UserData,
-      action: PayloadAction<IAppoinment>,
+      action: PayloadAction<IAppointment>,
     ) => {
       return {
         ...state,
-        upcomingAppoinment: {
+        upcomingAppointment: {
           data: {...action.payload},
           loading: false,
           error: {},
@@ -37,47 +37,47 @@ export const userDataSlice = createSlice({
       };
     },
 
-    upcomingAppoinmentFailure: (
+    upcomingAppointmentFailure: (
       state: UserData,
       action: PayloadAction<any>,
     ) => {
       return {
         ...state,
-        upcomingAppoinment: {
-          data: IAppoinmentInitialState,
+        upcomingAppointment: {
+          data: IAppointmentInitialState,
           error: action.payload,
           loading: false,
         },
       };
     },
 
-    appoinmentListRequested: (state: UserData) => {
+    appointmentListRequested: (state: UserData) => {
       return {
         ...state,
-        appoinmentList: {
-          ...state.appoinmentList,
+        appointmentList: {
+          ...state.appointmentList,
           loading: true,
         },
       };
     },
-    appoinmentListSucess: (
+    appointmentListSucess: (
       state: UserData,
-      action: PayloadAction<IAppoinment[]>,
+      action: PayloadAction<IAppointment[]>,
     ) => {
       return {
         ...state,
-        appoinmentList: {
-          ...state.appoinmentList,
+        appointmentList: {
+          ...state.appointmentList,
           data: action.payload,
           loading: false,
         },
       };
     },
 
-    appoinmentListFailure: (state: UserData, action: PayloadAction<any>) => {
+    appointmentListFailure: (state: UserData, action: PayloadAction<any>) => {
       return {
         ...state,
-        appoinmentList: {
+        appointmentList: {
           data: [],
           error: action.payload,
           loading: false,
@@ -147,48 +147,48 @@ export const userDataSlice = createSlice({
       };
     },
 
-    getAppoinmentDetailsRequested: (
+    getAppointmentDetailsRequested: (
       state: UserData,
       action: PayloadAction<number>,
     ) => {
       return {
         ...state,
-        currentAppoinmentDetails: {
-          ...state.currentAppoinmentDetails,
+        currentAppointmentDetails: {
+          ...state.currentAppointmentDetails,
           loading: true,
         },
       };
     },
 
-    getAppoinmentDetailsSuccess: (
+    getAppointmentDetailsSuccess: (
       state: UserData,
-      action: PayloadAction<IAppoinment>,
+      action: PayloadAction<IAppointment>,
     ) => {
       return {
         ...state,
-        currentAppoinmentDetails: {
-          ...state.currentAppoinmentDetails,
+        currentAppointmentDetails: {
+          ...state.currentAppointmentDetails,
           loading: false,
           data: action.payload,
         },
       };
     },
 
-    getAppoinmentDetailsFailure: (
+    getAppointmentDetailsFailure: (
       state: UserData,
       action: PayloadAction<any>,
     ) => {
       return {
         ...state,
-        currentAppoinmentDetails: {
-          ...state.currentAppoinmentDetails,
+        currentAppointmentDetails: {
+          ...state.currentAppointmentDetails,
           loading: false,
           error: action.payload,
         },
       };
     },
 
-    //   createAppoinment:()
+    //   createAppointment:()
 
     clearUserData: (state: UserData) => {
       return {
@@ -196,39 +196,39 @@ export const userDataSlice = createSlice({
       };
     },
 
-    updateAppoinmentForm: (state: UserData, action: PayloadAction<any>) => {
+    updateAppointmentForm: (state: UserData, action: PayloadAction<any>) => {
       return {
         ...state,
-        appoinmentForm: {...action.payload, ...state.appoinmentForm},
+        appointmentForm: {...action.payload, ...state.appointmentForm},
       };
     },
-    addAppoinmentInListRequested: (state: UserData) => {
+    addAppointmentInListRequested: (state: UserData) => {
       return {
         ...state,
-        appoinmentForm: {...state.appoinmentForm, loading: true},
+        appointmentForm: {...state.appointmentForm, loading: true},
       };
     },
-    addAppoinmentInListSuccess: (
+    addAppointmentInListSuccess: (
       state: UserData,
-      action: PayloadAction<IAppoinment>,
+      action: PayloadAction<IAppointment>,
     ) => {
       return {
         ...state,
-        appoinmentList: {
-          ...state.appoinmentList,
-          data: [action.payload, ...state.appoinmentList.data],
+        appointmentList: {
+          ...state.appointmentList,
+          data: [action.payload, ...state.appointmentList.data],
         },
       };
     },
   },
 });
 export const {
-  upcomingAppoinmentFailure,
-  upcomingAppoinmentRequested,
-  upcomingAppoinmentSucess,
-  appoinmentListFailure,
-  appoinmentListRequested,
-  appoinmentListSucess,
+  upcomingAppointmentFailure,
+  upcomingAppointmentRequested,
+  upcomingAppointmentSucess,
+  appointmentListFailure,
+  appointmentListRequested,
+  appointmentListSucess,
   timeSlotFailure,
   timeSlotRequested,
   timeSlotSucess,
@@ -236,12 +236,12 @@ export const {
   dateSlotRequested,
   dateSlotSucess,
   clearUserData,
-  getAppoinmentDetailsSuccess,
-  getAppoinmentDetailsRequested,
-  getAppoinmentDetailsFailure,
-  addAppoinmentInListSuccess,
-  addAppoinmentInListRequested,
-  updateAppoinmentForm,
+  getAppointmentDetailsSuccess,
+  getAppointmentDetailsRequested,
+  getAppointmentDetailsFailure,
+  addAppointmentInListSuccess,
+  addAppointmentInListRequested,
+  updateAppointmentForm,
 } = userDataSlice.actions;
 
 export const userDataReducer = userDataSlice.reducer;

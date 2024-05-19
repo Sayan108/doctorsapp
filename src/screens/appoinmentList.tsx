@@ -10,18 +10,17 @@ import {
 import React from 'react';
 import Layout from '../components/layOut';
 import {colors} from '../styles';
-import AddAppoinmentButton from '../components/addAppoinmentButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {IAppoinment} from '../redux/redux.constants';
+import {IAppointment} from '../redux/redux.constants';
 import {useSelector, useDispatch} from 'react-redux';
 import {RootState} from '../redux';
-import {getAppoinmentDetailsRequested} from '../redux/silces/userdata.slice';
+import {getAppointmentDetailsRequested} from '../redux/silces/userdata.slice';
 
-const AppoinmentList = (props: any) => {
+const AppointmentList = (props: any) => {
   const dispatch = useDispatch();
   const {data} = useSelector(
-    (state: RootState) => state.userdata.appoinmentList,
+    (state: RootState) => state.userdata.appointmentList,
   );
   const handleOpenPhoneApp = (phone: string) => {
     Linking.openURL(`tel:${phone}`);
@@ -37,19 +36,19 @@ const AppoinmentList = (props: any) => {
   };
 
   return (
-    <Layout headerText="All appoinments" navigation={conditionalFunction}>
+    <Layout headerText="All appointments" navigation={conditionalFunction}>
       <ScrollView>
         {data &&
-          data?.map((item: IAppoinment, index: number) => (
+          data?.map((item: IAppointment, index: number) => (
             <Pressable
-              key={item.appoinmentId}
+              key={item.appointmentId}
               onPress={() => {
-                dispatch(getAppoinmentDetailsRequested(index));
-                navigation.navigate('appoinmentdetails', {
-                  id: parseInt(item.appoinmentId),
+                dispatch(getAppointmentDetailsRequested(index));
+                navigation.navigate('appointmentdetails', {
+                  id: parseInt(item.appointmentId),
                 });
               }}>
-              <View style={styles.card} key={item?.appoinmentId}>
+              <View style={styles.card} key={item?.appointmentId}>
                 <View style={styles.textContainer}>
                   <Text style={styles.addressHeader}>{item.patientName}</Text>
                   <Text style={styles.address}>{item.doctorName}</Text>
@@ -70,7 +69,7 @@ const AppoinmentList = (props: any) => {
                       }}
                       size={PixelRatio.getPixelSizeForLayoutSize(15)}
                     />
-                    <Text style={styles.address}>{item.appoinmentTime}</Text>
+                    <Text style={styles.address}>{item.appointmentTime}</Text>
                   </View>
                   <View
                     style={{
@@ -89,7 +88,7 @@ const AppoinmentList = (props: any) => {
                       }}
                       size={PixelRatio.getPixelSizeForLayoutSize(15)}
                     />
-                    <Text style={styles.address}>{item.appoinmentDate}</Text>
+                    <Text style={styles.address}>{item.appointmentDate}</Text>
                   </View>
 
                   <View
@@ -164,4 +163,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-export default AppoinmentList;
+export default AppointmentList;

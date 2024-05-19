@@ -7,9 +7,8 @@ import ChipsGrid from '../components/gridRadioButtons';
 import {colors} from '../styles';
 import Layout from '../components/layOut';
 import {RootState} from '../redux';
-import {updateAppoinmentForm} from '../redux/silces/userdata.slice';
 
-const ChooseDateandTime = ({
+const ChooseDateAndTime = ({
   navigation,
   route,
 }: {
@@ -39,7 +38,7 @@ const ChooseDateandTime = ({
   };
 
   const handleNavigation = () => {
-    navigation.navigate('appoinmentlist');
+    navigation.navigate('appointmentlist');
   };
 
   return (
@@ -62,7 +61,7 @@ const ChooseDateandTime = ({
         mode="contained"
         onPress={() => {
           navigation.navigate(
-            id === -1 ? 'appoinmentdetails' : 'appoinmentdetails',
+            id === -1 ? 'appointmentdetails' : 'appointmentdetails',
             {
               id: id,
             },
@@ -111,4 +110,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChooseDateandTime;
+export default ChooseDateAndTime;

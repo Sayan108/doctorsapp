@@ -4,16 +4,17 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Text, PaperProvider, Surface } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux';
-// import { getAppoinmentDetailsRequested } from '../../redux/slices/userdata.slice';
+// import { getAppointmentDetailsRequested } from '../../redux/slices/userdata.slice';
 import { theme } from '../../theme/theme';
 import UserAvatar from '../../components/userAvataricon';
-import { getAppoinmentDetailsRequested } from '../../redux/silces/userdata.slice';
+import { getAppointmentDetailsRequested } from '../../redux/silces/userdata.slice';
 
 const AppointmentCard = ({ navigation }: { navigation: any }) => {
   const dispatch = useDispatch();
   const appointmentDetails = useSelector(
-    (state: RootState) => state.userdata.upcomingAppoinment.data,
+    (state: RootState) => state.userdata.upcomingAppointment.data,
   );
+  // const appointmentDetails = '';
 
   return (
     <PaperProvider theme={theme}>
@@ -21,12 +22,12 @@ const AppointmentCard = ({ navigation }: { navigation: any }) => {
         <Pressable
           onPress={() => {
             dispatch(
-              getAppoinmentDetailsRequested(
-                parseInt(appointmentDetails.appoinmentId) - 1,
+              getAppointmentDetailsRequested(
+                parseInt(appointmentDetails.appointmentId) - 1,
               ),
             );
-            navigation.navigate('appoinmentdetails', {
-              id: appointmentDetails.appoinmentId,
+            navigation.navigate('appointmentdetails', {
+              id: appointmentDetails.appointmentId,
             });
           }}
         >
@@ -53,7 +54,7 @@ const AppointmentCard = ({ navigation }: { navigation: any }) => {
                   size={24}
                 />
                 <Text style={{ color: theme.colors.onPrimaryContainer }}>
-                  {appointmentDetails.appoinmentDate}
+                  {appointmentDetails.appointmentDate}
                 </Text>
               </View>
               <View style={styles.detailItem}>
@@ -63,7 +64,7 @@ const AppointmentCard = ({ navigation }: { navigation: any }) => {
                   size={24}
                 />
                 <Text style={{ color: theme.colors.onPrimaryContainer }}>
-                  {appointmentDetails.appoinmentTime}
+                  {appointmentDetails.appointmentTime}
                 </Text>
               </View>
             </View>

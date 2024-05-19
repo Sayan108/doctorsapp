@@ -1,50 +1,50 @@
 import {put, takeEvery, takeLatest} from 'redux-saga/effects';
 import {ActionType} from 'typesafe-actions';
 import {
-  addAppoinmentInListRequested,
-  addAppoinmentInListSuccess,
-  appoinmentListFailure,
-  appoinmentListRequested,
-  appoinmentListSucess,
+  addAppointmentInListRequested,
+  addAppointmentInListSuccess,
+  appointmentListFailure,
+  appointmentListRequested,
+  appointmentListSucess,
   dateSlotFailure,
   dateSlotRequested,
   dateSlotSucess,
-  getAppoinmentDetailsFailure,
-  getAppoinmentDetailsRequested,
-  getAppoinmentDetailsSuccess,
+  getAppointmentDetailsFailure,
+  getAppointmentDetailsRequested,
+  getAppointmentDetailsSuccess,
   timeSlotFailure,
   timeSlotRequested,
   timeSlotSucess,
-  upcomingAppoinmentFailure,
-  upcomingAppoinmentRequested,
-  upcomingAppoinmentSucess,
+  upcomingAppointmentFailure,
+  upcomingAppointmentRequested,
+  upcomingAppointmentSucess,
 } from '../silces/userdata.slice';
 import {
-  IAppoinment,
+  IAppointment,
   appointments,
   dateSlots,
   timeSlots,
 } from '../redux.constants';
 import {store} from '..';
 
-function* fetchUpcomingAppoinment(
-  action: ActionType<typeof upcomingAppoinmentRequested>,
+function* fetchUpcomingAppointment(
+  action: ActionType<typeof upcomingAppointmentRequested>,
 ) {
   try {
-    yield put(upcomingAppoinmentSucess(appointments[5]));
+    yield put(upcomingAppointmentSucess(appointments[5]));
   } catch (error) {
-    yield put(upcomingAppoinmentFailure(error));
+    yield put(upcomingAppointmentFailure(error));
   }
 }
 
-function* fetchAppoinmentList(
-  action: ActionType<typeof appoinmentListRequested>,
+function* fetchAppointmentList(
+  action: ActionType<typeof appointmentListRequested>,
 ) {
   try {
-    const data: IAppoinment[] = appointments;
-    yield put(appoinmentListSucess(data));
+    const data: IAppointment[] = appointments;
+    yield put(appointmentListSucess(data));
   } catch (error) {
-    yield put(appoinmentListFailure(error));
+    yield put(appointmentListFailure(error));
   }
 }
 
@@ -66,51 +66,51 @@ function* fetchTimeSlotsBasedOnDate(
   }
 }
 
-function* fetchAppoinmentDetails(
-  action: ActionType<typeof getAppoinmentDetailsRequested>,
+function* fetchAppointmentDetails(
+  action: ActionType<typeof getAppointmentDetailsRequested>,
 ) {
   try {
     console.log(appointments[action.payload]);
-    yield put(getAppoinmentDetailsSuccess(appointments[action.payload]));
+    yield put(getAppointmentDetailsSuccess(appointments[action.payload]));
   } catch (error) {
-    yield put(getAppoinmentDetailsFailure(error));
+    yield put(getAppointmentDetailsFailure(error));
   }
 }
 
-function* addAppoinmentInListSaga(
-  action: ActionType<typeof addAppoinmentInListRequested>,
+function* addAppointmentInListSaga(
+  action: ActionType<typeof addAppointmentInListRequested>,
 ) {
   const {
-    userdata: {appoinmentForm},
+    userdata: {appointmentForm},
   } = store.getState();
   const {
     userdata: {
-      appoinmentList: {data},
+      appointmentList: {data},
     },
   } = store.getState();
   try {
     // do necessary api calls here
-    const appData: IAppoinment = {
-      patientName: appoinmentForm?.patientName ?? '',
+    const appData: IAppointment = {
+      patientName: appointmentForm?.patientName ?? '',
       doctorName: 'Dr. Debabrata Bera',
       clinicAddress: 'Somewhere on earth',
-      clinicPhone: appoinmentForm?.patientPhone ?? '',
-      appoinmentDate: appoinmentForm?.appoinmentDate ?? '',
-      appoinmentTime: appoinmentForm?.appoinmentTime ?? '',
-      problem: appoinmentForm?.problem,
-      appoinmentId: (data.length + 1).toString(),
+      clinicPhone: appointmentForm?.patientPhone ?? '',
+      appointmentDate: appointmentForm?.appointmentDate ?? '',
+      appointmentTime: appointmentForm?.appointmentTime ?? '',
+      problem: appointmentForm?.problem,
+      appointmentId: (data.length + 1).toString(),
     };
-    yield put(addAppoinmentInListSuccess(appData));
+    yield put(addAppointmentInListSuccess(appData));
   } catch (error) {
-    yield put(getAppoinmentDetailsFailure(error));
+    yield put(getAppointmentDetailsFailure(error));
   }
 }
-export function* watchFetchUpcomingAppoinment() {
-  yield takeEvery(upcomingAppoinmentRequested.type, fetchUpcomingAppoinment);
+export function* watchFetchUpcomingAppointment() {
+  yield takeEvery(upcomingAppointmentRequested.type, fetchUpcomingAppointment);
 }
 
-export function* watchFetchAppoinmentList() {
-  yield takeEvery(appoinmentListRequested.type, fetchAppoinmentList);
+export function* watchFetchAppointmentList() {
+  yield takeEvery(appointmentListRequested.type, fetchAppointmentList);
 }
 
 export function* watchFetchDateSlots() {
@@ -121,10 +121,10 @@ export function* watchFetchTimeSlotsBasedOnDate() {
   yield takeEvery(timeSlotRequested.type, fetchTimeSlotsBasedOnDate);
 }
 
-export function* watchFetchAppoinmentDetails() {
-  yield takeEvery(getAppoinmentDetailsRequested.type, fetchAppoinmentDetails);
+export function* watchFetchAppointmentDetails() {
+  yield takeEvery(getAppointmentDetailsRequested.type, fetchAppointmentDetails);
 }
 
-export function* watchAddAppoinmentinList() {
-  yield takeLatest(addAppoinmentInListRequested.type, addAppoinmentInListSaga);
+export function* watchAddAppointmentinList() {
+  yield takeLatest(addAppointmentInListRequested.type, addAppointmentInListSaga);
 }

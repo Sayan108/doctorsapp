@@ -3,10 +3,10 @@ import React, {useState} from 'react';
 import {Appbar, List, PaperProvider} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '../../styles';
-import AppointmentCard from './appoinmentCard';
 import {Text} from 'react-native-paper';
-import LogoutDialogue from '../../components/logOutDialogue';
+import LogoutDialogue from '../../components/logOutDialog';
 import {theme} from '../../theme/theme';
+import AppointmentCard from './appoinmentCard';
 import AppointmentOverView from './appoinmentOverView';
 
 const {height: screenHeight} = Dimensions.get('window');

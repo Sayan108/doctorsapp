@@ -1,19 +1,19 @@
 import {all} from 'redux-saga/effects';
 import {
-  watchAddAppoinmentinList,
-  watchFetchAppoinmentDetails,
-  watchFetchAppoinmentList,
+  watchAddAppointmentinList,
+  watchFetchAppointmentDetails,
+  watchFetchAppointmentList,
   watchFetchDateSlots,
   watchFetchTimeSlotsBasedOnDate,
-  watchFetchUpcomingAppoinment,
+  watchFetchUpcomingAppointment,
 } from './userData.saga';
 export default function* rootSaga() {
   yield all([
-    watchFetchAppoinmentList(),
+    watchFetchAppointmentList(),
     watchFetchDateSlots(),
     watchFetchTimeSlotsBasedOnDate(),
-    watchFetchUpcomingAppoinment(),
-    watchFetchAppoinmentDetails(),
-    watchAddAppoinmentinList(),
+    watchFetchUpcomingAppointment(),
+    watchFetchAppointmentDetails(),
+    watchAddAppointmentinList(),
   ]);
 }
