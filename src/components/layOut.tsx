@@ -12,7 +12,6 @@ export interface Props {
 const Layout = (props: Props) => {
   const {children, navigation, headerText} = props;
   return (
-    <PaperProvider theme={theme}>
       <View style={styles.container}>
         <Appbar.Header style={styles.header}>
           <Icon
@@ -26,7 +25,7 @@ const Layout = (props: Props) => {
         </Appbar.Header>
         {children}
       </View>
-    </PaperProvider>
+     
   );
 };
 
@@ -34,7 +33,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 8,
-    backgroundColor: theme.colors.surface,
+    // backgroundColor: theme.colors.surface,
   
   },
   header: {

@@ -9,7 +9,6 @@ import {theme} from '../../theme/theme';
 import AppointmentCard from './appoinmentCard';
 import AppointmentOverView from './appoinmentOverView';
 
-const {height: screenHeight} = Dimensions.get('window');
 
 const HomePageComponent = (props: any) => {
   const {setIndex, navigation} = props;
