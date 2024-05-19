@@ -50,7 +50,7 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
       renderScene={renderScene}
       style={styles.bottomNavigation}
       //  renderTouchable={customRenderTouchableRipple}
-      activeColor={colors.primaryColor}
+      activeColor={theme.colors.primary}
       activeIndicatorStyle={{shadowColor: 'rgba(245, 71, 73, 0.1)'}}
     />
   );

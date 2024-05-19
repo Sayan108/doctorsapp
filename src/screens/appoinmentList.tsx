@@ -17,6 +17,7 @@ import {RootState} from '../redux';
 import {getAppointmentDetailsRequested} from '../redux/silces/userdata.slice';
 import useResponsiveSize from '../components/useResponsiveSize';
 import {theme} from '../theme/theme';
+import {formatDateString} from '../util/funtions.util';
 
 const AppointmentList = (props: any) => {
   const dispatch = useDispatch();
@@ -58,20 +59,52 @@ const AppointmentList = (props: any) => {
                   },
                 ]}
                 key={item?.appointmentId}>
+
                 {/*  patientName, ... other details */}
                 <View style={styles.textContainer}>
                   <Text
                     style={{color: theme.colors.onSurface}}
-                    variant="titleLarge">
+                    variant="titleMedium">
                     {item.patientName}{' '}
                   </Text>
                   {/* <Text variant="bodyMedium">{item.doctorName}</Text> */}
 
-                  {/* clock section */}
+                  {/* status */}
+                  <View
+                    style={{
+                      backgroundColor: theme.colors.statusUpcoming,
+                      padding: 4,
+                      borderRadius: 4,
+                      alignSelf: 'flex-start',
+                    }}>
+                    <Text
+                      style={{color: theme.colors.onStatusUpcoming}}
+                      variant="bodySmall">
+                      {' '}
+                      status: upcoming{' '}
+                    </Text>
+                  </View>
+
+                    {/* date time section */}
                   <View style={styles.section}>
+                    {/* <Icon
+                      name="clock-outline"
+                      color={theme.colors.onSurface}
+                      size={useResponsiveSize(24)}
+                    /> */}
+                    <Text
+                      style={{color: theme.colors.onSurface}}
+                      variant="labelMedium">
+                      {item.appointmentTime} |{' '}
+                      {formatDateString(item.appointmentDate)}
+                    </Text>
+                  </View>
+
+                  {/* clock section */}
+                  {/* <View style={styles.section}>
                     <Icon
                       name="clock-outline"
-                      color= {theme.colors.onSurface}
+                      color={theme.colors.onSurface}
                       size={useResponsiveSize(24)}
                     />
                     <Text
@@ -79,10 +112,10 @@ const AppointmentList = (props: any) => {
                       variant="bodyLarge">
                       {item.appointmentTime}
                     </Text>
-                  </View>
+                  </View> */}
 
                   {/* calender section */}
-                  <View
+                  {/* <View
                     style={{
                       display: 'flex',
                       flexDirection: 'row',
@@ -90,31 +123,32 @@ const AppointmentList = (props: any) => {
                     }}>
                     <Icon
                       name="calendar-blank"
-                       color= {theme.colors.onSurface}
+                      color={theme.colors.onSurface}
                       size={useResponsiveSize(24)}
                     />
+
                     <Text
                       style={{color: theme.colors.onSurface}}
                       variant="bodyLarge">
-                      {item.appointmentDate}
+                      {formatDateString(item.appointmentDate)}
                     </Text>
-                  </View>
+                  </View> */}
 
                   {/* address section */}
                   <View
                     style={{
                       display: 'flex',
                       flexDirection: 'row',
-                      gap: 10,
+                      gap: 6,
                     }}>
                     <Icon
                       name="map-marker-outline"
-                       color= {theme.colors.onSurface}
-                      size={useResponsiveSize(24)}
+                      color={theme.colors.onSurface}
+                      size={useResponsiveSize(20)}
                     />
                     <Text
                       style={{color: theme.colors.onSurface}}
-                      variant="bodyLarge">
+                      variant="bodyMedium">
                       {item.clinicAddress}
                     </Text>
                   </View>
@@ -130,15 +164,24 @@ const AppointmentList = (props: any) => {
                   <Icon
                     onPress={() => handleOpenPhoneApp(item.clinicPhone)}
                     name="phone"
-                    color={theme.colors.error}
-                    size={useResponsiveSize(32)}
+                    color={theme.colors.onTertiaryContainer}
+                    size={useResponsiveSize(24)}
+                    style={{
+                      // borderWidth: 1,
+                      borderRadius: 100,
+                      padding: 8,
+                      // borderColor: theme.colors.primaryContainer,
+                      backgroundColor: theme.colors.tertiaryContainer,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
                   />
-                  <Icon
+                  {/* <Icon
                     onPress={() => handleOpenWhatsApp(item.clinicPhone)}
                     name="whatsapp"
                     color={'green'}
                     size={useResponsiveSize(32)}
-                  />
+                  /> */}
                 </View>
               </View>
             </Pressable>

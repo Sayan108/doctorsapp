@@ -1,52 +1,73 @@
-import {View, StyleSheet} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import React from 'react';
-import {Appbar, Provider, Text} from 'react-native-paper';
-import {colors} from '../styles';
+import { Appbar, Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {theme} from '../theme/theme';
+import { theme } from '../theme/theme';
+
 export interface Props {
   children: React.ReactNode;
   navigation: any;
   headerText: string;
 }
+
 const Layout = (props: Props) => {
-  const {children, navigation, headerText} = props;
+  const { children, navigation, headerText } = props;
   return (
-      <View style={styles.container}>
-        <Appbar.Header style={styles.header}>
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Appbar.Header style={[styles.header, { backgroundColor: theme.colors.background }]}>
           <Icon
             name="arrow-left"
             size={24}
-            color={colors.textColor}
+            color={theme.colors.onBackground}
             onPress={navigation}
-            style={{marginLeft:8}}
+            style={styles.icon}
           />
-          <Text variant="titleMedium" >{headerText}</Text>
+          <View style={styles.titleWrapper}>
+            <Text style={[styles.title, { color: theme.colors.onBackground }]}>
+              {headerText}
+            </Text>
+          </View>
         </Appbar.Header>
+      </View>
+
+      <View style={styles.contentContainer}>
         {children}
       </View>
-     
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 8,
-    // backgroundColor: theme.colors.surface,
-  
+  },
+  headerContainer: {
+    zIndex: 1, // Ensure the header is on top
   },
   header: {
-    backgroundColor: 'white',
-    elevation: 0,
     flexDirection: 'row',
+    alignItems: 'center',
+    elevation: 2,
+    position: 'relative', // Make sure the header is positioned relative for absolute positioning inside it
+  },
+  icon: {
+    marginLeft: 8,
+  },
+  titleWrapper: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    justifyContent: 'center',
     alignItems: 'center',
   },
   title: {
     fontSize: 18,
     fontWeight: '400',
-    marginLeft: 30,
-    color: colors.textColor,
+  },
+  contentContainer: {
+    flex: 1,
+    padding: 8, // Padding applied only to content
   },
 });
 
