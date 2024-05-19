@@ -7,13 +7,16 @@ import App from './App';
 import {name as appName} from './app.json';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
-import {Text} from 'react-native-paper';
+import {PaperProvider, Text} from 'react-native-paper';
+import {theme} from './src/theme/theme';
 
 const RNRedux = () => (
-  <Provider store={store}>
-    <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
-      <App />
-    </PersistGate>
-  </Provider>
+  <PaperProvider theme={theme}>
+    <Provider store={store}>
+      <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
+  </PaperProvider>
 );
 AppRegistry.registerComponent(appName, () => RNRedux);

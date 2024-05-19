@@ -1,7 +1,7 @@
 import { View, Pressable, StyleSheet } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Text, PaperProvider, Surface } from 'react-native-paper';
+import { Text, Provider, Surface } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux';
 // import { getAppointmentDetailsRequested } from '../../redux/slices/userdata.slice';
@@ -17,7 +17,7 @@ const AppointmentCard = ({ navigation }: { navigation: any }) => {
   // const appointmentDetails = '';
 
   return (
-    <PaperProvider theme={theme}>
+    <Provider theme={theme}>
       {appointmentDetails && (
         <Pressable
           onPress={() => {
@@ -82,7 +82,7 @@ const AppointmentCard = ({ navigation }: { navigation: any }) => {
           </Surface>
         </Pressable>
       )}
-    </PaperProvider>
+    </Provider>
   );
 };
 

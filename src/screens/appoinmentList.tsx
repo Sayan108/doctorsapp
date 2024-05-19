@@ -10,7 +10,7 @@ import React from 'react';
 import Layout from '../components/layOut';
 import {colors} from '../styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {PaperProvider, Text} from 'react-native-paper';
+import {Provider, Text} from 'react-native-paper';
 import {IAppointment} from '../redux/redux.constants';
 import {useSelector, useDispatch} from 'react-redux';
 import {RootState} from '../redux';
@@ -37,94 +37,114 @@ const AppointmentList = (props: any) => {
   };
 
   return (
-    <PaperProvider theme={theme}>
-      <Layout headerText="All appointments" navigation={conditionalFunction}>
-        <ScrollView>
-          {data &&
-            data?.map((item: IAppointment, index: number) => (
-              <Pressable
-                key={item.appointmentId}
-                onPress={() => {
-                  dispatch(getAppointmentDetailsRequested(index));
-                  navigation.navigate('appointmentdetails', {
-                    id: parseInt(item.appointmentId),
-                  });
-                }}>
-                <View style={styles.card} key={item?.appointmentId}>
-                  {/*  patientName, ... other details */}
-                  <View style={styles.textContainer}>
-                    <Text variant="titleLarge">{item.patientName}</Text>
-                    {/* <Text variant="bodyMedium">{item.doctorName}</Text> */}
+    <Layout headerText="All appointments" navigation={conditionalFunction}>
+      <ScrollView style={{backgroundColor: theme.colors.surface}}>
+        {data &&
+          data?.map((item: IAppointment, index: number) => (
+            <Pressable
+              key={item.appointmentId}
+              onPress={() => {
+                dispatch(getAppointmentDetailsRequested(index));
+                navigation.navigate('appointmentdetails', {
+                  id: parseInt(item.appointmentId),
+                });
+              }}>
+              <View
+                style={[
+                  styles.card,
+                  {
+                    borderColor: theme.colors.outline,
+                    backgroundColor: theme.colors.surface,
+                  },
+                ]}
+                key={item?.appointmentId}>
+                {/*  patientName, ... other details */}
+                <View style={styles.textContainer}>
+                  <Text
+                    style={{color: theme.colors.onSurface}}
+                    variant="titleLarge">
+                    {item.patientName}{' '}
+                  </Text>
+                  {/* <Text variant="bodyMedium">{item.doctorName}</Text> */}
 
-                    {/* clock section */}
-                    <View
-                      style={styles.section}>
-                      <Icon
-                        name="clock-outline"
-                        color="black"
-                        size={useResponsiveSize(24)}
-                      />
-                      <Text variant="bodyLarge">{item.appointmentTime}</Text>
-                    </View>
-
-                    {/* calender section */}
-                    <View
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        gap: 10,
-                      }}
-                      >
-                      <Icon
-                        name="calendar-blank"
-                        color="black"
-                        size={useResponsiveSize(24)}
-                      />
-                      <Text variant="bodyLarge">{item.appointmentDate}</Text>
-                    </View>
-
-                    {/* address section */}
-                    <View
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        gap: 10,
-                      }}>
-                      <Icon
-                        name="map-marker-outline"
-                        color="black"
-                        size={useResponsiveSize(24)}
-                      />
-                      <Text variant="bodyLarge">{item.clinicAddress}</Text>
-                    </View>
+                  {/* clock section */}
+                  <View style={styles.section}>
+                    <Icon
+                      name="clock-outline"
+                      color= {theme.colors.onSurface}
+                      size={useResponsiveSize(24)}
+                    />
+                    <Text
+                      style={{color: theme.colors.onSurface}}
+                      variant="bodyLarge">
+                      {item.appointmentTime}
+                    </Text>
                   </View>
 
-                  {/* whatsapp and call icon */}
+                  {/* calender section */}
                   <View
                     style={{
                       display: 'flex',
                       flexDirection: 'row',
-                      gap: 16,
+                      gap: 10,
                     }}>
                     <Icon
-                      onPress={() => handleOpenPhoneApp(item.clinicPhone)}
-                      name="phone"
-                      color={theme.colors.error}
-                      size={useResponsiveSize(32)}
+                      name="calendar-blank"
+                       color= {theme.colors.onSurface}
+                      size={useResponsiveSize(24)}
                     />
+                    <Text
+                      style={{color: theme.colors.onSurface}}
+                      variant="bodyLarge">
+                      {item.appointmentDate}
+                    </Text>
+                  </View>
+
+                  {/* address section */}
+                  <View
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      gap: 10,
+                    }}>
                     <Icon
-                      onPress={() => handleOpenWhatsApp(item.clinicPhone)}
-                      name="whatsapp"
-                      color={'green'}
-                      size={useResponsiveSize(32)}
+                      name="map-marker-outline"
+                       color= {theme.colors.onSurface}
+                      size={useResponsiveSize(24)}
                     />
+                    <Text
+                      style={{color: theme.colors.onSurface}}
+                      variant="bodyLarge">
+                      {item.clinicAddress}
+                    </Text>
                   </View>
                 </View>
-              </Pressable>
-            ))}
-        </ScrollView>
-      </Layout>
-    </PaperProvider>
+
+                {/* whatsapp and call icon */}
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: 16,
+                  }}>
+                  <Icon
+                    onPress={() => handleOpenPhoneApp(item.clinicPhone)}
+                    name="phone"
+                    color={theme.colors.error}
+                    size={useResponsiveSize(32)}
+                  />
+                  <Icon
+                    onPress={() => handleOpenWhatsApp(item.clinicPhone)}
+                    name="whatsapp"
+                    color={'green'}
+                    size={useResponsiveSize(32)}
+                  />
+                </View>
+              </View>
+            </Pressable>
+          ))}
+      </ScrollView>
+    </Layout>
   );
 };
 
@@ -134,7 +154,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: theme.colors.outline,
   },
   textContainer: {
     display: 'flex',

@@ -1,7 +1,7 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {colors} from '../../styles';
-import {PaperProvider} from 'react-native-paper';
+import {Provider} from 'react-native-paper';
 import {theme} from '../../theme/theme';
 import {Text} from 'react-native-paper';
 
@@ -12,7 +12,7 @@ export default function AppointmentOverView({navigation}: {navigation: any}) {
   const percentage = (todaysAppointments / total) * 100;
 
   return (
-    <PaperProvider theme={theme}>
+    <Provider theme={theme}>
       <View style={[styles.container, {backgroundColor: theme.colors.primary}]}>
         <Text variant="titleLarge" style={{color: theme.colors.onPrimary}}>
           {`Total ${total}`}
@@ -42,7 +42,7 @@ export default function AppointmentOverView({navigation}: {navigation: any}) {
           </View>
         </View>
       </View>
-    </PaperProvider>
+    </Provider>
   );
 }
 

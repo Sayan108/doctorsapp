@@ -1,11 +1,14 @@
 import * as React from 'react';
-import {BottomNavigation, TouchableRipple} from 'react-native-paper';
+import {BottomNavigation, TouchableRipple, useTheme} from 'react-native-paper';
 import HomePageComponent from './homePageComponents';
 import {StyleSheet} from 'react-native';
 import {colors} from '../../styles';
 import AppointmentList from '../appoinmentList';
 
 const HomeScreen = ({navigation}: {navigation: any}) => {
+
+  const theme =useTheme();
+
   const [index, setIndex] = React.useState(0);
 
   const handleIndexChange = (params: number) => {
@@ -39,14 +42,6 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
     home: homePageRoute,
     appointments: allAppointmentList,
   });
-  // const customRenderTouchableRipple = (props: any) => {
-  //   return (
-  //     <TouchableRipple
-  //       {...props}
-  //       rippleColor="rgba(245, 71, 73, 0.1)" // Change YOUR_RIPPLE_COLOR to your desired color
-  //     />
-  //   );
-  // };
 
   return (
     <BottomNavigation

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View} from 'react-native';
-import {Button, Dialog, Portal, PaperProvider, Text} from 'react-native-paper';
+import {Button, Dialog, Portal, Provider, Text} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {colors} from '../styles';
 interface ILogInDialogProps {
@@ -15,7 +15,7 @@ const MarkAsDoneDialog = (props: ILogInDialogProps) => {
   const hideDialog = () => setVisible(false);
 
   return (
-    <PaperProvider>
+    <Provider>
       <View style={{zIndex: 1000}}>
         <Portal>
           <Dialog
@@ -55,7 +55,7 @@ const MarkAsDoneDialog = (props: ILogInDialogProps) => {
           </Dialog>
         </Portal>
       </View>
-    </PaperProvider>
+    </Provider>
   );
 };
 

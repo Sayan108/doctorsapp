@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View} from 'react-native';
-import {Button, Dialog, Portal, PaperProvider, Text} from 'react-native-paper';
+import {Button, Dialog, Portal, Provider, Text} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
 import {logOut} from '../redux/silces/auth.silce';
 import {colors} from '../styles';
@@ -18,7 +18,7 @@ const LogoutDialogue = (props: ILogInDialogProps) => {
   const hideDialog = () => setVisible(false);
 
   return (
-    <PaperProvider>
+    <Provider>
       <View style={{zIndex: 1000}}>
         <Portal>
           <Dialog
@@ -61,7 +61,7 @@ const LogoutDialogue = (props: ILogInDialogProps) => {
           </Dialog>
         </Portal>
       </View>
-    </PaperProvider>
+    </Provider>
   );
 };
 

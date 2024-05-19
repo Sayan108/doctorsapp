@@ -1,6 +1,6 @@
 import {View, StyleSheet} from 'react-native';
 import React from 'react';
-import {Appbar, PaperProvider, Text} from 'react-native-paper';
+import {Appbar, Provider, Text} from 'react-native-paper';
 import {colors} from '../styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {theme} from '../theme/theme';
