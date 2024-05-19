@@ -91,7 +91,7 @@ const HomePageComponent = (props: any) => {
         <View style={{display: 'flex', flex: 1}}>
           {/* Appointment overview section */}
           <View style={styles.section}>
-            <Text variant="headlineSmall" style={styles.sectionTitle}>
+            <Text variant="titleMedium" style={{color: theme.colors.onSurface, marginBottom:10}}>
               Appointment overview
             </Text>
             <AppointmentOverView navigation={navigation} />
@@ -101,15 +101,17 @@ const HomePageComponent = (props: any) => {
           <View style={styles.section}>
             {/* Upcoming appointment text and see all button */}
             <View style={styles.header}>
-              <Text variant="headlineSmall" style={styles.sectionTitle}>
+              <Text
+                variant="titleMedium"
+                style={{color: theme.colors.onSurface, marginBottom:10}}>
                 Upcoming appointments
               </Text>
 
               <Text
-                variant="bodySmall"
-                style={styles.seeAllButton}
+                variant="labelMedium"
+                style={{color:theme.colors.error}}
                 onPress={() => setIndex(1)}>
-                See all
+                show all
               </Text>
             </View>
 
@@ -134,20 +136,13 @@ const styles = StyleSheet.create({
     height: 'auto',
     flex: 1,
   },
-  sectionTitle: {
-    color: colors.textColor,
-    fontSize: 18,
-    marginBottom: 5,
-  },
+
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between', // Distribute space between the text elements
     alignItems: 'center',
     width: '100%',
   },
-  seeAllButton: {
-    color: colors.primaryColor,
-    fontSize: 16,
-  },
+
 });
 export default HomePageComponent;

@@ -1,15 +1,15 @@
-import { View, Pressable, StyleSheet } from 'react-native';
+import {View, Pressable, StyleSheet} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Text, Provider, Surface } from 'react-native-paper';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux';
+import {Text, Provider, Surface} from 'react-native-paper';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../redux';
 // import { getAppointmentDetailsRequested } from '../../redux/slices/userdata.slice';
-import { theme } from '../../theme/theme';
+import {theme} from '../../theme/theme';
 import UserAvatar from '../../components/userAvataricon';
-import { getAppointmentDetailsRequested } from '../../redux/silces/userdata.slice';
+import {getAppointmentDetailsRequested} from '../../redux/silces/userdata.slice';
 
-const AppointmentCard = ({ navigation }: { navigation: any }) => {
+const AppointmentCard = ({navigation}: {navigation: any}) => {
   const dispatch = useDispatch();
   const appointmentDetails = useSelector(
     (state: RootState) => state.userdata.upcomingAppointment.data,
@@ -29,17 +29,22 @@ const AppointmentCard = ({ navigation }: { navigation: any }) => {
             navigation.navigate('appointmentdetails', {
               id: appointmentDetails.appointmentId,
             });
-          }}
-        >
-          <Surface style={[styles.surface, { backgroundColor: theme.colors.primaryContainer }]}>
+          }}>
+          <Surface
+            style={[
+              styles.surface,
+              {backgroundColor: theme.colors.surface},
+            ]}>
             <View style={styles.iconContainer}>
               <Icon
                 name="account-circle"
-                style={{ color: theme.colors.onPrimaryContainer }}
+                style={{color: theme.colors.onSurface}}
                 size={44}
               />
               <View>
-                <Text variant="titleMedium">{appointmentDetails.patientName}</Text>
+                <Text variant="titleMedium">
+                  {appointmentDetails.patientName}
+                </Text>
                 <Text variant="bodySmall">
                   {appointmentDetails.gender} | Age {appointmentDetails.age}
                 </Text>
@@ -50,20 +55,20 @@ const AppointmentCard = ({ navigation }: { navigation: any }) => {
               <View style={styles.detailItem}>
                 <Icon
                   name="calendar-blank"
-                  style={{ color: theme.colors.onPrimaryContainer }}
+                  style={{color: theme.colors.onSurface}}
                   size={24}
                 />
-                <Text style={{ color: theme.colors.onPrimaryContainer }}>
+                <Text style={{color: theme.colors.onSurface}}>
                   {appointmentDetails.appointmentDate}
                 </Text>
               </View>
               <View style={styles.detailItem}>
                 <Icon
                   name="clock-outline"
-                  style={{ color: theme.colors.onPrimaryContainer }}
+                  style={{color: theme.colors.onSurface}}
                   size={24}
                 />
-                <Text style={{ color: theme.colors.onPrimaryContainer }}>
+                <Text style={{color: theme.colors.onSurface}}>
                   {appointmentDetails.appointmentTime}
                 </Text>
               </View>
@@ -72,10 +77,10 @@ const AppointmentCard = ({ navigation }: { navigation: any }) => {
             <View style={styles.addressContainer}>
               <Icon
                 name="map-marker-outline"
-                style={{ color: theme.colors.onPrimaryContainer }}
+                style={{color: theme.colors.onSurface}}
                 size={24}
               />
-              <Text style={{ color: theme.colors.onPrimaryContainer }}>
+              <Text style={{color: theme.colors.onSurface}}>
                 {appointmentDetails.clinicAddress}
               </Text>
             </View>
@@ -95,6 +100,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'flex-start',
     gap: 20,
+  
   },
   iconContainer: {
     display: 'flex',
