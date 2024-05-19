@@ -91,7 +91,7 @@ const HomePageComponent = (props: any) => {
         {showLogout ? (
           <LogoutDialogue visible={showLogout} setVisible={setshowLogout} />
         ) : (
-          <>
+          <View style={{display:'flex',flex:1}}>
             {/* Appointment overview section */}
             <View style={styles.section}>
               <Text variant="headlineSmall" style={styles.sectionTitle}>
@@ -118,7 +118,7 @@ const HomePageComponent = (props: any) => {
 
               <AppointmentCard navigation={navigation} />
             </View>
-          </>
+          </View>
         )}
       </View>
     </PaperProvider>
@@ -138,7 +138,6 @@ const styles = StyleSheet.create({
   section: {
     display: 'flex',
     height: 'auto',
-
     flex: 1,
   },
   sectionTitle: {
