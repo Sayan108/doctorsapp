@@ -145,10 +145,6 @@ const styles = StyleSheet.create({
   radioButtonContainer: {
     justifyContent: 'center',
   },
-  button: {
-    marginTop: 24,
-    backgroundColor: colors.primaryColor,
-  },
   buttonLabel: {
     color: 'white',
     fontWeight: 'bold',

@@ -1,6 +1,6 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import React from 'react';
-import {Appbar, PaperProvider} from 'react-native-paper';
+import {Appbar, PaperProvider, Text} from 'react-native-paper';
 import {colors} from '../styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {theme} from '../theme/theme';
@@ -20,8 +20,9 @@ const Layout = (props: Props) => {
             size={24}
             color={colors.textColor}
             onPress={navigation}
+            style={{marginLeft:8}}
           />
-          <Text style={styles.title}>{headerText}</Text>
+          <Text variant="titleMedium" >{headerText}</Text>
         </Appbar.Header>
         {children}
       </View>
@@ -32,11 +33,12 @@ const Layout = (props: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    // backgroundColor: theme.colors.surface,
+    padding: 8,
+    backgroundColor: theme.colors.surface,
+  
   },
   header: {
-    backgroundColor: 'transparent',
+    backgroundColor: 'white',
     elevation: 0,
     flexDirection: 'row',
     alignItems: 'center',
