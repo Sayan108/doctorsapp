@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '../../styles';
 import AppointmentCard from './appoinmentCard';
 import {Text} from 'react-native-paper';
-import LogoutDialoge from '../../components/logOutDialogue';
+import LogoutDialogue from '../../components/logOutDialogue';
 import {theme} from '../../theme/theme';
 import AppointmentOverView from './appoinmentOverView';
 
@@ -89,7 +89,7 @@ const HomePageComponent = (props: any) => {
 
         {/* appointment Overview, upcoming Appointment */}
         {showLogout ? (
-          <LogoutDialoge visible={showLogout} setVisible={setshowLogout} />
+          <LogoutDialogue visible={showLogout} setVisible={setshowLogout} />
         ) : (
           <>
             {/* Appointment overview section */}

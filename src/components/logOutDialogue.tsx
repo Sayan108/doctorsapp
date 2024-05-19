@@ -11,7 +11,7 @@ interface ILogInDialogeProps {
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const LogoutDialoge = (props: ILogInDialogeProps) => {
+const LogoutDialogue = (props: ILogInDialogeProps) => {
   const dispatch = useDispatch();
   const {visible, setVisible} = props;
   const userData = useSelector((state: RootState) => state.userdata);
@@ -65,4 +65,4 @@ const LogoutDialoge = (props: ILogInDialogeProps) => {
   );
 };
 
-export default LogoutDialoge;
+export default LogoutDialogue;
