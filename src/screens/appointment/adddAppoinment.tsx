@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {TextInput, Button, Text, RadioButton} from 'react-native-paper';
 
-import HelperText from '../components/helperText';
-import {colors} from '../styles';
-import Layout from '../components/layOut';
+import HelperText from '../../components/helperText';
+import {colors} from '../../styles';
+import Layout from '../../components/layOut';
 import {useDispatch} from 'react-redux';
-import {updateAppointmentForm} from '../redux/silces/userdata.slice';
+import {updateAppointmentForm} from '../../redux/silces/userdata.slice';
 
 const AddAppointment = ({navigation}: {navigation: any}) => {
   const dispatch = useDispatch();

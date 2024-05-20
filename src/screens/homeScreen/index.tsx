@@ -3,7 +3,7 @@ import {BottomNavigation, TouchableRipple, useTheme} from 'react-native-paper';
 import HomePageComponent from './homePageComponents';
 import {StyleSheet} from 'react-native';
 import {colors} from '../../styles';
-import AppointmentList from '../appoinmentList';
+import AppointmentList from '../appointment/appoinmentList';
 
 const HomeScreen = ({navigation}: {navigation: any}) => {
 

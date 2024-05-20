@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View} from 'react-native';
-import {Button, Dialog, Portal, Provider, Text} from 'react-native-paper';
+import {Button, Dialog, Portal, Provider, Text, TextInput, useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {colors} from '../styles';
 interface ILogInDialogProps {
@@ -9,6 +9,9 @@ interface ILogInDialogProps {
 }
 
 const MarkAsDoneDialog = (props: ILogInDialogProps) => {
+
+  const theme = useTheme();
+
   const dispatch = useDispatch();
   const {visible, setVisible} = props;
 
@@ -18,41 +21,50 @@ const MarkAsDoneDialog = (props: ILogInDialogProps) => {
     <Provider>
       <View style={{zIndex: 1000}}>
         <Portal>
-          <Dialog
-            visible={visible}
-            onDismiss={hideDialog}
-            style={{backgroundColor: 'white'}}>
-            <Dialog.Title>
-              <Text style={{color: 'black', fontSize: 20, fontWeight: '600'}}>
-                Mark as done
-              </Text>
-            </Dialog.Title>
-            <Dialog.Content>
-              <Text style={{color: 'black', fontSize: 18, fontWeight: '600'}}>
-                Are you sure you want to mark this appointment done?
-              </Text>
-            </Dialog.Content>
-            <Dialog.Actions>
-              <Button onPress={hideDialog}>
-                <Text style={{color: 'black', fontSize: 16, fontWeight: '600'}}>
-                  No
-                </Text>
+        <Dialog
+          visible={visible}
+          onDismiss={hideDialog}
+          style={{backgroundColor: theme.colors.surface}}>
+          <Dialog.Title>
+            <Text variant="titleMedium" style={{color: theme.colors.onSurface}}>
+              Take a note
+            </Text>
+          </Dialog.Title>
+          <Dialog.Content>
+            {/* <Text variant="bodyMedium" style={{color: theme.colors.onSurface}}>
+              Are you sure you want to cancel this appointment ?
+            </Text> */}
+            <TextInput
+              placeholder='write here'
+            >
+
+            </TextInput>
+          </Dialog.Content>
+          <Dialog.Actions>
+            {/* buttons */}
+            <View
+              style={{
+                display: 'flex',
+                justifyContent: 'space-around',
+                flexDirection: 'row',
+                flex: 1,
+              }}>
+              <Button
+                style={{borderRadius: 5, padding: 2}}
+                mode="outlined"
+                onPress={hideDialog}>
+                Cancel
               </Button>
               <Button
-                style={{backgroundColor: colors.primaryColor}}
+                style={{borderRadius: 5, padding: 2}}
+                mode="contained"
+                // style={{backgroundColor: colors.primaryColor}}
                 onPress={hideDialog}>
-                <Text
-                  style={{
-                    color: 'white',
-                    fontSize: 16,
-                    fontWeight: '600',
-                    padding: 5,
-                  }}>
-                  Yes
-                </Text>
+                Done
               </Button>
-            </Dialog.Actions>
-          </Dialog>
+            </View>
+          </Dialog.Actions>
+        </Dialog>
         </Portal>
       </View>
     </Provider>

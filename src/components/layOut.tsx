@@ -1,8 +1,8 @@
-import { View, StyleSheet } from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import React from 'react';
-import { Appbar, Text } from 'react-native-paper';
+import {Appbar, Text} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { theme } from '../theme/theme';
+import {theme} from '../theme/theme';
 
 export interface Props {
   children: React.ReactNode;
@@ -11,11 +11,12 @@ export interface Props {
 }
 
 const Layout = (props: Props) => {
-  const { children, navigation, headerText } = props;
+  const {children, navigation, headerText} = props;
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: theme.colors.surface}]}>
       <View style={styles.headerContainer}>
-        <Appbar.Header style={[styles.header, { backgroundColor: theme.colors.background }]}>
+        <Appbar.Header
+          style={[styles.header, {backgroundColor: theme.colors.background}]}>
           <Icon
             name="arrow-left"
             size={24}
@@ -24,16 +25,14 @@ const Layout = (props: Props) => {
             style={styles.icon}
           />
           <View style={styles.titleWrapper}>
-            <Text style={[styles.title, { color: theme.colors.onBackground }]}>
+            <Text style={[styles.title, {color: theme.colors.onBackground}]}>
               {headerText}
             </Text>
           </View>
         </Appbar.Header>
       </View>
 
-      <View style={styles.contentContainer}>
-        {children}
-      </View>
+      <View style={styles.contentContainer}>{children}</View>
     </View>
   );
 };

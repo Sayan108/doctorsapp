@@ -9,8 +9,8 @@ import OTPInputScreen from './screens/otpScreen';
 import HomeScreen from './screens/homeScreen';
 import ChooseDateAndTime from './screens/chooseDateandTime';
 import MyProfile from './screens/myProfile';
-import AppointmentDetails from './screens/appoinmentDetails';
-import AppointmentList from './screens/appoinmentList';
+import AppointmentList from './screens/appointment/appoinmentList';
+import AppointmentDetails from './screens/appointment/appoinmentDetails';
 
 const Routes = () => {
   const {isAuthenticated} = useSelector((state: RootState) => state.auth);

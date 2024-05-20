@@ -7,17 +7,17 @@ import {
   PixelRatio,
 } from 'react-native';
 import React from 'react';
-import Layout from '../components/layOut';
-import {colors} from '../styles';
+import Layout from '../../components/layOut';
+import {colors} from '../../styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Provider, Text} from 'react-native-paper';
-import {IAppointment} from '../redux/redux.constants';
+import {IAppointment} from '../../redux/redux.constants';
 import {useSelector, useDispatch} from 'react-redux';
-import {RootState} from '../redux';
-import {getAppointmentDetailsRequested} from '../redux/silces/userdata.slice';
-import useResponsiveSize from '../components/useResponsiveSize';
-import {theme} from '../theme/theme';
-import {formatDateString} from '../util/funtions.util';
+import {RootState} from '../../redux';
+import {getAppointmentDetailsRequested} from '../../redux/silces/userdata.slice';
+import useResponsiveSize from '../../components/useResponsiveSize';
+import {theme} from '../../theme/theme';
+import {formatDateString} from '../../util/funtions.util';
 
 const AppointmentList = (props: any) => {
   const dispatch = useDispatch();
