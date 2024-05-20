@@ -81,7 +81,7 @@ const AppointmentList = (props: any) => {
                       style={{color: theme.colors.onStatusUpcoming}}
                       variant="bodySmall">
                       {' '}
-                      status: upcoming{' '}
+                       upcoming{' '}
                     </Text>
                   </View>
 
