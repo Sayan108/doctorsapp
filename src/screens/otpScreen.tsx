@@ -1,5 +1,5 @@
-import {View, Text, Image, TextInput, StyleSheet} from 'react-native';
-import {Button} from 'react-native-paper';
+import {View, Image, TextInput, StyleSheet} from 'react-native';
+import {Button, Text, useTheme} from 'react-native-paper';
 import React, {useRef, useState} from 'react';
 import {colors, style} from '../styles';
 import {useSelector} from 'react-redux';
@@ -9,6 +9,8 @@ import useAuthService from '../hooks/useAuthServices';
 import Timer from '../components/otpTimer';
 
 const OTPInputScreen = ({navigation}: {navigation: any}) => {
+  const theme = useTheme();
+
   const {handleLogIn} = useAuthService();
   const timerValue = 60;
   const length = 4;
@@ -44,9 +46,11 @@ const OTPInputScreen = ({navigation}: {navigation: any}) => {
     handleLogIn(finalOtp, navigation);
   };
   return (
-    <View style={style.view}>
+    <View style={[style.view, {backgroundColor: theme.colors.surface}]}>
       <View style={style.headerView}>
-        <Text style={style.loginPageHeader}>Log in</Text>
+        <Text variant="titleMedium" style={{color: theme.colors.onSurface}}>
+          Log in
+        </Text>
       </View>
 
       <Image
@@ -54,10 +58,18 @@ const OTPInputScreen = ({navigation}: {navigation: any}) => {
         source={require('./OTPInput.png')}></Image>
 
       <View style={style.loginPageTextContainer}>
-        <Text style={style.loginPageTextPrimary}>OTP Verification</Text>
-        <Text style={style.loginPageTextSecondary}>
-          {`We have sent you a verification code in your mobile no ${phoneNumber}`}
-        </Text>
+
+        {/* other text and textbox */}
+        <View style={style.loginPageTextContainer}>
+          <Text variant="titleMedium" style={{color: theme.colors.onSurface}}>
+            OTP Verification
+          </Text>
+
+          <Text variant="bodyMedium" style={{color: theme.colors.onSurface}}>
+            {`We have sent you a verification code in your mobile no ${phoneNumber}`}
+          </Text>
+        </View>
+
         <View>
           {/* <TextInput
             keyboardType="phone-pad"
@@ -75,10 +87,13 @@ const OTPInputScreen = ({navigation}: {navigation: any}) => {
               .fill(null)
               .map((_, index) => (
                 <TextInput
-                  selectionColor={colors.primaryColor}
+                  selectionColor={theme.colors.primary}
                   autoFocus={index === 0}
                   key={index}
-                  style={styles.input}
+                  style={[
+                    styles.input,
+                    {borderBottomColor: theme.colors.primary},
+                  ]}
                   keyboardType="numeric"
                   maxLength={1}
                   onChangeText={text => handleChangeText(text, index)}
@@ -91,11 +106,11 @@ const OTPInputScreen = ({navigation}: {navigation: any}) => {
 
           <View style={{paddingTop: 10}}>
             <View style={{display: 'flex', flexDirection: 'row'}}>
-              <Text
-                style={{
+              <Text variant="bodySmall" style={{color: theme.colors.onSurface}}>
+                {/* style={{
                   color: colors.textColor,
                   justifyContent: 'space-between',
-                }}>
+                }}> */}
                 Didn't recieve the code?
               </Text>
 
@@ -112,10 +127,14 @@ const OTPInputScreen = ({navigation}: {navigation: any}) => {
 
           <View style={{paddingTop: 50}}>
             <Button
-              style={{backgroundColor: colors.primaryColor}}
+              style={{
+                backgroundColor: theme.colors.primary,
+                padding: 6,
+                borderRadius: 4,
+              }}
               mode="contained"
               onPress={handleLoginButtonClick}>
-              Login
+              Get OTP
             </Button>
           </View>
         </View>
@@ -136,9 +155,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     borderRadius: 5,
     margin: 5,
-    borderBottomColor: 'black',
+    marginTop:20,
+    // borderBottomColor: 'black',
     borderBottomWidth: 1,
-    color: 'black',
+    // color: 'black',
   },
 });
 export default OTPInputScreen;

@@ -21,10 +21,14 @@ export default function AppointmentOverView({navigation}: {navigation: any}) {
         {/* Today's Appointments Section */}
         <View style={styles.row}>
           <Text variant="bodyLarge" style={{color: theme.colors.onPrimary}}>
-            Today's appointments {todaysAppointments}
+            New appointments {todaysAppointments}
           </Text>
-          <View style={styles.percentageBox}>
-            <Text variant="bodyLarge" style={{color: theme.colors.onPrimary}}>
+          <View
+            style={[
+              styles.percentageBox,
+              {backgroundColor: theme.colors.success},
+            ]}>
+            <Text variant="bodyLarge" style={{color: theme.colors.onSuccess}}>
               {percentage.toFixed(2)}%
             </Text>
           </View>
@@ -33,10 +37,14 @@ export default function AppointmentOverView({navigation}: {navigation: any}) {
         {/* New Patients Section */}
         <View style={styles.row}>
           <Text variant="bodyLarge" style={{color: theme.colors.onPrimary}}>
-            New patients {newPatients}
+            Old patients {newPatients}
           </Text>
-          <View style={styles.percentageBox}>
-            <Text variant="bodyLarge" style={{color: theme.colors.onPrimary}}>
+          <View
+            style={[
+              styles.percentageBox,
+              {backgroundColor: theme.colors.success},
+            ]}>
+            <Text variant="bodyLarge" style={{color: theme.colors.onSuccess}}>
               {percentage.toFixed(2)}%
             </Text>
           </View>
@@ -52,7 +60,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 20,
     alignItems: 'flex-start',
-    gap: 16,
+    gap: 10,
   },
   row: {
     display: 'flex',
@@ -66,8 +74,10 @@ const styles = StyleSheet.create({
     height: 30,
     padding: 4,
     paddingHorizontal: 8,
-    borderRadius: 20,
+    borderRadius: 4,
     alignItems: 'center',
-    backgroundColor: 'rgba(53, 184, 42, 0.5)',
+  },
+  titleMain: {
+    fontWeight: '600',
   },
 });

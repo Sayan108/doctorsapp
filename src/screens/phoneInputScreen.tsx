@@ -1,5 +1,5 @@
-import {View, Text, StyleSheet, Image} from 'react-native';
-import {Button, TextInput} from 'react-native-paper';
+import {View, StyleSheet, Image} from 'react-native';
+import {Button, Text, TextInput, useTheme} from 'react-native-paper';
 
 import React, {useState} from 'react';
 import {colors, style} from '../styles';
@@ -10,6 +10,8 @@ import {useSelector} from 'react-redux';
 import {RootState} from '../redux';
 
 const PhoneInputScreen = ({navigation}: {navigation: any}) => {
+  const theme = useTheme();
+
   const {handleSendOTP} = useAuthService();
   const userData = useSelector((state: RootState) => state.userdata);
   const [phoneNumber, setphoneNumber] = useState<string>('');
@@ -27,20 +29,30 @@ const PhoneInputScreen = ({navigation}: {navigation: any}) => {
     }
   };
   return (
-    <View style={style.view}>
+    <View style={[style.view, {backgroundColor: theme.colors.surface}]}>
+      {/* login text */}
       <View style={style.headerView}>
-        <Text style={style.loginPageHeader}>Log in</Text>
+        <Text variant="titleMedium" style={{color: theme.colors.onSurface}}>
+          Log in
+        </Text>
       </View>
 
+      {/* doctor icon */}
       <Image
         style={style.loginPageImage}
         source={require('./phoneNumberInput.png')}></Image>
 
+      {/* other text and textbox */}
       <View style={style.loginPageTextContainer}>
-        <Text style={style.loginPageTextPrimary}>Let's get started</Text>
-        <Text style={style.loginPageTextSecondary}>
+        <Text variant="titleMedium" style={{color: theme.colors.onSurface}}>
+          Let's get started
+        </Text>
+
+        <Text variant="bodyMedium" style={{color: theme.colors.onSurface}}>
           An OTP will be sent to verify the mobile number
         </Text>
+
+        {/* phonenumber input */}
         <View style={{marginTop: 10}}>
           <TextInput
             keyboardType="phone-pad"
@@ -50,10 +62,9 @@ const PhoneInputScreen = ({navigation}: {navigation: any}) => {
             value={phoneNumber}
             label="Mobile number"
             mode="outlined"
-            activeOutlineColor={colors.primaryColor}
+            activeOutlineColor={theme.colors.primary}
             onChangeText={handlePhoneNumberChange}
-            placeholder="1234567890"
-            placeholderTextColor="gray"></TextInput>
+            placeholder="1234567890"></TextInput>
           <HelperText
             show={validNumber}
             text="Enter valid number"
@@ -61,11 +72,16 @@ const PhoneInputScreen = ({navigation}: {navigation: any}) => {
           />
           <View style={{paddingTop: 100}}>
             <Button
-              style={{backgroundColor: colors.primaryColor}}
+              style={{
+                backgroundColor: theme.colors.primary,
+                padding: 6,
+                borderRadius: 4,
+              }}
               mode="contained"
               onPress={handleSendOTPButtonClick}>
               Get OTP
             </Button>
+            
           </View>
         </View>
       </View>

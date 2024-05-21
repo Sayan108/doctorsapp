@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {Text, View, Button, StyleSheet} from 'react-native';
 import {colors} from '../styles';
+import { useTheme } from 'react-native-paper';
+import { theme } from '../theme/theme';
 
 interface TimerProps {
   initialMinutes?: number;
@@ -9,10 +11,14 @@ interface TimerProps {
 }
 
 const Timer: React.FC<TimerProps> = ({
+
   initialMinutes = 0,
   initialSeconds = 0,
   navigation,
 }) => {
+
+  const theme = useTheme();
+
   const [minutes, setMinutes] = useState<number>(initialMinutes);
   const [seconds, setSeconds] = useState<number>(initialSeconds);
   const [isActive, setIsActive] = useState<boolean>(true);
@@ -43,7 +49,7 @@ const Timer: React.FC<TimerProps> = ({
           style={{
             marginLeft: 10,
             justifyContent: 'space-between',
-            color: colors.primaryColor,
+            color: theme.colors.tertiary,
           }}
           onPress={() => {
             setSeconds(60);
@@ -67,8 +73,7 @@ const styles = StyleSheet.create({
   },
   timer: {
     fontSize: 14,
-
-    color: colors.primaryColor,
+    color: theme.colors.tertiary,
   },
   buttonContainer: {
     flexDirection: 'row',

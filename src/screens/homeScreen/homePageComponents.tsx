@@ -8,6 +8,7 @@ import LogoutDialogue from '../../components/logOutDialog';
 import {theme} from '../../theme/theme';
 import AppointmentCard from './appoinmentCard';
 import AppointmentOverView from './appoinmentOverView';
+import useResponsiveSize from '../../components/useResponsiveSize';
 
 const HomePageComponent = (props: any) => {
   const {setIndex, navigation} = props;
@@ -34,26 +35,26 @@ const HomePageComponent = (props: any) => {
           style={{
             position: 'absolute',
             top: 60, // Adjust as needed
-            left: 10,
+            left: '10%',
             right: 0,
-            backgroundColor: 'rgba(255,255 ,255 ,1)',
+            backgroundColor: theme.colors.surfaceVariant,
             zIndex: 10, // Ensure the menu is above other elements
             elevation: 400,
             width: '60%',
-            borderRadius: 25,
+            borderRadius: 20,
           }}>
           <List.Section>
             <List.Item
               title="My profile"
               titleStyle={{
-                color: 'black', // Text color
+                color: theme.colors.onSurfaceVariant,
               }}
               left={() => (
                 <Icon
                   style={{paddingLeft: 10}}
                   name="account-circle-outline"
-                  size={35}
-                  color={colors.textColor}
+                  size={useResponsiveSize(24)}
+                  color={theme.colors.onSurfaceVariant}
                 />
               )}
               onPress={() => {
@@ -65,14 +66,14 @@ const HomePageComponent = (props: any) => {
             <List.Item
               title="Log out"
               titleStyle={{
-                color: 'black', // Text color
+                color: theme.colors.onSurfaceVariant, // Text color
               }}
               left={() => (
                 <Icon
                   style={{paddingLeft: 10}}
                   name="logout"
-                  size={35}
-                  color={colors.textColor}
+                  size={useResponsiveSize(24)}
+                  color={theme.colors.onSurfaceVariant}
                 />
               )}
               onPress={() => {
@@ -91,7 +92,9 @@ const HomePageComponent = (props: any) => {
         <View style={{display: 'flex', flex: 1}}>
           {/* Appointment overview section */}
           <View style={styles.section}>
-            <Text variant="titleMedium" style={{color: theme.colors.onSurface, marginBottom:10}}>
+            <Text
+              variant="titleMedium"
+              style={{color: theme.colors.onSurface, marginBottom: 10}}>
               Appointment overview
             </Text>
             <AppointmentOverView navigation={navigation} />
@@ -103,13 +106,13 @@ const HomePageComponent = (props: any) => {
             <View style={styles.header}>
               <Text
                 variant="titleMedium"
-                style={{color: theme.colors.onSurface, marginBottom:10}}>
+                style={{color: theme.colors.onSurface, marginBottom: 10}}>
                 Upcoming appointments
               </Text>
 
               <Text
                 variant="labelMedium"
-                style={{color:theme.colors.error}}
+                style={{color: theme.colors.error}}
                 onPress={() => setIndex(1)}>
                 show all
               </Text>
@@ -143,6 +146,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-
 });
 export default HomePageComponent;

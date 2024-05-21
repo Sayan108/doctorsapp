@@ -59,8 +59,8 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
 const styles = StyleSheet.create({
   bottomNavigation: {
     backgroundColor: 'red', // Example background color
-    borderTopWidth: 1, // Example border style
-    borderTopColor: 'gray', // Example border color
+    // borderTopWidth: 1, // Example border style
+    // borderTopColor: 'gray', // Example border color
   },
 });
 

@@ -8,15 +8,17 @@ export const aspectRatio: number = 1;
 export const style = StyleSheet.create({
   view: {
     alignSelf: 'center',
-    color: colors.backGroundColor,
     alignItems: 'center',
+    display: 'flex',
+    width:'100%',
+    borderWidth:1,
+    flex:1,
+    gap:16
   },
   headerView: {
-    backgroundColor: 'inherit',
+    justifyContent: 'center',
     alignSelf: 'center',
-    width: 325 * aspectRatio,
-    height: 42 * aspectRatio,
-    paddingBottom: 10,
+    padding: 16,
   },
   loginPageHeader: {
     color: colors.textColor,
@@ -28,7 +30,8 @@ export const style = StyleSheet.create({
   },
   loginPageTextContainer: {
     width: 300,
-    height: 59,
+    height: 60,
+    gap:8
   },
   loginPageTextPrimary: {
     color: colors.textColor,

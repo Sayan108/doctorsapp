@@ -1,6 +1,13 @@
 import * as React from 'react';
 import {View} from 'react-native';
-import {Button, Dialog, Portal, Provider, Text} from 'react-native-paper';
+import {
+  Button,
+  Dialog,
+  Portal,
+  Provider,
+  Text,
+  useTheme,
+} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
 import {logOut} from '../redux/silces/auth.silce';
 import {colors} from '../styles';
@@ -12,6 +19,8 @@ interface ILogInDialogProps {
 }
 
 const LogoutDialogue = (props: ILogInDialogProps) => {
+  const theme = useTheme();
+
   const dispatch = useDispatch();
   const {visible, setVisible} = props;
   const userData = useSelector((state: RootState) => state.userdata);
@@ -24,39 +33,44 @@ const LogoutDialogue = (props: ILogInDialogProps) => {
           <Dialog
             visible={visible}
             onDismiss={hideDialog}
-            style={{backgroundColor: 'white'}}>
+            style={{backgroundColor: theme.colors.surface}}>
             <Dialog.Title>
-              <Text style={{color: 'black', fontSize: 20, fontWeight: '600'}}>
+              <Text
+                variant="titleMedium"
+                style={{color: theme.colors.onSurface}}>
                 Log out
               </Text>
             </Dialog.Title>
             <Dialog.Content>
-              <Text style={{color: 'black', fontSize: 18, fontWeight: '600'}}>
+              <Text
+                variant="bodyMedium"
+                style={{color: theme.colors.onSurface}}>
                 Are you sure you want to log out ?
               </Text>
             </Dialog.Content>
             <Dialog.Actions>
-              <Button onPress={hideDialog}>
-                <Text style={{color: 'black', fontSize: 16, fontWeight: '600'}}>
-                  No
-                </Text>
-              </Button>
-              <Button
-                style={{backgroundColor: colors.primaryColor}}
-                onPress={() => {
-                  dispatch(logOut());
-                  dispatch(clearUserData());
+              {/* buttons */}
+              <View
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-around',
+                  flexDirection: 'row',
+                  flex: 1,
                 }}>
-                <Text
-                  style={{
-                    color: 'white',
-                    fontSize: 16,
-                    fontWeight: '600',
-                    padding: 5,
-                  }}>
-                  Log out
-                </Text>
-              </Button>
+                <Button
+                  style={{borderRadius: 5, padding: 2}}
+                  mode="outlined"
+                  onPress={hideDialog}>
+                  No
+                </Button>
+                <Button
+                  style={{borderRadius: 5, padding: 2}}
+                  mode="contained"
+                  // style={{backgroundColor: colors.primaryColor}}
+                  onPress={hideDialog}>
+                  Yes
+                </Button>
+              </View>
             </Dialog.Actions>
           </Dialog>
         </Portal>
