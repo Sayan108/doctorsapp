@@ -1,12 +1,13 @@
 import {View, Image, TextInput, StyleSheet} from 'react-native';
 import {Button, Text, useTheme} from 'react-native-paper';
 import React, {useRef, useState} from 'react';
-import {colors, style} from '../styles';
+import {colors, style} from '../../styles';
 import {useSelector} from 'react-redux';
-import {RootState} from '../redux';
+import {RootState} from '../../redux';
 
-import useAuthService from '../hooks/useAuthServices';
-import Timer from '../components/otpTimer';
+import useAuthService from '../../hooks/useAuthServices';
+import Timer from '../../components/otpTimer';
+import OtpPageIcon from '../../asset/icons/otpPageIcon';
 
 const OTPInputScreen = ({navigation}: {navigation: any}) => {
   const theme = useTheme();
@@ -53,9 +54,12 @@ const OTPInputScreen = ({navigation}: {navigation: any}) => {
         </Text>
       </View>
 
-      <Image
+      {/* <Image
         style={style.loginPageImage}
-        source={require('./OTPInput.png')}></Image>
+        source={require('./OTPInput.png')}></Image> */}
+        <View>
+          <OtpPageIcon/>
+        </View>
 
       <View style={style.loginPageTextContainer}>
 

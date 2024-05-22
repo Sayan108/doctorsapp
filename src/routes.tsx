@@ -1,11 +1,11 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import PhoneInputScreen from './screens/phoneInputScreen';
+import PhoneInputScreen from './screens/login/phoneInputScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useSelector} from 'react-redux';
 import {RootState} from './redux';
-import OTPInputScreen from './screens/otpScreen';
+import OTPInputScreen from './screens/login/otpScreen';
 import HomeScreen from './screens/homeScreen';
 import ChooseDateAndTime from './screens/chooseDateandTime';
 import MyProfile from './screens/myProfile';

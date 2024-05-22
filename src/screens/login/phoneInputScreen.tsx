@@ -2,12 +2,13 @@ import {View, StyleSheet, Image} from 'react-native';
 import {Button, Text, TextInput, useTheme} from 'react-native-paper';
 
 import React, {useState} from 'react';
-import {colors, style} from '../styles';
-import useAuthService, {sendOTPPayload} from '../hooks/useAuthServices';
-import {phoneNumberRegex} from '../regex.config';
-import HelperText from '../components/helperText';
+import {colors, style} from '../../styles';
+import useAuthService, {sendOTPPayload} from '../../hooks/useAuthServices';
+import {phoneNumberRegex} from '../../regex.config';
+import HelperText from '../../components/helperText';
 import {useSelector} from 'react-redux';
-import {RootState} from '../redux';
+import {RootState} from '../../redux';
+import DoctorIcon from '../../asset/icons/doctoricon';
 
 const PhoneInputScreen = ({navigation}: {navigation: any}) => {
   const theme = useTheme();
@@ -38,9 +39,10 @@ const PhoneInputScreen = ({navigation}: {navigation: any}) => {
       </View>
 
       {/* doctor icon */}
-      <Image
-        style={style.loginPageImage}
-        source={require('./phoneNumberInput.png')}></Image>
+      <View style={{}}>
+        <DoctorIcon/>
+      </View>
+
 
       {/* other text and textbox */}
       <View style={style.loginPageTextContainer}>
@@ -81,7 +83,6 @@ const PhoneInputScreen = ({navigation}: {navigation: any}) => {
               onPress={handleSendOTPButtonClick}>
               Get OTP
             </Button>
-            
           </View>
         </View>
       </View>
