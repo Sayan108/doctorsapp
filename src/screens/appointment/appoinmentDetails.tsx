@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, ScrollView, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {List, Button, useTheme} from 'react-native-paper';
+import {List, Button, useTheme, Surface} from 'react-native-paper';
 import {useSelector} from 'react-redux';
 import CancelAppointmentDialog from '../../components/cancelAppoinmentDialogue';
 import Layout from '../../components/layOut';
@@ -78,17 +78,17 @@ const AppointmentDetails = ({
                 }}>
                 <Icon
                   name="dots-vertical"
-                  color={colors.textColor}
+                  color={theme.colors.onSurfaceVariant}
                   size={30}
-                  style={[{color: theme.colors.onSurface}]}
+                  style={[{color: theme.colors.onSurfaceVariant}]}
                 />
               </Pressable>
               {visible ? (
-                <View
+                <Surface
                   style={[
                     styles.cancelButton,
                     {
-                      backgroundColor: theme.colors.secondary,
+                      backgroundColor: theme.colors.surfaceVariant,
                       shadowColor: theme.colors.shadow,
                     },
                   ]}>
@@ -96,7 +96,7 @@ const AppointmentDetails = ({
                     <List.Item
                       title="Cancel"
                       titleStyle={{
-                        color: theme.colors.onSecondary,
+                        color: theme.colors.onSurfaceVariant,
                       }}
                       left={() => (
                         <Icon
@@ -112,7 +112,7 @@ const AppointmentDetails = ({
                       }}
                     />
                   </List.Section>
-                </View>
+                </Surface>
               ) : null}
             </View>
 
@@ -221,35 +221,53 @@ const AppointmentDetails = ({
             </View>
           </View>
 
-          {/* buttons */}
-          <View style={{display:'flex',gap:24,marginTop:24}}>
+         
+        </ScrollView>
+      )}
+       {/* buttons */}
+       <View
+            style={[
+              styles.buttonContainer,
+              {backgroundColor: theme.colors.surface},
+            ]}>
             <Button
+              style={{
+                backgroundColor: theme.colors.primary,
+                padding: 6,
+                borderRadius: 4,
+              }}
               mode="contained"
               onPress={() => {
                 setshowMarkAssDoneModal(true);
               }}
               // style={[styles.button]}
-              >
+            >
               Mark as done
             </Button>
             <Button
+              style={{
+                borderRadius: 4,
+                padding: 6,
+              }}
               mode="outlined"
               onPress={() => {
                 navigation.navigate('reschedule');
               }}
               // style={styles.buttonOutline}
-              >
+            >
               Reschedule
             </Button>
           </View>
-        </ScrollView>
-      )}
     </Layout>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    paddingBottom:10
+  },
 
   cancelButton: {
     display: 'flex',
@@ -299,6 +317,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     marginLeft: 10,
+  },
+
+  buttonContainer: {
+    display: 'flex',
+    gap: 24,
+    position: 'absolute',
+    bottom: '0%',
+    width: '100%',
+    paddingLeft: 16,
+    paddingRight: 8,
+    paddingBottom: 8,
+    paddingTop: 8,
+    alignContent: 'center',
+    justifyContent: 'center',
   },
 });
 

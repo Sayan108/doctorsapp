@@ -40,9 +40,8 @@ const PhoneInputScreen = ({navigation}: {navigation: any}) => {
 
       {/* doctor icon */}
       <View style={{}}>
-        <DoctorIcon/>
+        <DoctorIcon />
       </View>
-
 
       {/* other text and textbox */}
       <View style={style.loginPageTextContainer}>
@@ -65,14 +64,13 @@ const PhoneInputScreen = ({navigation}: {navigation: any}) => {
             label="Mobile number"
             mode="outlined"
             activeOutlineColor={theme.colors.primary}
-            onChangeText={handlePhoneNumberChange}
-            placeholder="1234567890"></TextInput>
+            onChangeText={handlePhoneNumberChange}></TextInput>
           <HelperText
             show={validNumber}
             text="Enter valid number"
             type="error"
           />
-          <View style={{paddingTop: 100}}>
+          <View style={{paddingTop: 50}}>
             <Button
               style={{
                 backgroundColor: theme.colors.primary,
