@@ -5,12 +5,14 @@ import {
   Linking,
   Pressable,
   PixelRatio,
+  Touchable,
+  TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Layout from '../../components/layOut';
 import {colors} from '../../styles';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Provider, Text} from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {Chip, List, Provider, RadioButton, Text} from 'react-native-paper';
 import {IAppointment} from '../../redux/redux.constants';
 import {useSelector, useDispatch} from 'react-redux';
 import {RootState} from '../../redux';
@@ -31,6 +33,15 @@ const AppointmentList = (props: any) => {
     Linking.openURL(`whatsapp://send?phone=${number}`);
   };
 
+  const clinicList = ['Bidhannagar Clinic', 'ABC clinic', 'Maa Tara Clinic'];
+  const [selectedClinicIndex, setSelectedClinicIndex] = React.useState(0);
+  const handleRadioButtonClick = (index: number, item: any) => {
+    setSelectedClinicIndex(index);
+    setClinicListVisible(false);
+  };
+
+  const [clinicListVisible, setClinicListVisible] = useState<boolean>(false);
+
   const {navigation, setIndex} = props;
 
   const conditionalFunction = () => {
@@ -39,6 +50,77 @@ const AppointmentList = (props: any) => {
 
   return (
     <Layout headerText="All appointments" navigation={conditionalFunction}>
+      <TouchableOpacity
+        onPress={() => {
+          setClinicListVisible(true);
+        }}>
+        <View
+          style={{
+            display: 'flex',
+            backgroundColor: theme.colors.primary,
+            alignSelf: 'flex-start',
+            padding: 8,
+            gap: 4,
+            flexDirection: 'row',
+            borderRadius: 12,
+            minWidth: 80,
+            justifyContent: 'space-between',
+          }}>
+          <Text style={{color: theme.colors.onPrimary}}>
+            {clinicList[selectedClinicIndex]}
+          </Text>
+          <Icon
+            name="expand-more"
+            color={theme.colors.onPrimary}
+            size={useResponsiveSize(20)}
+          />
+        </View>
+      </TouchableOpacity>
+
+      {/* clinic list */}
+      {clinicListVisible ? (
+        <View
+          style={{
+            position: 'absolute',
+            top: 60, // Adjust as needed
+            left: '10%',
+            right: 0,
+            backgroundColor: theme.colors.surfaceVariant,
+            zIndex: 10, // Ensure the menu is above other elements
+            elevation: 400,
+            width: '60%',
+            borderRadius: 20,
+          }}>
+          <List.Section>
+            {clinicList.map((item, index) => (
+              <List.Item
+                key={clinicList.indexOf(item)}
+                title={item}
+                titleStyle={{
+                  color: theme.colors.onSurfaceVariant,
+                }}
+                right={() => (
+                  <RadioButton
+                    status={
+                      index === selectedClinicIndex ? 'checked' : 'unchecked'
+                    }
+                    onPress={() => {
+                      handleRadioButtonClick(index, item);
+                    }}
+                    value={index.toString()}
+                    // name={`radio-buttons-${index}`}
+                  />
+                )}
+                // onPress={() => {
+                //   navigation.navigate('myprofile');
+                //   setvisible(!visible);
+                // }}
+              />
+            ))}
+          </List.Section>
+        </View>
+      ) : null}
+
       <ScrollView style={{backgroundColor: theme.colors.surface}}>
         {data &&
           data?.map((item: IAppointment, index: number) => (
@@ -59,7 +141,6 @@ const AppointmentList = (props: any) => {
                   },
                 ]}
                 key={item?.appointmentId}>
-
                 {/*  patientName, ... other details */}
                 <View style={styles.textContainer}>
                   <Text
@@ -81,11 +162,11 @@ const AppointmentList = (props: any) => {
                       style={{color: theme.colors.onStatusUpcoming}}
                       variant="bodySmall">
                       {' '}
-                       upcoming{' '}
+                      upcoming{' '}
                     </Text>
                   </View>
 
-                    {/* date time section */}
+                  {/* date time section */}
                   <View style={styles.section}>
                     {/* <Icon
                       name="clock-outline"
@@ -142,7 +223,7 @@ const AppointmentList = (props: any) => {
                       gap: 6,
                     }}>
                     <Icon
-                      name="map-marker-outline"
+                      name="location-on"
                       color={theme.colors.onSurface}
                       size={useResponsiveSize(20)}
                     />
