@@ -7,6 +7,8 @@ import ChipsGrid from '../components/gridRadioButtons';
 import {colors} from '../styles';
 import Layout from '../components/layOut';
 import {RootState} from '../redux';
+import { Calendar } from 'react-native-calendars';
+import { theme } from '../theme/theme';
 
 const ChooseDateAndTime = ({
   navigation,
@@ -15,6 +17,9 @@ const ChooseDateAndTime = ({
   navigation: any;
   route: any;
 }) => {
+
+  const [selected, setSelected] = useState('');
+
   const {id} = route.params;
   const dispatch = useDispatch();
   const dateSlots = useSelector(
@@ -44,19 +49,32 @@ const ChooseDateAndTime = ({
   return (
     <Layout navigation={handleNavigation} headerText="Choose date and time">
       <Text style={styles.subtitle}>{'Choose date'}</Text>
-      <ChipsGrid
-        data={dateSlots}
-        onSelect={handleDateSelect}
-        selectedId={selectedDateId.id}
-        type="date"
-      />
+      <Calendar
+      style={{
+        // backgroundColor:theme.colors.secondaryContainer,
+        borderColor:theme.colors.outline
+        
+      }}
+      theme={{
+        backgroundColor: theme.colors.secondary,
+        calendarBackground: theme.colors.surface,
+        textSectionTitleColor: theme.colors.onSurface,
+        selectedDayBackgroundColor: theme.colors.primary,
+        selectedDayTextColor: theme.colors.onPrimary,
+        todayTextColor: theme.colors.onSurface,
+        dayTextColor: theme.colors.onSurface,
+        textDisabledColor: theme.colors.surfaceDisabled
+
+      }}
+      current={'2024-05-01'}
+
+      onDayPress={day => {
+        setSelected(day.dateString);
+      }}
+
+    />
       <Text style={styles.subtitle}>{'Choose time'}</Text>
-      <ChipsGrid
-        data={timeSlots}
-        onSelect={handleTimeSlotSelect}
-        selectedId={selectedTimeSlot.id}
-        type="time"
-      />
+      
       <Button
         mode="contained"
         onPress={() => {
