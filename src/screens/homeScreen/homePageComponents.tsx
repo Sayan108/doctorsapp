@@ -9,6 +9,7 @@ import {theme} from '../../theme/theme';
 import AppointmentCard from './appoinmentCard';
 import AppointmentOverView from './appoinmentOverView';
 import useResponsiveSize from '../../components/useResponsiveSize';
+import useAuthService from '../../hooks/useAuthServices';
 
 const HomePageComponent = (props: any) => {
   const {setIndex, navigation} = props;
@@ -16,6 +17,9 @@ const HomePageComponent = (props: any) => {
   const theme = useTheme();
   const [visible, setvisible] = useState<boolean>(false);
   const [showLogout, setshowLogout] = useState<boolean>(false);
+
+  const { handleLogOut } = useAuthService();
+
   return (
     <View style={[styles.container, {backgroundColor: theme.colors.surface}]}>
       {/* appbar */}
@@ -42,7 +46,8 @@ const HomePageComponent = (props: any) => {
             elevation: 400,
             width: '60%',
             borderRadius: 20,
-          }}>
+          }}
+          >
           <List.Section>
             <List.Item
               title="My profile"
@@ -87,7 +92,7 @@ const HomePageComponent = (props: any) => {
 
       {/* appointment Overview, upcoming Appointment */}
       {showLogout ? (
-        <LogoutDialogue visible={showLogout} setVisible={setshowLogout} />
+        <LogoutDialogue visible={showLogout} setVisible={setshowLogout} navigation={navigation} />
       ) : (
         <View style={{display: 'flex', flex: 1}}>
           {/* Appointment overview section */}
@@ -146,5 +151,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
+
+  menuContainer:{
+
+  }
 });
 export default HomePageComponent;

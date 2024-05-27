@@ -23,7 +23,7 @@ const PhoneInputScreen = ({navigation}: {navigation: any}) => {
 
   const handleSendOTPButtonClick = () => {
     if (phoneNumber.length === 10) {
-      const payload: sendOTPPayload = {phoneNumber};
+      const payload: sendOTPPayload = {phoneNo:phoneNumber};
       handleSendOTP(payload, navigation);
     } else {
       setvalidNumber(phoneNumber.length > 0 && phoneNumber.length < 10);

@@ -16,6 +16,7 @@ import {RootState} from '../redux';
 interface ILogInDialogProps {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  navigation:any
 }
 
 const LogoutDialogue = (props: ILogInDialogProps) => {
@@ -25,6 +26,11 @@ const LogoutDialogue = (props: ILogInDialogProps) => {
   const {visible, setVisible} = props;
   const userData = useSelector((state: RootState) => state.userdata);
   const hideDialog = () => setVisible(false);
+
+  const handleYesPress = () =>{
+    hideDialog();
+    props.navigation.navigate('phoneinput');
+  }
 
   return (
     <Provider>
@@ -67,7 +73,7 @@ const LogoutDialogue = (props: ILogInDialogProps) => {
                   style={{borderRadius: 5, padding: 2}}
                   mode="contained"
                   // style={{backgroundColor: colors.primaryColor}}
-                  onPress={hideDialog}>
+                  onPress={handleYesPress}>
                   Yes
                 </Button>
               </View>

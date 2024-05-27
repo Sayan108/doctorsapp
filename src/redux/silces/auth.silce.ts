@@ -1,5 +1,8 @@
-import {type PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {IAuthState, IAuthStateInitialState} from '../redux.constants';
+import {PayloadAction, createSlice} from '@reduxjs/toolkit';
+import {
+  IAuthState,
+  IAuthStateInitialState,
+} from '../redux.constants';
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -12,18 +15,30 @@ export const authSlice = createSlice({
         isLoading: true,
       };
     },
+    // otpCallSuccess: (
+    //   state: IAuthState,
+    //   action: PayloadAction<OTPSuccessPayload>,
+    // ) => {
+    //   return {
+    //     ...state,
+    //     userDetails: {
+    //       userName: '',
+    //       fullname: '',
+    //       email: '',
+    //       phoneNumber: action.payload.phoneNumber,
+    //     },
+    //     isLoading: false,
+    //   };
+    // },
+
     otpSuccess: (state: IAuthState, action: PayloadAction<any>) => {
+      console.log(action.payload, 'data in slice');
       return {
         ...state,
-        userDetails: {
-          userName: '',
-          fullname: '',
-          email: '',
-          phoneNumber: action.payload.data.phonenumber,
-        },
-        isLoading: false,
+        userDetails: {...state.userDetails, ...action.payload.data},
       };
     },
+
     otpFailed: (state: IAuthState, action: PayloadAction<any>) => {
       return {
         isAuthenticated: false,

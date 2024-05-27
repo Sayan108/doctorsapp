@@ -44,7 +44,13 @@ const OTPInputScreen = ({navigation}: {navigation: any}) => {
       finalOtp = finalOtp + otp[i];
     }
 
-    handleLogIn(finalOtp, navigation);
+    const payload = {
+      otp: finalOtp.toString(),
+      phoneNo: phoneNumber,
+      loginMethod: 'otp_based',
+    };
+
+    handleLogIn(payload, navigation);
   };
   return (
     <View style={[style.view, {backgroundColor: theme.colors.surface}]}>

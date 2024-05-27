@@ -5,6 +5,8 @@ export interface IAuthState {
 }
 
 export interface IUserDetails {
+  userID: string | null;
+  accessToken: string | null;
   userName: string;
   fullname: string;
   email?: string;
@@ -12,6 +14,8 @@ export interface IUserDetails {
 }
 
 export const IUserDetailsInitialState: IUserDetails = {
+  userID: null,
+  accessToken: null,
   userName: '',
   fullname: '',
   email: '',
