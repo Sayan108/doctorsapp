@@ -92,7 +92,7 @@ const useAuthService = () => {
   };
 
   const handleLogOut = () => {
-    // dispatch(logOut());
+    dispatch(logOut());
   };
 
   return {

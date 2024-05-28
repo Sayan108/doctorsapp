@@ -1,5 +1,5 @@
 import {View, Image, TextInput, StyleSheet} from 'react-native';
-import {Button, Text, useTheme} from 'react-native-paper';
+import {ActivityIndicator, Button, Text, useTheme} from 'react-native-paper';
 import React, {useRef, useState} from 'react';
 import {colors, style} from '../../styles';
 import {useSelector} from 'react-redux';
@@ -11,6 +11,8 @@ import OtpPageIcon from '../../asset/icons/otpPageIcon';
 
 const OTPInputScreen = ({navigation}: {navigation: any}) => {
   const theme = useTheme();
+
+  const isLoading = useSelector((state: RootState) => state.auth.isLoading);
 
   const {handleLogIn} = useAuthService();
   const timerValue = 60;
@@ -136,15 +138,20 @@ const OTPInputScreen = ({navigation}: {navigation: any}) => {
           </View>
 
           <View style={{paddingTop: 50}}>
-            <Button
+          <Button
               style={{
+                ...styles.button,
                 backgroundColor: theme.colors.primary,
-                padding: 6,
-                borderRadius: 4,
               }}
               mode="contained"
-              onPress={handleLoginButtonClick}>
-              Get OTP
+              onPress={handleLoginButtonClick}
+              disabled={isLoading} // Optionally disable the button when loading
+            >
+              {isLoading ? (
+                <ActivityIndicator size="small" color={theme.colors.onPrimary} />
+              ) : (
+                'submit OTP'
+              )}
             </Button>
           </View>
         </View>
@@ -169,6 +176,10 @@ const styles = StyleSheet.create({
     // borderBottomColor: 'black',
     borderBottomWidth: 1,
     // color: 'black',
+  },
+  button: {
+    padding: 6,
+    borderRadius: 4,
   },
 });
 export default OTPInputScreen;

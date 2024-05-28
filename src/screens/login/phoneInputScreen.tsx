@@ -1,5 +1,11 @@
 import {View, StyleSheet, Image} from 'react-native';
-import {Button, Text, TextInput, useTheme} from 'react-native-paper';
+import {
+  ActivityIndicator,
+  Button,
+  Text,
+  TextInput,
+  useTheme,
+} from 'react-native-paper';
 
 import React, {useState} from 'react';
 import {colors, style} from '../../styles';
@@ -13,6 +19,8 @@ import DoctorIcon from '../../asset/icons/doctoricon';
 const PhoneInputScreen = ({navigation}: {navigation: any}) => {
   const theme = useTheme();
 
+  const isLoading = useSelector((state: RootState) => state.auth.isLoading);
+
   const {handleSendOTP} = useAuthService();
   const userData = useSelector((state: RootState) => state.userdata);
   const [phoneNumber, setphoneNumber] = useState<string>('');
@@ -23,7 +31,7 @@ const PhoneInputScreen = ({navigation}: {navigation: any}) => {
 
   const handleSendOTPButtonClick = () => {
     if (phoneNumber.length === 10) {
-      const payload: sendOTPPayload = {phoneNo:phoneNumber};
+      const payload: sendOTPPayload = {phoneNo: phoneNumber};
       handleSendOTP(payload, navigation);
     } else {
       setvalidNumber(phoneNumber.length > 0 && phoneNumber.length < 10);
@@ -73,13 +81,18 @@ const PhoneInputScreen = ({navigation}: {navigation: any}) => {
           <View style={{paddingTop: 50}}>
             <Button
               style={{
+                ...styles.button,
                 backgroundColor: theme.colors.primary,
-                padding: 6,
-                borderRadius: 4,
               }}
               mode="contained"
-              onPress={handleSendOTPButtonClick}>
-              Get OTP
+              onPress={handleSendOTPButtonClick}
+              disabled={isLoading} // Optionally disable the button when loading
+            >
+              {isLoading ? (
+                <ActivityIndicator size="small" color={theme.colors.onPrimary} />
+              ) : (
+                'Log in'
+              )}
             </Button>
           </View>
         </View>
@@ -88,4 +101,13 @@ const PhoneInputScreen = ({navigation}: {navigation: any}) => {
   );
 };
 
+const styles = StyleSheet.create({
+  buttonContainer: {
+    position: 'relative',
+  },
+  button: {
+    padding: 6,
+    borderRadius: 4,
+  },
+});
 export default PhoneInputScreen;

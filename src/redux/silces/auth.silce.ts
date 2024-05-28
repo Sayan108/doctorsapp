@@ -35,6 +35,7 @@ export const authSlice = createSlice({
       console.log(action.payload, 'data in slice');
       return {
         ...state,
+        isLoading: false,
         userDetails: {...state.userDetails, ...action.payload.data},
       };
     },
@@ -73,6 +74,7 @@ export const authSlice = createSlice({
       return {
         ...state,
         isAuthenticated: false,
+        isLoading: false,
         userDetails: null,
       };
     },
