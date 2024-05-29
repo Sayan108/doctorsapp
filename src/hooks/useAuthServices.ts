@@ -81,7 +81,7 @@ const useAuthService = () => {
       console.log(userObject, 'getting data');
       dispatch(authSuccess(userObject));
       // dispatch(upcomingAppointmentRequested());
-      dispatch(appointmentListRequested());
+      //dispatch(appointmentListRequested());
       // dispatch(dateSlotRequested());
       // dispatch(timeSlotRequested());
 

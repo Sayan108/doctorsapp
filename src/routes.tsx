@@ -8,7 +8,7 @@ import {RootState} from './redux';
 import OTPInputScreen from './screens/login/otpScreen';
 import HomeScreen from './screens/homeScreen';
 import ChooseDateAndTime from './screens/chooseDateandTime';
-import MyProfile from './screens/myProfile';
+import MyProfile from './screens/profile/myProfile';
 import AppointmentList from './screens/appointment/appoinmentList';
 import AppointmentDetails from './screens/appointment/appoinmentDetails';
 

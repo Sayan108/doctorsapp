@@ -1,11 +1,11 @@
 import {StyleSheet} from 'react-native';
 import React, {UIEventHandler, useState} from 'react';
-import Layout from '../components/layOut';
-import {colors} from '../styles';
+import Layout from '../../components/layOut';
+import {colors} from '../../styles';
 import {Button, Text, TextInput, useTheme} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import { useSelector } from 'react-redux';
-import { RootState } from '../redux';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../redux';
 
 const MyProfile = ({navigation}: {navigation: any}) => {
   const theme = useTheme();
@@ -14,13 +14,19 @@ const MyProfile = ({navigation}: {navigation: any}) => {
     navigation.navigate('home');
   };
 
-  const profileDetails = useSelector((state: RootState) => state.auth.userDetails);
+  const profileDetails = useSelector(
+    (state: RootState) => state.auth.userDetails,
+  );
 
   // const [profileDetails, setprofileDetails] = useState<any>({
   //   fullname: ' Jane Austine',
 
   //   phone: '9876543210',
   // });
+
+  const [isTextChanged, setTextChange] = useState(false);
+
+
   const [editMode, setEditMode] = useState<boolean>(false);
 
   const mode: 'outlined' | 'flat' = editMode ? 'outlined' : 'flat';
@@ -39,29 +45,18 @@ const MyProfile = ({navigation}: {navigation: any}) => {
           value={profileDetails?.fullname}
           label="Full name"
           mode={mode}
-          onChangeText={(text: string) => {
-            // profileDetails({...profileDetails, fullname: text});
-          }}
-          // style={styles.input}
+          onChangeText={()=>{setTextChange(!isTextChanged)}}
           placeholder="Jhon Doe"
-          // placeholderTextColor={theme.colors.surfaceDisabled}
-          // activeOutlineColor={theme.colors.primary}
-          // outlineColor={theme.colors.outline}
         />
 
         <TextInput
           disabled={!editMode}
-          // activeOutlineColor={colors.primaryColor}
           maxLength={10}
           value={profileDetails?.phoneNumber}
           label="Phone"
           mode={mode}
-          onChangeText={(text: string) => {
-            // setprofileDetails({...profileDetails, phone: text});
-          }}
-          // style={styles.input}
+          onChangeText={()=>{setTextChange(!isTextChanged)}}
           placeholder="1234567890"
-          // placeholderTextColor="gray"
           keyboardType="phone-pad"
         />
       </SafeAreaView>
@@ -70,9 +65,13 @@ const MyProfile = ({navigation}: {navigation: any}) => {
         onPress={() => {
           setEditMode(!editMode);
         }}
-        style={styles.button}
-        labelStyle={styles.buttonLabel}>
-        {editMode ? 'Edit' : 'Update'}
+        style={{
+          ...styles.button,
+          backgroundColor: theme.colors.primary,
+        }}
+        disabled = {isTextChanged}
+        >
+        {editMode ? 'Save' : 'Edit'}
       </Button>
     </Layout>
   );
@@ -100,8 +99,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   button: {
-    marginTop: 24,
-    backgroundColor: colors.primaryColor,
+    padding: 6,
+    borderRadius: 4,
+    marginTop: 50,
   },
   buttonLabel: {
     color: 'white',

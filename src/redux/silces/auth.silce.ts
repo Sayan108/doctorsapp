@@ -59,6 +59,7 @@ export const authSlice = createSlice({
         ...state,
         isAuthenticated: true,
         isLoading: false,
+        userDetails: { ...action.payload },
       };
     },
     authFailed: (state: IAuthState, action: PayloadAction<any>) => {
