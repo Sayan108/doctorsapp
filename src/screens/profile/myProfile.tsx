@@ -2,10 +2,11 @@ import {StyleSheet} from 'react-native';
 import React, {UIEventHandler, useEffect, useState} from 'react';
 import Layout from '../../components/layOut';
 import {colors} from '../../styles';
-import {Button, Text, TextInput, useTheme} from 'react-native-paper';
+import {ActivityIndicator, Button, Text, TextInput, useTheme} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../redux';
+import useAuthService from '../../hooks/useAuthServices';
 
 const MyProfile = ({navigation}: {navigation: any}) => {
   const theme = useTheme();
@@ -18,10 +19,10 @@ const MyProfile = ({navigation}: {navigation: any}) => {
 
   const [profileDetails, setProfileDetails] = useState<{
     fullname: string;
-    phone: string;
+    phoneNumber: string;
   }>({
     fullname: profileInfo?.fullname || '',
-    phone: profileInfo?.phoneNumber || '',
+    phoneNumber: profileInfo?.phoneNumber || '',
   });
 
   const [isTextChanged, setTextChange] = useState(false);
@@ -35,19 +36,27 @@ const MyProfile = ({navigation}: {navigation: any}) => {
     profileInfo?.phoneNumber || '',
   );
 
+  const isLoading = useSelector((state: RootState) => state.auth.isLoading);
+
+  const {handleUserUpdate} = useAuthService();
+  const handleButtonPressed = ()=>{
+    setTextChange(!isTextChanged);
+    handleUserUpdate({...profileDetails});
+  }
+
   useEffect(() => {
     console.log('profileDetails', profileDetails);
     if (
       profileDetails.fullname.length === 0 ||
-      profileDetails.phone.length === 0
+      profileDetails.phoneNumber.length === 0
     ) {
       setTextChange(false);
     } else if (
       originalFullName !== profileDetails.fullname ||
-      originalPhoneNumber !== profileDetails.phone
+      originalPhoneNumber !== profileDetails.phoneNumber
     ) {
       setOriginalFullName(profileDetails.fullname);
-      setOriginalPhoneNumber(profileDetails.phone);
+      setOriginalPhoneNumber(profileDetails.phoneNumber);
       setTextChange(true);
     }
   }, [profileDetails]);
@@ -64,10 +73,8 @@ const MyProfile = ({navigation}: {navigation: any}) => {
         }}>
         <TextInput
           maxLength={50}
-          // disabled={!editMode}
           value={profileDetails?.fullname}
           label="Full name"
-          // mode={mode}
           mode="outlined"
           onChangeText={(text: string) => {
             setProfileDetails({...profileDetails, fullname: text});
@@ -76,13 +83,12 @@ const MyProfile = ({navigation}: {navigation: any}) => {
         />
 
         <TextInput
-          // disabled={!editMode}
           maxLength={10}
-          value={profileDetails?.phone}
+          value={profileDetails?.phoneNumber}
           label="Phone"
           mode="outlined"
           onChangeText={(text: string) => {
-            setProfileDetails({...profileDetails, phone: text});
+            setProfileDetails({...profileDetails, phoneNumber: text});
           }}
           placeholder="1234567890"
           keyboardType="phone-pad"
@@ -90,9 +96,7 @@ const MyProfile = ({navigation}: {navigation: any}) => {
       </SafeAreaView>
       <Button
         mode="contained"
-        onPress={() => {
-          setTextChange(!isTextChanged);
-        }}
+        onPress={handleButtonPressed}
         style={{
           ...styles.button,
           backgroundColor: isTextChanged
@@ -105,10 +109,12 @@ const MyProfile = ({navigation}: {navigation: any}) => {
             color: isTextChanged
               ? theme.colors.onPrimary
               : theme.colors.onSurfaceDisabled,
-          }}>
-          {' '}
-          {/* {editMode ? 'Save' : 'Edit'} */}
-          Update
+          }}> 
+         {isLoading ? (
+                <ActivityIndicator size="small" color={theme.colors.onPrimary} />
+              ) : (
+                'Update'
+              )}
         </Text>
       </Button>
     </Layout>
@@ -147,4 +153,6 @@ const styles = StyleSheet.create({
   },
 });
 
+
 export default MyProfile;
+

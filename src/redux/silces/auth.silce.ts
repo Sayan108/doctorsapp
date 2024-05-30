@@ -1,8 +1,5 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {
-  IAuthState,
-  IAuthStateInitialState,
-} from '../redux.constants';
+import {IAuthState, IAuthStateInitialState} from '../redux.constants';
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -59,7 +56,7 @@ export const authSlice = createSlice({
         ...state,
         isAuthenticated: true,
         isLoading: false,
-        userDetails: { ...action.payload },
+        userDetails: {...action.payload},
       };
     },
     authFailed: (state: IAuthState, action: PayloadAction<any>) => {
@@ -79,6 +76,29 @@ export const authSlice = createSlice({
         userDetails: null,
       };
     },
+
+    updateUserRequested: (state: IAuthState) => {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    },
+
+    updateUserSuccess: (state: IAuthState, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        isLoading: false,
+        userDetails: {...state.userDetails, ...action.payload},
+      };
+    },
+
+    updateUserFailed: (state: IAuthState, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      };
+    },
   },
 });
 export const {
@@ -89,6 +109,9 @@ export const {
   otpSuccess,
   otpFailed,
   logOut,
+  updateUserRequested,
+  updateUserSuccess,
+  updateUserFailed
 } = authSlice.actions;
 
 export const authReducer = authSlice.reducer;

@@ -7,6 +7,9 @@ import {
   otpFailed,
   otpRequested,
   otpSuccess,
+  updateUserFailed,
+  updateUserRequested,
+  updateUserSuccess,
 } from '../redux/silces/auth.silce';
 import {changehomeScreenTab} from '../redux/silces/application.slice';
 import {
@@ -20,9 +23,14 @@ import {
   upcomingAppointmentSucess,
 } from '../redux/silces/userdata.slice';
 import {RootState} from '../redux';
-import {appointments, dateSlots, IUserDetails, timeSlots} from '../redux/redux.constants';
-import { login, requestOTP } from '../services/auth/auth.service';
-import { AxiosResponse } from 'axios';
+import {
+  appointments,
+  dateSlots,
+  IUserDetails,
+  timeSlots,
+} from '../redux/redux.constants';
+import {login, requestOTP, updateUser} from '../services/auth/auth.service';
+import {AxiosResponse} from 'axios';
 
 export interface sendOTPPayload {
   phoneNo: string;
@@ -31,7 +39,6 @@ export interface sendOTPPayload {
 const useAuthService = () => {
   const dispatch = useDispatch();
   const value = useSelector((state: RootState) => state.userdata);
-
 
   // const handleSendOTP = async (payload: sendOTPPayload, navigation: any) => {
   //   dispatch(otpRequested(payload));
@@ -91,6 +98,21 @@ const useAuthService = () => {
     }
   };
 
+  const handleUserUpdate = async (payload: any) => {
+    dispatch(updateUserRequested());
+    try {
+      const {
+        data: {data},
+      }: AxiosResponse = await updateUser(payload);
+
+      const userObject: IUserDetails = {...data};
+      dispatch(updateUserSuccess(userObject));
+    } catch (err) {
+      console.log(err);
+      dispatch(updateUserFailed(err));
+    }
+  };
+
   const handleLogOut = () => {
     dispatch(logOut());
   };
@@ -99,6 +121,7 @@ const useAuthService = () => {
     handleSendOTP,
     handleLogIn,
     handleLogOut,
+    handleUserUpdate
   };
 };
 

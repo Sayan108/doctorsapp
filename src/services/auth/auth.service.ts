@@ -8,3 +8,7 @@ export const requestOTP = (payload: any) => {
 export const login = (payload: any) => {
   return authClient.post(Endpoints.login, payload);
 };
+
+export const updateUser = (payload:any)=>{
+  return authClient.patch(Endpoints.updateUser, payload);
+}

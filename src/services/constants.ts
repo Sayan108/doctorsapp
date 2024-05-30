@@ -15,5 +15,6 @@ export const Endpoints = {
   doctorDetails: "/doctor/details",
   addPatient: "/patient",
   patientList: "/patient/patientlist",
+  updateUser: "/user"
   //updateAppointment : "http://localhost:3000/appoinemntupdate",
 };
