@@ -26,9 +26,6 @@ const MyProfile = ({navigation}: {navigation: any}) => {
 
   const [isTextChanged, setTextChange] = useState(false);
 
-  // const [editMode, setEditMode] = useState<boolean>(false);
-
-  // const mode: 'outlined' | 'flat' = editMode ? 'outlined' : 'flat';
 
   const [originalFullName, setOriginalFullName] = useState(
     profileInfo?.fullname || '',
@@ -44,7 +41,6 @@ const MyProfile = ({navigation}: {navigation: any}) => {
       profileDetails.fullname.length === 0 ||
       profileDetails.phone.length === 0
     ) {
-      
       setTextChange(false);
     } else if (
       originalFullName !== profileDetails.fullname ||
@@ -56,19 +52,6 @@ const MyProfile = ({navigation}: {navigation: any}) => {
     }
   }, [profileDetails]);
 
-  const handleFullNameChange = (text: string) => {
-    // setFullName(text);
-    // setTextChange(
-    //   text !== originalFullName || phoneNumber !== originalPhoneNumber,
-    // );
-  };
-
-  const handlePhoneNumberChange = (text: string) => {
-    // setPhoneNumber(text);
-    // setTextChange(
-    //   fullName !== originalFullName || text !== originalPhoneNumber,
-    // );
-  };
   console.log('istextChanged', isTextChanged);
 
   return (
