@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import React, {UIEventHandler, useState} from 'react';
+import React, {UIEventHandler, useEffect, useState} from 'react';
 import Layout from '../../components/layOut';
 import {colors} from '../../styles';
 import {Button, Text, TextInput, useTheme} from 'react-native-paper';
@@ -14,22 +14,62 @@ const MyProfile = ({navigation}: {navigation: any}) => {
     navigation.navigate('home');
   };
 
-  const profileDetails = useSelector(
-    (state: RootState) => state.auth.userDetails,
-  );
+  const profileInfo = useSelector((state: RootState) => state.auth.userDetails);
 
-  // const [profileDetails, setprofileDetails] = useState<any>({
-  //   fullname: ' Jane Austine',
-
-  //   phone: '9876543210',
-  // });
+  const [profileDetails, setProfileDetails] = useState<{
+    fullname: string;
+    phone: string;
+  }>({
+    fullname: profileInfo?.fullname || '',
+    phone: profileInfo?.phoneNumber || '',
+  });
 
   const [isTextChanged, setTextChange] = useState(false);
 
+  // const [editMode, setEditMode] = useState<boolean>(false);
 
-  const [editMode, setEditMode] = useState<boolean>(false);
+  // const mode: 'outlined' | 'flat' = editMode ? 'outlined' : 'flat';
 
-  const mode: 'outlined' | 'flat' = editMode ? 'outlined' : 'flat';
+  const [originalFullName, setOriginalFullName] = useState(
+    profileInfo?.fullname || '',
+  );
+
+  const [originalPhoneNumber, setOriginalPhoneNumber] = useState(
+    profileInfo?.phoneNumber || '',
+  );
+
+  useEffect(() => {
+    console.log('profileDetails', profileDetails);
+    if (
+      profileDetails.fullname.length === 0 ||
+      profileDetails.phone.length === 0
+    ) {
+      
+      setTextChange(false);
+    } else if (
+      originalFullName !== profileDetails.fullname ||
+      originalPhoneNumber !== profileDetails.phone
+    ) {
+      setOriginalFullName(profileDetails.fullname);
+      setOriginalPhoneNumber(profileDetails.phone);
+      setTextChange(true);
+    }
+  }, [profileDetails]);
+
+  const handleFullNameChange = (text: string) => {
+    // setFullName(text);
+    // setTextChange(
+    //   text !== originalFullName || phoneNumber !== originalPhoneNumber,
+    // );
+  };
+
+  const handlePhoneNumberChange = (text: string) => {
+    // setPhoneNumber(text);
+    // setTextChange(
+    //   fullName !== originalFullName || text !== originalPhoneNumber,
+    // );
+  };
+  console.log('istextChanged', isTextChanged);
 
   return (
     <Layout navigation={handleNavigation} headerText="My profile">
@@ -41,21 +81,26 @@ const MyProfile = ({navigation}: {navigation: any}) => {
         }}>
         <TextInput
           maxLength={50}
-          disabled={!editMode}
+          // disabled={!editMode}
           value={profileDetails?.fullname}
           label="Full name"
-          mode={mode}
-          onChangeText={()=>{setTextChange(!isTextChanged)}}
+          // mode={mode}
+          mode="outlined"
+          onChangeText={(text: string) => {
+            setProfileDetails({...profileDetails, fullname: text});
+          }}
           placeholder="Jhon Doe"
         />
 
         <TextInput
-          disabled={!editMode}
+          // disabled={!editMode}
           maxLength={10}
-          value={profileDetails?.phoneNumber}
+          value={profileDetails?.phone}
           label="Phone"
-          mode={mode}
-          onChangeText={()=>{setTextChange(!isTextChanged)}}
+          mode="outlined"
+          onChangeText={(text: string) => {
+            setProfileDetails({...profileDetails, phone: text});
+          }}
           placeholder="1234567890"
           keyboardType="phone-pad"
         />
@@ -63,15 +108,25 @@ const MyProfile = ({navigation}: {navigation: any}) => {
       <Button
         mode="contained"
         onPress={() => {
-          setEditMode(!editMode);
+          setTextChange(!isTextChanged);
         }}
         style={{
           ...styles.button,
-          backgroundColor: theme.colors.primary,
+          backgroundColor: isTextChanged
+            ? theme.colors.primary
+            : theme.colors.surfaceDisabled,
         }}
-        disabled = {isTextChanged}
-        >
-        {editMode ? 'Save' : 'Edit'}
+        disabled={!isTextChanged}>
+        <Text
+          style={{
+            color: isTextChanged
+              ? theme.colors.onPrimary
+              : theme.colors.onSurfaceDisabled,
+          }}>
+          {' '}
+          {/* {editMode ? 'Save' : 'Edit'} */}
+          Update
+        </Text>
       </Button>
     </Layout>
   );
