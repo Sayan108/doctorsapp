@@ -6,10 +6,11 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
 const axiosConfig: AxiosRequestConfig = {
+
   baseURL: BaseURLs.baseurl, // Set the base URL for your requests
   headers: {
     "Content-Type": "application/json", // Set the default content type
-    // Authorization: `Bearer ${
+    // Authorization: `Bearer ${accessToken}`, //
 
     // }`, // Add any default headers you need
   },
@@ -32,9 +33,13 @@ export function AxiosInterceptor({
 }: {
   children: JSX.Element;
 }): JSX.Element {
+  
   const accessToken = useSelector(
     (state: RootState) => state.auth.userDetails?.accessToken
   );
+
+  console.log('accesstoken is here', accessToken);
+
   useEffect(() => {
     const reqBaseClientInterceptor = (request: any) => {
       request.headers.Authorization = `Bearer ${accessToken}`;

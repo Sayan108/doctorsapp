@@ -16,6 +16,7 @@ const MyProfile = ({navigation}: {navigation: any}) => {
   };
 
   const profileInfo = useSelector((state: RootState) => state.auth.userDetails);
+  
 
   const [profileDetails, setProfileDetails] = useState<{
     fullname: string;
@@ -41,7 +42,7 @@ const MyProfile = ({navigation}: {navigation: any}) => {
   const {handleUserUpdate} = useAuthService();
   const handleButtonPressed = ()=>{
     setTextChange(!isTextChanged);
-    handleUserUpdate({...profileDetails});
+    handleUserUpdate({...profileDetails, userId:profileInfo?.userID});
   }
 
   useEffect(() => {

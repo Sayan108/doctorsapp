@@ -31,6 +31,7 @@ import {
 } from '../redux/redux.constants';
 import {login, requestOTP, updateUser} from '../services/auth/auth.service';
 import {AxiosResponse} from 'axios';
+import { serializeError } from '../util/funtions.util';
 
 export interface sendOTPPayload {
   phoneNo: string;
@@ -99,16 +100,22 @@ const useAuthService = () => {
   };
 
   const handleUserUpdate = async (payload: any) => {
-    dispatch(updateUserRequested());
+    // dispatch(updateUserRequested());
     try {
-      const {
-        data: {data},
-      }: AxiosResponse = await updateUser(payload);
+      // const {
+      //   data: {data},
+      // }: AxiosResponse = await updateUser(payload);
+      const response = await updateUser(payload);
+      console.log(response);
+      if (response.data?.statuscode === 200) {
+        const data = {phoneNumber: payload.phoneNo};
+        dispatch(otpSuccess({data}));
+      }
 
-      const userObject: IUserDetails = {...data};
+      const userObject: IUserDetails = {...response.data};
       dispatch(updateUserSuccess(userObject));
     } catch (err) {
-      console.log(err);
+      err = serializeError(err);
       dispatch(updateUserFailed(err));
     }
   };
@@ -121,7 +128,7 @@ const useAuthService = () => {
     handleSendOTP,
     handleLogIn,
     handleLogOut,
-    handleUserUpdate
+    handleUserUpdate,
   };
 };
 

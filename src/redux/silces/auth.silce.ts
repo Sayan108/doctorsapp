@@ -78,6 +78,7 @@ export const authSlice = createSlice({
     },
 
     updateUserRequested: (state: IAuthState) => {
+      console.log('updateUserRequested', state);
       return {
         ...state,
         isLoading: true,
