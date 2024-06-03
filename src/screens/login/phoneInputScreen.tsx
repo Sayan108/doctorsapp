@@ -22,9 +22,13 @@ const PhoneInputScreen = ({navigation}: {navigation: any}) => {
   const isLoading = useSelector((state: RootState) => state.auth.isLoading);
 
   const {handleSendOTP} = useAuthService();
+
   const userData = useSelector((state: RootState) => state.userdata);
+
   const [phoneNumber, setphoneNumber] = useState<string>('');
+
   const [validNumber, setvalidNumber] = useState<boolean>(false);
+  
   const handlePhoneNumberChange = (text: string) => {
     setphoneNumber(text);
   };

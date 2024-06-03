@@ -1,16 +1,16 @@
-import {type PayloadAction, createSlice} from '@reduxjs/toolkit';
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
-  IAppointment,
-  IAppointmentInitialState,
+
   IDateSlots,
   IDateSlotsInitialStates,
   ITimeslots,
   UserData,
   UserDataInitialState,
-} from '../redux.constants';
+} from "../constants/userdata.constants";
+import { IAppointment, IAppointmentInitialState } from "../constants/appointment.constant";
 // Redux Toolkit slice
 export const userDataSlice = createSlice({
-  name: 'userdata',
+  name: "userdata",
   initialState: UserDataInitialState,
 
   reducers: {
@@ -23,14 +23,14 @@ export const userDataSlice = createSlice({
         },
       };
     },
-    upcomingAppointmentSucess: (
+    upcomingAppointmentSuccess: (
       state: UserData,
-      action: PayloadAction<IAppointment>,
+      action: PayloadAction<IAppointment>
     ) => {
       return {
         ...state,
         upcomingAppointment: {
-          data: {...action.payload},
+          data: { ...action.payload },
           loading: false,
           error: {},
         },
@@ -39,7 +39,7 @@ export const userDataSlice = createSlice({
 
     upcomingAppointmentFailure: (
       state: UserData,
-      action: PayloadAction<any>,
+      action: PayloadAction<any>
     ) => {
       return {
         ...state,
@@ -60,9 +60,9 @@ export const userDataSlice = createSlice({
         },
       };
     },
-    appointmentListSucess: (
+    appointmentListSuccess: (
       state: UserData,
-      action: PayloadAction<IAppointment[]>,
+      action: PayloadAction<IAppointment[]>
     ) => {
       return {
         ...state,
@@ -85,71 +85,10 @@ export const userDataSlice = createSlice({
       };
     },
 
-    dateSlotRequested: (state: UserData) => {
-      return {
-        ...state,
-        dateSlots: {
-          ...state.dateSlots,
-          loading: true,
-        },
-      };
-    },
-    dateSlotSucess: (state: UserData, action: PayloadAction<IDateSlots[]>) => {
-      return {
-        ...state,
-        dateSlots: {
-          data: action.payload,
-          loading: false,
-          error: {},
-        },
-      };
-    },
-
-    dateSlotFailure: (state: UserData, action: PayloadAction<any>) => {
-      return {
-        ...state,
-        dateSlots: {
-          data: [],
-          error: action.payload,
-          loading: false,
-        },
-      };
-    },
-
-    timeSlotRequested: (state: UserData) => {
-      return {
-        ...state,
-        timeSlots: {
-          ...state.timeSlots,
-          loading: true,
-        },
-      };
-    },
-    timeSlotSucess: (state: UserData, action: PayloadAction<ITimeslots[]>) => {
-      return {
-        ...state,
-        timeSlots: {
-          data: action.payload,
-          loading: false,
-          error: {},
-        },
-      };
-    },
-
-    timeSlotFailure: (state: UserData, action: PayloadAction<any>) => {
-      return {
-        ...state,
-        timeSlots: {
-          data: [],
-          error: action.payload,
-          loading: false,
-        },
-      };
-    },
 
     getAppointmentDetailsRequested: (
       state: UserData,
-      action: PayloadAction<number>,
+      action: PayloadAction<number>
     ) => {
       return {
         ...state,
@@ -162,7 +101,7 @@ export const userDataSlice = createSlice({
 
     getAppointmentDetailsSuccess: (
       state: UserData,
-      action: PayloadAction<IAppointment>,
+      action: PayloadAction<IAppointment>
     ) => {
       return {
         ...state,
@@ -176,7 +115,7 @@ export const userDataSlice = createSlice({
 
     getAppointmentDetailsFailure: (
       state: UserData,
-      action: PayloadAction<any>,
+      action: PayloadAction<any>
     ) => {
       return {
         ...state,
@@ -196,22 +135,31 @@ export const userDataSlice = createSlice({
       };
     },
 
+
+   /**
+    * @pupose :- it will update the appointmentForm details of upcomingappointment object of userdata in redux;
+    * @param state : this tpye of data is present in redux which need to updated 
+    * @param action : payloadaction has the new datas for updating userdata
+    */
     updateAppointmentForm: (state: UserData, action: PayloadAction<any>) => {
+      console.log('action.payload123',action.payload)
       return {
         ...state,
-        appointmentForm: {...action.payload, ...state.appointmentForm},
+      
+        appointmentForm: {  ...state.appointmentForm, ...action.payload },
       };
     },
-    addAppointmentInListRequested: (state: UserData) => {
-      return {
-        ...state,
-        appointmentForm: {...state.appointmentForm, loading: true},
-      };
-    },
-    addAppointmentInListSuccess: (
+    // addAppointmentInListRequested: (state: UserData, action: PayloadAction<any>) => {
+    //   return {
+    //     ...state,
+    //     appointmentForm: { ...state.appointmentForm, loading: true },
+    //   };
+    // },
+    updateAppointmentList: (
       state: UserData,
-      action: PayloadAction<IAppointment>,
+      action: PayloadAction<IAppointment>
     ) => {
+      console.log('updateappointmentList', action.payload);
       return {
         ...state,
         appointmentList: {
@@ -222,25 +170,19 @@ export const userDataSlice = createSlice({
     },
   },
 });
+
 export const {
   upcomingAppointmentFailure,
   upcomingAppointmentRequested,
-  upcomingAppointmentSucess,
+  upcomingAppointmentSuccess,
   appointmentListFailure,
   appointmentListRequested,
-  appointmentListSucess,
-  timeSlotFailure,
-  timeSlotRequested,
-  timeSlotSucess,
-  dateSlotFailure,
-  dateSlotRequested,
-  dateSlotSucess,
+  appointmentListSuccess,
   clearUserData,
   getAppointmentDetailsSuccess,
   getAppointmentDetailsRequested,
   getAppointmentDetailsFailure,
-  addAppointmentInListSuccess,
-  addAppointmentInListRequested,
+  updateAppointmentList,
   updateAppointmentForm,
 } = userDataSlice.actions;
 

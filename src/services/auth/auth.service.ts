@@ -27,3 +27,11 @@ export const updateUser = async (payload: any) => {
     throw err;
   }
 };
+
+export const userInfo = async (payload: any) => {
+  try{
+    // const res = await baseClient.get(Endpoints)
+  }catch(err){
+    throw err;
+  }
+};

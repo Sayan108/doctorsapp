@@ -4,8 +4,16 @@ import HomePageComponent from './homePageComponents';
 import {StyleSheet} from 'react-native';
 import {colors} from '../../styles';
 import AppointmentList from '../appointment/appoinmentList';
+import { useEffect } from 'react';
+import { appointmentListRequested } from '../../redux/silces/userdata.slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux';
 
 const HomeScreen = ({navigation}: {navigation: any}) => {
+
+  const {userDetails} = useSelector((state: RootState) => state.auth);
+
+  const dispatch = useDispatch()
 
   const theme =useTheme();
 
@@ -22,6 +30,15 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
   const allAppointmentList = () => (
     <AppointmentList navigation={navigation} setIndex={handleIndexChange} />
   );
+
+  // useEffect(() => {
+    dispatch(appointmentListRequested());
+    // dispatch(
+    //   doctorDetailsRequested({
+    //     doctorId: "e0f64f05-3fa2-4356-b130-3aa30d3237b7",
+    //   })
+    // );
+  // }, []);
 
   const [routes] = React.useState([
     {

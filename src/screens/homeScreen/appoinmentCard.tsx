@@ -25,7 +25,7 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
           onPress={() => {
             dispatch(
               getAppointmentDetailsRequested(
-                parseInt(appointmentDetails.appointmentId) - 1,
+                parseInt(appointmentDetails.appointmentId?appointmentDetails.appointmentId:'') - 1,
               ),
             );
             navigation.navigate('appointmentdetails', {
@@ -45,10 +45,10 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
               />
               <View>
                 <Text variant="titleMedium">
-                  {appointmentDetails.patientName}
+                  {appointmentDetails.patientData.fullname}
                 </Text>
                 <Text variant="bodySmall">
-                  {appointmentDetails.gender} | Age {appointmentDetails.age}
+                  {appointmentDetails.patientData.gender} | Age {appointmentDetails.patientData.age}
                 </Text>
               </View>
             </View>
@@ -61,7 +61,7 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
                   size={useResponsiveSize(24)}
                 />
                 <Text style={{color: theme.colors.onSurfaceVariant}}>
-                  {formatDateString(appointmentDetails.appointmentDate)}
+                  {formatDateString(appointmentDetails.bookingDate)}
                 </Text>
               </View>
               <View style={styles.detailItem}>
@@ -71,7 +71,7 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
                   size={useResponsiveSize(24)}
                 />
                 <Text style={{color: theme.colors.onSurfaceVariant}}>
-                  {appointmentDetails.appointmentTime}
+                  {appointmentDetails.checkupHour}
                 </Text>
               </View>
             </View>
@@ -83,7 +83,7 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
                 size={useResponsiveSize(24)}
               />
               <Text style={{color: theme.colors.onSurfaceVariant}}>
-                {appointmentDetails.clinicAddress}
+                {appointmentDetails.clinicData?.address.address}
               </Text>
             </View>
           </Surface>

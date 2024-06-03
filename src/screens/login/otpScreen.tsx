@@ -18,7 +18,7 @@ const OTPInputScreen = ({navigation}: {navigation: any}) => {
   const timerValue = 60;
   const length = 4;
   const phoneNumber = useSelector(
-    (state: RootState) => state.auth.userDetails?.phoneNumber,
+    (state: RootState) => state.auth.userDetails?.phoneNo,
   );
 
   const inputRefs = useRef<TextInput[]>([]);

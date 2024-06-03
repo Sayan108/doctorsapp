@@ -1,11 +1,17 @@
-import {authReducer} from './auth.silce';
-import {IApplicationStates, IAuthState, UserData} from '../redux.constants';
-import {combineReducers} from '@reduxjs/toolkit';
-import {applicationReducer} from './application.slice';
-import {userDataReducer} from './userdata.slice';
+import { authReducer } from "./auth.silce";
+import { combineReducers } from "@reduxjs/toolkit";
+import { userDataReducer } from "./userdata.slice";
+import { clinicReducer } from "./clinic.slice";
+import { appointmentReducer } from "./appointment.slice";
+import { doctorReducer } from "./doctor.slice";
+import { patientListReducer, patientSlice } from "./patient.slice";
 
 export const rootReducer = combineReducers({
   auth: authReducer,
-  application: applicationReducer,
+
   userdata: userDataReducer,
+  clinicData:clinicReducer,
+  newAppointmentData: appointmentReducer,
+  doctorsData: doctorReducer ,
+  patientList: patientListReducer
 });

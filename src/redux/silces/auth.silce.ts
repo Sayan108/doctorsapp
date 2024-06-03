@@ -1,8 +1,12 @@
-import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {IAuthState, IAuthStateInitialState} from '../redux.constants';
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import {
+  IAuthState,
+  IAuthStateInitialState,
+  IUserDetails,
+} from "../constants/userdata.constants";
 
 export const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState: IAuthStateInitialState,
 
   reducers: {
@@ -12,37 +16,27 @@ export const authSlice = createSlice({
         isLoading: true,
       };
     },
-    // otpCallSuccess: (
-    //   state: IAuthState,
-    //   action: PayloadAction<OTPSuccessPayload>,
-    // ) => {
-    //   return {
-    //     ...state,
-    //     userDetails: {
-    //       userName: '',
-    //       fullname: '',
-    //       email: '',
-    //       phoneNumber: action.payload.phoneNumber,
-    //     },
-    //     isLoading: false,
-    //   };
-    // },
-
     otpSuccess: (state: IAuthState, action: PayloadAction<any>) => {
-      console.log(action.payload, 'data in slice');
       return {
         ...state,
+        userDetails: {
+          userID: "",
+          userName: "",
+          fullname: "",
+          email: "",
+          phoneNo: action.payload.data.phonenumber,
+          accessToken: null,
+        },
         isLoading: false,
-        userDetails: {...state.userDetails, ...action.payload.data},
       };
     },
-
     otpFailed: (state: IAuthState, action: PayloadAction<any>) => {
       return {
         isAuthenticated: false,
         isLoading: false,
         userDetails: null,
         errormessege: action.payload,
+        accessToken: null,
       };
     },
     authRequested: (state: IAuthState) => {
@@ -51,12 +45,13 @@ export const authSlice = createSlice({
         isLoading: true,
       };
     },
-    authSuccess: (state: IAuthState, action: PayloadAction<any>) => {
+    authSuccess: (state: IAuthState, action: PayloadAction<IUserDetails>) => {
+      console.log(action.payload);
       return {
         ...state,
         isAuthenticated: true,
         isLoading: false,
-        userDetails: {...action.payload},
+        userDetails: { ...action.payload },
       };
     },
     authFailed: (state: IAuthState, action: PayloadAction<any>) => {
@@ -65,6 +60,7 @@ export const authSlice = createSlice({
         isLoading: false,
         userDetails: null,
         errormessege: action.payload,
+        accessToken: null,
       };
     },
 
@@ -72,7 +68,6 @@ export const authSlice = createSlice({
       return {
         ...state,
         isAuthenticated: false,
-        isLoading: false,
         userDetails: null,
       };
     },

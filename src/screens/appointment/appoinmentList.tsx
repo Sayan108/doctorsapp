@@ -4,28 +4,30 @@ import {
   StyleSheet,
   Linking,
   Pressable,
-  PixelRatio,
-  Touchable,
   TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
 import Layout from '../../components/layOut';
-import {colors} from '../../styles';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Chip, List, Provider, RadioButton, Text} from 'react-native-paper';
-import {IAppointment} from '../../redux/redux.constants';
 import {useSelector, useDispatch} from 'react-redux';
 import {RootState} from '../../redux';
 import {getAppointmentDetailsRequested} from '../../redux/silces/userdata.slice';
 import useResponsiveSize from '../../components/useResponsiveSize';
 import {theme} from '../../theme/theme';
 import {formatDateString} from '../../util/funtions.util';
+import {
+  IAppointment,
+  IAppointmentList,
+} from '../../redux/constants/appointment.constant';
+import {AppointmentStatus, AppointmentStatusText} from '../../config/enum';
 
 const AppointmentList = (props: any) => {
   const dispatch = useDispatch();
-  const {data} = useSelector(
-    (state: RootState) => state.userdata.appointmentList,
+  const appointmentList: IAppointment[] = useSelector(
+    (state: RootState) => state.userdata.appointmentList.data,
   );
+
   const handleOpenPhoneApp = (phone: string) => {
     Linking.openURL(`tel:${phone}`);
   };
@@ -47,6 +49,18 @@ const AppointmentList = (props: any) => {
   const conditionalFunction = () => {
     setIndex !== undefined ? setIndex(0) : navigation.navigate('home');
   };
+
+  // function generateStatusColor(status:number){
+  //   if(status===AppointmentStatus.Upcoming){
+  //     return {backgroundColor:theme.colors.statusUpcoming, textColor:theme.colors.onStatusUpcoming}
+  //   }
+  //   else if(status===AppointmentStatus.Completed){
+  //     return {backgroundColor:theme.colors.successContainer, textColor:theme.colors.onSuccessContainer}
+  //   }
+  //   else (status===AppointmentStatus.Cancelled){
+  //     return {backgroundColor:theme.colors.errorContainer, textColor:theme.colors.onErrorContainer}
+  //   }
+  // }
 
   return (
     <Layout headerText="All appointments" navigation={conditionalFunction}>
@@ -108,13 +122,8 @@ const AppointmentList = (props: any) => {
                       handleRadioButtonClick(index, item);
                     }}
                     value={index.toString()}
-                    // name={`radio-buttons-${index}`}
                   />
                 )}
-                // onPress={() => {
-                //   navigation.navigate('myprofile');
-                //   setvisible(!visible);
-                // }}
               />
             ))}
           </List.Section>
@@ -122,14 +131,14 @@ const AppointmentList = (props: any) => {
       ) : null}
 
       <ScrollView style={{backgroundColor: theme.colors.surface}}>
-        {data &&
-          data?.map((item: IAppointment, index: number) => (
+        {appointmentList &&
+          appointmentList?.map((item: IAppointment, index: number) => (
             <Pressable
               key={item.appointmentId}
               onPress={() => {
                 dispatch(getAppointmentDetailsRequested(index));
                 navigation.navigate('appointmentdetails', {
-                  id: parseInt(item.appointmentId),
+                  id: parseInt(item.appointmentId ? item.appointmentId : ''),
                 });
               }}>
               <View
@@ -146,23 +155,36 @@ const AppointmentList = (props: any) => {
                   <Text
                     style={{color: theme.colors.onSurface}}
                     variant="titleMedium">
-                    {item.patientName}{' '}
+                    {item.patientData?.fullname}{' '}
                   </Text>
                   {/* <Text variant="bodyMedium">{item.doctorName}</Text> */}
 
                   {/* status */}
                   <View
                     style={{
-                      backgroundColor: theme.colors.statusUpcoming,
+                      backgroundColor:
+                        item.status === AppointmentStatus.Upcoming
+                          ? theme.colors.statusUpcoming
+                          : item.status === AppointmentStatus.Completed
+                          ? theme.colors.success
+                          : item.status === AppointmentStatus.Cancelled
+                          ? theme.colors.error
+                          : 'transparent',
                       padding: 4,
                       borderRadius: 4,
                       alignSelf: 'flex-start',
                     }}>
                     <Text
-                      style={{color: theme.colors.onStatusUpcoming}}
+                      style={{color:  item.status === AppointmentStatus.Upcoming
+                        ? theme.colors.onStatusUpcoming
+                        : item.status === AppointmentStatus.Completed
+                        ? theme.colors.onSuccess
+                        : item.status === AppointmentStatus.Cancelled
+                        ? theme.colors.onError
+                        : 'transparent',}}
                       variant="bodySmall">
                       {' '}
-                      upcoming{' '}
+                      {AppointmentStatusText[item.status]}{' '}
                     </Text>
                   </View>
 
@@ -176,8 +198,7 @@ const AppointmentList = (props: any) => {
                     <Text
                       style={{color: theme.colors.onSurface}}
                       variant="labelMedium">
-                      {item.appointmentTime} |{' '}
-                      {formatDateString(item.appointmentDate)}
+                      {item.checkupHour} | {formatDateString(item.bookingDate)}
                     </Text>
                   </View>
 
@@ -230,7 +251,7 @@ const AppointmentList = (props: any) => {
                     <Text
                       style={{color: theme.colors.onSurface}}
                       variant="bodyMedium">
-                      {item.clinicAddress}
+                      {item.clinicData?.address.address}
                     </Text>
                   </View>
                 </View>
@@ -243,7 +264,7 @@ const AppointmentList = (props: any) => {
                     gap: 16,
                   }}>
                   <Icon
-                    onPress={() => handleOpenPhoneApp(item.clinicPhone)}
+                    onPress={() => handleOpenPhoneApp('9098675568')}
                     name="phone"
                     color={theme.colors.onTertiaryContainer}
                     size={useResponsiveSize(24)}

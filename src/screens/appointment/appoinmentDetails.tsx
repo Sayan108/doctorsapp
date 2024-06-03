@@ -9,6 +9,7 @@ import MarkAsDoneDialog from '../../components/markAsDoneDialog';
 import {RootState} from '../../redux';
 import {colors} from '../../styles';
 import {Text} from 'react-native-paper';
+import { formatDateString } from '../../util/funtions.util';
 
 interface modalSate {
   isOpen: boolean;
@@ -125,13 +126,13 @@ const AppointmentDetails = ({
               <Text
                 variant="bodyMedium"
                 style={{color: theme.colors.onSurfaceVariant}}>
-                Name: {data?.patientName}
+                Name: {data?.patientData.fullname}
               </Text>
               {/* <Text style={styles.sectionDetails}>Email: {data.email}</Text> */}
               <Text
                 variant="bodyMedium"
                 style={{color: theme.colors.onSurfaceVariant}}>
-                Phone: {data?.clinicPhone}
+                Phone: {"9098990998"}
               </Text>
             </View>
 
@@ -158,12 +159,12 @@ const AppointmentDetails = ({
               <Text
                 variant="bodyMedium"
                 style={{color: theme.colors.onSurfaceVariant}}>
-                Date: {data?.appointmentDate}
+                Date: {formatDateString(data?.bookingDate?data.bookingDate:'')}
               </Text>
               <Text
                 variant="bodyMedium"
                 style={{color: theme.colors.onSurfaceVariant}}>
-                Time: {data?.appointmentTime}
+                Time: {data?.checkupHour}
               </Text>
             </View>
 
@@ -177,7 +178,8 @@ const AppointmentDetails = ({
               Payment Details
             </Text>
 
-            <View
+              {/* payment section */}
+            {/* <View
               style={[
                 styles.section,
                 {backgroundColor: theme.colors.surfaceVariant},
@@ -185,7 +187,7 @@ const AppointmentDetails = ({
               <Text
                 variant="bodyMedium"
                 style={{color: theme.colors.onSurfaceVariant}}>
-                Payment id: {data?.paymentDetails?.paymentId}
+                Payment id: {data?.?.paymentId}
               </Text>
               <Text
                 variant="bodyMedium"
@@ -197,7 +199,7 @@ const AppointmentDetails = ({
                 style={{color: theme.colors.onSurfaceVariant}}>
                 Total Amount: {data?.paymentDetails?.ammount}
               </Text>
-            </View>
+            </View> */}
 
             {/* Problem details */}
             <Text
@@ -216,7 +218,7 @@ const AppointmentDetails = ({
               <Text
                 variant="bodyMedium"
                 style={{color: theme.colors.onSurfaceVariant}}>
-                {data?.problem}
+                {"very big problem"}
               </Text>
             </View>
           </View>

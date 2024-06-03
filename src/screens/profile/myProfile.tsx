@@ -23,7 +23,7 @@ const MyProfile = ({navigation}: {navigation: any}) => {
     phoneNumber: string;
   }>({
     fullname: profileInfo?.fullname || '',
-    phoneNumber: profileInfo?.phoneNumber || '',
+    phoneNumber: profileInfo?.phoneNo || '',
   });
 
   const [isTextChanged, setTextChange] = useState(false);
@@ -34,7 +34,7 @@ const MyProfile = ({navigation}: {navigation: any}) => {
   );
 
   const [originalPhoneNumber, setOriginalPhoneNumber] = useState(
-    profileInfo?.phoneNumber || '',
+    profileInfo?.phoneNo || '',
   );
 
   const isLoading = useSelector((state: RootState) => state.auth.isLoading);
@@ -94,6 +94,7 @@ const MyProfile = ({navigation}: {navigation: any}) => {
           placeholder="1234567890"
           keyboardType="phone-pad"
         />
+        
       </SafeAreaView>
       <Button
         mode="contained"
