@@ -6,7 +6,7 @@ import {
   // watchFetchTimeSlotsBasedOnDate,
   watchFetchUpcomingAppointment,
 } from "./userData.saga";
-import { watchFetchAvailableSlots, watchFetchClinicDetails } from "./clinic.saga";
+import { watchFetchAvailableSlots, watchFetchClinicDetails, watchFetchClinicList } from "./clinic.saga";
 import { watchCreateAppointmentRequested } from "./appointment.saga";
 import { watchDoctorDetailsRequested } from "./doctor.saga";
 import { watchCreatePatientRequested, watchPatientListRequested } from "./patient.saga";
@@ -23,6 +23,7 @@ export default function* rootSaga() {
     watchCreateAppointmentRequested(),
     watchDoctorDetailsRequested(),
     watchCreatePatientRequested(),
-    watchPatientListRequested()
+    watchPatientListRequested(),
+    watchFetchClinicList()
   ]);
 }

@@ -6,12 +6,14 @@ import {
   appointmentListSuccess,
   getAppointmentDetailsFailure,
   getAppointmentDetailsRequested,
+  getAppointmentDetailsSuccess,
   upcomingAppointmentFailure,
   upcomingAppointmentRequested,
 } from '../silces/userdata.slice';
 
 import {
   addAppointment,
+  getAppointmentDetails,
   getAppointmentList,
 } from '../../services/appointments/appoinment.services';
 // import { addAppoinemt } from "../../services/appointments/api.services";
@@ -33,15 +35,22 @@ function* fetchAppointmentList(
   try {
     const res = yield call(getAppointmentList);
     yield put(appointmentListSuccess(res.data.data));
-  } catch (error) {
-    yield put(appointmentListFailure(error))
+  } catch (error:any) {
+    yield put(appointmentListFailure(error.message));
   }
 }
 
 function* fetchAppointmentDetails(
   action: ActionType<typeof getAppointmentDetailsRequested>,
-) {
+): Generator<any, void, any>  {
   try {
+
+    const payload ={
+      appointmentId:action.payload
+    }
+    // const res: any = yield call(addAppointment, payload);
+    const res:any = yield call(getAppointmentDetails,payload);
+    yield put(getAppointmentDetailsSuccess(res.data.data));
   } catch (error) {
     yield put(getAppointmentDetailsFailure(error));
   }

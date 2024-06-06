@@ -1,16 +1,12 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {
   IAvailableDayAndHour,
   IClinic,
-  IClinicDetails,
   IClinicInitialState,
-  IClinicList,
-  IHourAndSlot,
-} from "../constants/clinic.constant";
-import { IAuthState } from "../constants/userdata.constants";
+} from '../constants/clinic.constant';
 
 export const clinicSlice = createSlice({
-  name: "clinic",
+  name: 'clinic',
   initialState: IClinicInitialState,
 
   reducers: {
@@ -25,19 +21,51 @@ export const clinicSlice = createSlice({
       return {
         ...state,
         clinicDetails: {
-          clinicId: action.payload.clinicId,
-          clinicName: action.payload.clinicName,
-          address: action.payload.address,
+          ...state.clinicDetails,
+          ...action.payload,
         },
-        isLoading: false,
       };
     },
 
     clinicDetailsFailed: (state: IClinic, action: PayloadAction<any>) => {
       return {
         ...state,
-        clinicDetails: null,
-        isLoading: true,
+        clinicDetails: {
+          ...state.clinicDetails,
+          ...action.payload,
+        },
+      };
+    },
+
+    clinicListRequested: (state: IClinic, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        ClinicList: {
+          ...state.ClinicList,
+          isLoading: true,
+        },
+      };
+    },
+
+    clinicListSuccess: (state: IClinic, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        ClinicList: {
+          data: [...action.payload],
+          isLoading: false,
+          error:null,
+        },
+      };
+    },
+
+    clinicListFailed: (state: IClinic, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        ClinicList: {
+          error: action.payload,
+          isLoading: false,
+          data:null,
+        },
       };
     },
 
@@ -50,7 +78,7 @@ export const clinicSlice = createSlice({
 
     availableSlotsSuccess: (
       state: IClinic,
-      action: PayloadAction<IAvailableDayAndHour[]>
+      action: PayloadAction<IAvailableDayAndHour[]>,
     ) => {
       return {
         ...state,
@@ -69,7 +97,7 @@ export const clinicSlice = createSlice({
 
     setAvailableTimeSlotsBasedDate: (
       state: IClinic,
-      action: PayloadAction<any[]>
+      action: PayloadAction<any[]>,
     ) => {
       return {
         ...state,
@@ -86,6 +114,9 @@ export const {
   availableSlotsRequested,
   availableSlotsSuccess,
   availableSlotsFailed,
+  clinicListRequested,
+  clinicListSuccess,
+  clinicListFailed,
   setAvailableTimeSlotsBasedDate: setAvailableTimeSlotsBasedDate,
 } = clinicSlice.actions;
 

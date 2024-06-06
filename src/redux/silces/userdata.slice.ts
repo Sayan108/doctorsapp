@@ -88,7 +88,7 @@ export const userDataSlice = createSlice({
 
     getAppointmentDetailsRequested: (
       state: UserData,
-      action: PayloadAction<number>
+      action: PayloadAction<string>
     ) => {
       return {
         ...state,

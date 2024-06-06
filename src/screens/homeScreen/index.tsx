@@ -8,17 +8,21 @@ import { useEffect } from 'react';
 import { appointmentListRequested } from '../../redux/silces/userdata.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux';
+import { clinicListRequested } from '../../redux/silces/clinic.slice';
 
 const HomeScreen = ({navigation}: {navigation: any}) => {
 
   const {userDetails} = useSelector((state: RootState) => state.auth);
 
+  const theme =useTheme();
   const dispatch = useDispatch()
 
-  const theme =useTheme();
+  const params ={doctorId:'0f7b8341-6bd6-4af8-b427-6f6e66ffd354'}
+  
+  dispatch(clinicListRequested(params));
+  
 
   const [index, setIndex] = React.useState(0);
-
   const handleIndexChange = (params: number) => {
     setIndex(params);
   };
@@ -31,14 +35,7 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
     <AppointmentList navigation={navigation} setIndex={handleIndexChange} />
   );
 
-  // useEffect(() => {
-    dispatch(appointmentListRequested());
-    // dispatch(
-    //   doctorDetailsRequested({
-    //     doctorId: "e0f64f05-3fa2-4356-b130-3aa30d3237b7",
-    //   })
-    // );
-  // }, []);
+
 
   const [routes] = React.useState([
     {

@@ -6,13 +6,21 @@ import {
   Pressable,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Layout from '../../components/layOut';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {Chip, List, Provider, RadioButton, Text} from 'react-native-paper';
+import {
+  ActivityIndicator,
+  Chip,
+  List,
+  ProgressBar,
+  Provider,
+  RadioButton,
+  Text,
+} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import {RootState} from '../../redux';
-import {getAppointmentDetailsRequested} from '../../redux/silces/userdata.slice';
+import {appointmentListRequested, getAppointmentDetailsRequested} from '../../redux/silces/userdata.slice';
 import useResponsiveSize from '../../components/useResponsiveSize';
 import {theme} from '../../theme/theme';
 import {formatDateString} from '../../util/funtions.util';
@@ -21,9 +29,24 @@ import {
   IAppointmentList,
 } from '../../redux/constants/appointment.constant';
 import {AppointmentStatus, AppointmentStatusText} from '../../config/enum';
+import { IClinicDetails } from '../../redux/constants/clinic.constant';
 
 const AppointmentList = (props: any) => {
+
+  const [progress, setProgress] = React.useState<number>(0.3);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(appointmentListRequested());
+  }, []);
+
+  const clinicList:IClinicDetails[] = useSelector((state:RootState)=>state.clinicData.ClinicList.data||[])
+  console.log('clinicList is here',clinicList);
+
+  const isLoading = useSelector(
+    (state: RootState) => state.userdata.appointmentList.loading,
+  );
+
   const appointmentList: IAppointment[] = useSelector(
     (state: RootState) => state.userdata.appointmentList.data,
   );
@@ -35,7 +58,6 @@ const AppointmentList = (props: any) => {
     Linking.openURL(`whatsapp://send?phone=${number}`);
   };
 
-  const clinicList = ['Bidhannagar Clinic', 'ABC clinic', 'Maa Tara Clinic'];
   const [selectedClinicIndex, setSelectedClinicIndex] = React.useState(0);
   const handleRadioButtonClick = (index: number, item: any) => {
     setSelectedClinicIndex(index);
@@ -49,18 +71,6 @@ const AppointmentList = (props: any) => {
   const conditionalFunction = () => {
     setIndex !== undefined ? setIndex(0) : navigation.navigate('home');
   };
-
-  // function generateStatusColor(status:number){
-  //   if(status===AppointmentStatus.Upcoming){
-  //     return {backgroundColor:theme.colors.statusUpcoming, textColor:theme.colors.onStatusUpcoming}
-  //   }
-  //   else if(status===AppointmentStatus.Completed){
-  //     return {backgroundColor:theme.colors.successContainer, textColor:theme.colors.onSuccessContainer}
-  //   }
-  //   else (status===AppointmentStatus.Cancelled){
-  //     return {backgroundColor:theme.colors.errorContainer, textColor:theme.colors.onErrorContainer}
-  //   }
-  // }
 
   return (
     <Layout headerText="All appointments" navigation={conditionalFunction}>
@@ -81,7 +91,7 @@ const AppointmentList = (props: any) => {
             justifyContent: 'space-between',
           }}>
           <Text style={{color: theme.colors.onPrimary}}>
-            {clinicList[selectedClinicIndex]}
+            {clinicList[selectedClinicIndex]?.clinicName?clinicList[selectedClinicIndex].clinicName:""}
           </Text>
           <Icon
             name="expand-more"
@@ -109,7 +119,7 @@ const AppointmentList = (props: any) => {
             {clinicList.map((item, index) => (
               <List.Item
                 key={clinicList.indexOf(item)}
-                title={item}
+                title={item.clinicName}
                 titleStyle={{
                   color: theme.colors.onSurfaceVariant,
                 }}
@@ -130,165 +140,140 @@ const AppointmentList = (props: any) => {
         </View>
       ) : null}
 
-      <ScrollView style={{backgroundColor: theme.colors.surface}}>
-        {appointmentList &&
-          appointmentList?.map((item: IAppointment, index: number) => (
-            <Pressable
-              key={item.appointmentId}
-              onPress={() => {
-                dispatch(getAppointmentDetailsRequested(index));
-                navigation.navigate('appointmentdetails', {
-                  id: parseInt(item.appointmentId ? item.appointmentId : ''),
-                });
-              }}>
-              <View
-                style={[
-                  styles.card,
-                  {
-                    borderColor: theme.colors.outline,
-                    backgroundColor: theme.colors.surface,
-                  },
-                ]}
-                key={item?.appointmentId}>
-                {/*  patientName, ... other details */}
-                <View style={styles.textContainer}>
-                  <Text
-                    style={{color: theme.colors.onSurface}}
-                    variant="titleMedium">
-                    {item.patientData?.fullname}{' '}
-                  </Text>
-                  {/* <Text variant="bodyMedium">{item.doctorName}</Text> */}
 
-                  {/* status */}
-                  <View
-                    style={{
-                      backgroundColor:
-                        item.status === AppointmentStatus.Upcoming
-                          ? theme.colors.statusUpcoming
-                          : item.status === AppointmentStatus.Completed
-                          ? theme.colors.success
-                          : item.status === AppointmentStatus.Cancelled
-                          ? theme.colors.error
-                          : 'transparent',
-                      padding: 4,
-                      borderRadius: 4,
-                      alignSelf: 'flex-start',
-                    }}>
+      {isLoading ? (
+        <ActivityIndicator  size="large"  style={{marginTop:'50%',marginHorizontal:10}}/>
+      ) : (
+        <ScrollView style={{backgroundColor: theme.colors.surface}}>
+          {appointmentList &&
+            appointmentList?.map((item: IAppointment, index: number) => (
+              <Pressable
+                key={item.appointmentId}
+                onPress={() => {
+                  dispatch(
+                    getAppointmentDetailsRequested(item.appointmentId || ''),
+                  );
+                  navigation.navigate('appointmentdetails');
+                }}>
+                <View
+                  style={[
+                    styles.card,
+                    {
+                      borderColor: theme.colors.outline,
+                      backgroundColor: theme.colors.surface,
+                    },
+                  ]}
+                  key={item?.appointmentId}>
+                  {/*  patientName, ... other details */}
+                  <View style={styles.textContainer}>
                     <Text
-                      style={{color:  item.status === AppointmentStatus.Upcoming
-                        ? theme.colors.onStatusUpcoming
-                        : item.status === AppointmentStatus.Completed
-                        ? theme.colors.onSuccess
-                        : item.status === AppointmentStatus.Cancelled
-                        ? theme.colors.onError
-                        : 'transparent',}}
-                      variant="bodySmall">
-                      {' '}
-                      {AppointmentStatusText[item.status]}{' '}
+                      style={{color: theme.colors.onSurface}}
+                      variant="titleMedium">
+                      {item.patientData?.fullname}{' '}
                     </Text>
-                  </View>
+                    {/* <Text variant="bodyMedium">{item.doctorName}</Text> */}
 
-                  {/* date time section */}
-                  <View style={styles.section}>
-                    {/* <Icon
+                    {/* status */}
+                    <View
+                      style={{
+                        backgroundColor:
+                          item.status === AppointmentStatus.Upcoming
+                            ? theme.colors.statusUpcoming
+                            : item.status === AppointmentStatus.Completed
+                            ? theme.colors.success
+                            : item.status === AppointmentStatus.Cancelled
+                            ? theme.colors.error
+                            : 'transparent',
+                        padding: 4,
+                        borderRadius: 4,
+                        alignSelf: 'flex-start',
+                      }}>
+                      <Text
+                        style={{
+                          color:
+                            item.status === AppointmentStatus.Upcoming
+                              ? theme.colors.onStatusUpcoming
+                              : item.status === AppointmentStatus.Completed
+                              ? theme.colors.onSuccess
+                              : item.status === AppointmentStatus.Cancelled
+                              ? theme.colors.onError
+                              : 'transparent',
+                        }}
+                        variant="bodySmall">
+                        {' '}
+                        {AppointmentStatusText[item.status]}{' '}
+                      </Text>
+                    </View>
+
+                    {/* date time section */}
+                    <View style={styles.section}>
+                      {/* <Icon
                       name="clock-outline"
                       color={theme.colors.onSurface}
                       size={useResponsiveSize(24)}
                     /> */}
-                    <Text
-                      style={{color: theme.colors.onSurface}}
-                      variant="labelMedium">
-                      {item.checkupHour} | {formatDateString(item.bookingDate)}
-                    </Text>
+                      <Text
+                        style={{color: theme.colors.onSurface}}
+                        variant="labelMedium">
+                        {item.checkupHour} |{' '}
+                        {formatDateString(item.bookingDate)}
+                      </Text>
+                    </View>
+
+                    {/* address section */}
+                    <View
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        gap: 6,
+                      }}>
+                      <Icon
+                        name="location-on"
+                        color={theme.colors.onSurface}
+                        size={useResponsiveSize(20)}
+                      />
+                      <Text
+                        style={{color: theme.colors.onSurface}}
+                        variant="bodyMedium">
+                        {item.clinicData?.address.address}
+                      </Text>
+                    </View>
                   </View>
 
-                  {/* clock section */}
-                  {/* <View style={styles.section}>
-                    <Icon
-                      name="clock-outline"
-                      color={theme.colors.onSurface}
-                      size={useResponsiveSize(24)}
-                    />
-                    <Text
-                      style={{color: theme.colors.onSurface}}
-                      variant="bodyLarge">
-                      {item.appointmentTime}
-                    </Text>
-                  </View> */}
-
-                  {/* calender section */}
-                  {/* <View
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      gap: 10,
-                    }}>
-                    <Icon
-                      name="calendar-blank"
-                      color={theme.colors.onSurface}
-                      size={useResponsiveSize(24)}
-                    />
-
-                    <Text
-                      style={{color: theme.colors.onSurface}}
-                      variant="bodyLarge">
-                      {formatDateString(item.appointmentDate)}
-                    </Text>
-                  </View> */}
-
-                  {/* address section */}
+                  {/* whatsapp and call icon */}
                   <View
                     style={{
                       display: 'flex',
                       flexDirection: 'row',
-                      gap: 6,
+                      gap: 16,
                     }}>
                     <Icon
-                      name="location-on"
-                      color={theme.colors.onSurface}
-                      size={useResponsiveSize(20)}
+                      onPress={() => handleOpenPhoneApp('9098675568')}
+                      name="phone"
+                      color={theme.colors.onTertiaryContainer}
+                      size={useResponsiveSize(24)}
+                      style={{
+                        // borderWidth: 1,
+                        borderRadius: 100,
+                        padding: 8,
+                        // borderColor: theme.colors.primaryContainer,
+                        backgroundColor: theme.colors.tertiaryContainer,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
                     />
-                    <Text
-                      style={{color: theme.colors.onSurface}}
-                      variant="bodyMedium">
-                      {item.clinicData?.address.address}
-                    </Text>
-                  </View>
-                </View>
-
-                {/* whatsapp and call icon */}
-                <View
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    gap: 16,
-                  }}>
-                  <Icon
-                    onPress={() => handleOpenPhoneApp('9098675568')}
-                    name="phone"
-                    color={theme.colors.onTertiaryContainer}
-                    size={useResponsiveSize(24)}
-                    style={{
-                      // borderWidth: 1,
-                      borderRadius: 100,
-                      padding: 8,
-                      // borderColor: theme.colors.primaryContainer,
-                      backgroundColor: theme.colors.tertiaryContainer,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  />
-                  {/* <Icon
+                    {/* <Icon
                     onPress={() => handleOpenWhatsApp(item.clinicPhone)}
                     name="whatsapp"
                     color={'green'}
                     size={useResponsiveSize(32)}
                   /> */}
+                  </View>
                 </View>
-              </View>
-            </Pressable>
-          ))}
-      </ScrollView>
+              </Pressable>
+            ))}
+        </ScrollView>
+      )}
     </Layout>
   );
 };

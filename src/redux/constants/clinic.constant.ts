@@ -1,7 +1,16 @@
 export interface IClinic {
-  clinicDetails: IClinicDetails | null;
+  clinicDetails: {
+    isLoading: boolean;
+    data: IClinicDetails;
+    error: any;
+  };
   availableDayAndHour: IAvailableDayAndHour[];
   selectedTimeSlots: any[];
+  ClinicList: {
+    isLoading: boolean;
+    data: IClinicDetails[]|null;
+    error: any;
+  };
 }
 
 export interface IAvailableDayAndHour {
@@ -17,12 +26,12 @@ export interface IHourAndSlot {
 }
 
 export const IHourAndSlotIntitalState: IHourAndSlot = {
-  hour: "",
+  hour: '',
   availableSlots: 0,
-  hourId: ""
+  hourId: '',
 };
 
- interface IClinicAddress {
+interface IClinicAddress {
   city: string;
   state: string;
   address: string;
@@ -37,27 +46,36 @@ export interface IClinicDetails {
   address: IClinicAddress;
 }
 
-export interface IClinicList {
-  list: IClinicDetails[];
-}
+// export interface IClinicList {
+//   list: IClinicDetails[];
+// }
 
 export const IClinicAddressInitialState: IClinicAddress = {
-  city: "",
-  state: "",
-  address: "",
-  country: "",
-  pincode: "",
-  landmark: "",
+  city: '',
+  state: '',
+  address: '',
+  country: '',
+  pincode: '',
+  landmark: '',
 };
 
 export const IClinicDetailsInitialState: IClinicDetails = {
-  clinicId: "",
-  clinicName: "",
+  clinicId: '',
+  clinicName: '',
   address: IClinicAddressInitialState,
 };
 
 export const IClinicInitialState: IClinic = {
-  clinicDetails: IClinicDetailsInitialState,
+  clinicDetails: {
+    isLoading: false,
+    data: IClinicDetailsInitialState,
+    error: undefined,
+  },
   availableDayAndHour: [],
   selectedTimeSlots: [],
+  ClinicList: {
+    isLoading: false,
+    data: null,
+    error: null,
+  },
 };

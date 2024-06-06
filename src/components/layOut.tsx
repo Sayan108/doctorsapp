@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     padding: 8, // Padding applied only to content
+    
   },
 });
 

@@ -1,9 +1,18 @@
 import {AxiosResponse} from 'axios';
 import {baseClient} from '../api.cilents';
 import {Endpoints} from '../constants';
+import { serializeError } from '../../util/funtions.util';
 
-export const getClinicList = () => {
-  return baseClient.get(Endpoints.clinicList);
+export const getClinicList =  async (params: any) => {
+  try{
+    
+    const res = await baseClient.get(Endpoints.clinicList,{params});
+    return res;
+
+  }catch(err){
+    serializeError(err);
+    throw err;
+  }
 };
 
 export const availableSlots = async (params: any) => {

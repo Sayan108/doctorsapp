@@ -17,7 +17,8 @@ export interface IAppointment {
   clinicData: IClinicDetails | null;
   patientData: IPatient;
   clinicId: string;
-  status:number
+  status:number;
+  problem:string | null;
 }
 
 export const IAppointmentInitialState: IAppointment = {
@@ -35,7 +36,8 @@ export const IAppointmentInitialState: IAppointment = {
   doctorId: "",
   clinicId: "",
   checkupDay: "",
-  status: 0
+  status: 0,
+  problem:""
 };
 
 export interface IAppointmentList{
