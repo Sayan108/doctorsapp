@@ -9,15 +9,7 @@ import {
 import React, {useEffect, useState} from 'react';
 import Layout from '../../components/layOut';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {
-  ActivityIndicator,
-  Chip,
-  List,
-  ProgressBar,
-  Provider,
-  RadioButton,
-  Text,
-} from 'react-native-paper';
+import {ActivityIndicator, List, RadioButton, Text} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import {RootState} from '../../redux';
 import {
@@ -27,15 +19,17 @@ import {
 import useResponsiveSize from '../../components/useResponsiveSize';
 import {theme} from '../../theme/theme';
 import {formatDateString} from '../../util/funtions.util';
-import {
-  IAppointment,
-  IAppointmentList,
-} from '../../redux/constants/appointment.constant';
+import {IAppointment} from '../../redux/constants/appointment.constant';
 import {AppointmentStatus, AppointmentStatusText} from '../../config/enum';
 import {IClinicDetails} from '../../redux/constants/clinic.constant';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const AppointmentList = (props: any) => {
   const dispatch = useDispatch();
+
+  const [selectedStatusIndex, setSelectedStatusIndex] = React.useState(0);
+  const [selectedClinicIndex, setSelectedClinicIndex] = React.useState(0);
+
 
   //payload
   const [payload, setPayload] = useState<{
@@ -61,10 +55,12 @@ const AppointmentList = (props: any) => {
 
   console.log('clinicList is here', clinicList);
 
+  //loading state
   const isLoading = useSelector(
     (state: RootState) => state.userdata.appointmentList.loading,
   );
 
+  //appointment list
   const appointmentList: IAppointment[] = useSelector(
     (state: RootState) => state.userdata.appointmentList.data,
   );
@@ -76,14 +72,29 @@ const AppointmentList = (props: any) => {
     Linking.openURL(`whatsapp://send?phone=${number}`);
   };
 
-  const [selectedClinicIndex, setSelectedClinicIndex] = React.useState(0);
-  const handleRadioButtonClick = (index: number, item: IClinicDetails) => {
+  const handleClinicRadioButtonClick = (
+    index: number,
+    item: IClinicDetails,
+  ) => {
     setSelectedClinicIndex(index);
     setClinicListVisible(false);
     setPayload({...payload, clinicId: item.clinicId});
   };
-
   const [clinicListVisible, setClinicListVisible] = useState<boolean>(false);
+
+  const [statusListVisible, setStatusListVisible] = useState<boolean>(false);
+  const displayStatusList = ['All Status', ...AppointmentStatusText];
+  const handleStatusRadioButtonClick = (
+    index: number,
+    item: string,
+  ) => {
+    setSelectedStatusIndex(index);
+    console.log('selectedStatusIndex',selectedStatusIndex)
+    setStatusListVisible(false);
+    if(index>0){ //as 0 is holded by All status, which is not an actual status
+      setPayload({...payload, status:AppointmentStatusText.indexOf(item)});
+    }
+  };
 
   const {navigation, setIndex} = props;
 
@@ -93,42 +104,70 @@ const AppointmentList = (props: any) => {
 
   return (
     <Layout headerText="All appointments" navigation={conditionalFunction}>
-      <TouchableOpacity
-        onPress={() => {
-          setClinicListVisible(true);
+      {/* filter options */}
+      <SafeAreaView
+        style={{
+          display: 'flex',
+          gap: 24,
+          flexDirection: 'row',
+          paddingLeft: 10,
         }}>
-        <View
-          style={[
-            styles.filterOptions,
-            {backgroundColor: theme.colors.primary},
-          ]}>
-          <Text style={{color: theme.colors.onPrimary}}>
-            {clinicList[selectedClinicIndex]?.clinicName
-              ? clinicList[selectedClinicIndex].clinicName
-              : ''}
-          </Text>
-          <Icon
-            name="expand-more"
-            color={theme.colors.onPrimary}
-            size={useResponsiveSize(20)}
-          />
-        </View>
-      </TouchableOpacity>
+        {/* clinic based filter */}
+        <TouchableOpacity
+          onPress={() => {
+            setClinicListVisible(!clinicListVisible);
+          }}>
+          <View
+            style={[
+              styles.filterOptionsContainer,
+              {backgroundColor: theme.colors.primary},
+            ]}>
+            <Text style={{color: theme.colors.onPrimary}}>
+              {clinicList[selectedClinicIndex]?.clinicName
+                ? clinicList[selectedClinicIndex].clinicName
+                : ''}
+            </Text>
+            <Icon
+              name="expand-more"
+              color={theme.colors.onPrimary}
+              size={useResponsiveSize(20)}
+            />
+          </View>
+        </TouchableOpacity>
+
+        {/* status based filter  */}
+        <TouchableOpacity
+          onPress={() => {
+            setStatusListVisible(!statusListVisible);
+          }}>
+          <View
+            style={[
+              styles.filterOptionsContainer,
+              {backgroundColor: theme.colors.primary},
+            ]}>
+            <Text style={{color: theme.colors.onPrimary}}>
+              {displayStatusList[selectedStatusIndex]}
+            </Text>
+            <Icon
+              name="expand-more"
+              color={theme.colors.onPrimary}
+              size={useResponsiveSize(20)}
+            />
+          </View>
+        </TouchableOpacity>
+      </SafeAreaView>
 
       {/* clinic list */}
       {clinicListVisible ? (
         <View
-          style={{
-            position: 'absolute',
-            top: 60, // Adjust as needed
-            left: '10%',
-            right: 0,
-            backgroundColor: theme.colors.surfaceVariant,
-            zIndex: 10, // Ensure the menu is above other elements
-            elevation: 400,
-            width: '60%',
-            borderRadius: 20,
-          }}>
+          style={[
+            styles.filterOptions,
+            {
+              backgroundColor: theme.colors.surfaceVariant,
+              width: '60%',
+              left: '10%',
+            },
+          ]}>
           <List.Section>
             {clinicList.map((item, index) => (
               <List.Item
@@ -143,7 +182,43 @@ const AppointmentList = (props: any) => {
                       index === selectedClinicIndex ? 'checked' : 'unchecked'
                     }
                     onPress={() => {
-                      handleRadioButtonClick(index, item);
+                      handleClinicRadioButtonClick(index, item);
+                    }}
+                    value={index.toString()}
+                  />
+                )}
+              />
+            ))}
+          </List.Section>
+        </View>
+      ) : null}
+
+      {/* status list */}
+      {statusListVisible ? (
+        <View
+          style={[
+            styles.filterOptions,
+            {
+              backgroundColor: theme.colors.surfaceVariant,
+              width: '60%',
+              left: '30%',
+            },
+          ]}>
+          <List.Section>
+            {displayStatusList.map((item, index) => (
+              <List.Item
+                key={index}
+                title={item}
+                titleStyle={{
+                  color: theme.colors.onSurfaceVariant,
+                }}
+                right={() => (
+                  <RadioButton
+                    status={
+                      index === selectedClinicIndex ? 'checked' : 'unchecked'
+                    }
+                    onPress={() => {
+                      handleStatusRadioButtonClick(index, item);
                     }}
                     value={index.toString()}
                   />
@@ -320,7 +395,7 @@ const styles = StyleSheet.create({
     gap: 10,
     alignItems: 'center',
   },
-  filterOptions: {
+  filterOptionsContainer: {
     display: 'flex',
     alignSelf: 'flex-start',
     padding: 8,
@@ -329,6 +404,14 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     minWidth: 80,
     justifyContent: 'space-between',
+  },
+  filterOptions: {
+    position: 'absolute',
+    top: 60, // Adjust as needed
+    right: 0,
+    zIndex: 10, // Ensure the menu is above other elements
+    elevation: 400,
+    borderRadius: 20,
   },
 });
 export default AppointmentList;
