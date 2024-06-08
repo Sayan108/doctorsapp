@@ -43,7 +43,7 @@ interface IClinicAddress {
 export interface IClinicDetails {
   clinicId: string | null;
   clinicName: string;
-  address: IClinicAddress;
+  address: IClinicAddress | null;
 }
 
 // export interface IClinicList {

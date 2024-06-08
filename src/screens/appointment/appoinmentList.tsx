@@ -20,7 +20,10 @@ import {
 } from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import {RootState} from '../../redux';
-import {appointmentListRequested, getAppointmentDetailsRequested} from '../../redux/silces/userdata.slice';
+import {
+  appointmentListRequested,
+  getAppointmentDetailsRequested,
+} from '../../redux/silces/userdata.slice';
 import useResponsiveSize from '../../components/useResponsiveSize';
 import {theme} from '../../theme/theme';
 import {formatDateString} from '../../util/funtions.util';
@@ -29,19 +32,34 @@ import {
   IAppointmentList,
 } from '../../redux/constants/appointment.constant';
 import {AppointmentStatus, AppointmentStatusText} from '../../config/enum';
-import { IClinicDetails } from '../../redux/constants/clinic.constant';
+import {IClinicDetails} from '../../redux/constants/clinic.constant';
 
 const AppointmentList = (props: any) => {
-
-  const [progress, setProgress] = React.useState<number>(0.3);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(appointmentListRequested());
-  }, []);
+  //payload
+  const [payload, setPayload] = useState<{
+    clinicId: string | null;
+    status: number | null;
+  }>({clinicId: null, status: null});
 
-  const clinicList:IClinicDetails[] = useSelector((state:RootState)=>state.clinicData.ClinicList.data||[])
-  console.log('clinicList is here',clinicList);
+  //api call to get appointment list
+  useEffect(() => {
+    dispatch(appointmentListRequested(payload));
+  }, [payload]);
+
+  //formatting clinic list
+  let clinicList: IClinicDetails[] = useSelector(
+    (state: RootState) => state.clinicData.ClinicList.data || [],
+  );
+  const allClinic: IClinicDetails = {
+    clinicId: null,
+    clinicName: 'All Clinics',
+    address: null,
+  };
+  clinicList = [allClinic, ...clinicList];
+
+  console.log('clinicList is here', clinicList);
 
   const isLoading = useSelector(
     (state: RootState) => state.userdata.appointmentList.loading,
@@ -59,9 +77,10 @@ const AppointmentList = (props: any) => {
   };
 
   const [selectedClinicIndex, setSelectedClinicIndex] = React.useState(0);
-  const handleRadioButtonClick = (index: number, item: any) => {
+  const handleRadioButtonClick = (index: number, item: IClinicDetails) => {
     setSelectedClinicIndex(index);
     setClinicListVisible(false);
+    setPayload({...payload, clinicId: item.clinicId});
   };
 
   const [clinicListVisible, setClinicListVisible] = useState<boolean>(false);
@@ -79,19 +98,14 @@ const AppointmentList = (props: any) => {
           setClinicListVisible(true);
         }}>
         <View
-          style={{
-            display: 'flex',
-            backgroundColor: theme.colors.primary,
-            alignSelf: 'flex-start',
-            padding: 8,
-            gap: 4,
-            flexDirection: 'row',
-            borderRadius: 12,
-            minWidth: 80,
-            justifyContent: 'space-between',
-          }}>
+          style={[
+            styles.filterOptions,
+            {backgroundColor: theme.colors.primary},
+          ]}>
           <Text style={{color: theme.colors.onPrimary}}>
-            {clinicList[selectedClinicIndex]?.clinicName?clinicList[selectedClinicIndex].clinicName:""}
+            {clinicList[selectedClinicIndex]?.clinicName
+              ? clinicList[selectedClinicIndex].clinicName
+              : ''}
           </Text>
           <Icon
             name="expand-more"
@@ -140,9 +154,11 @@ const AppointmentList = (props: any) => {
         </View>
       ) : null}
 
-
       {isLoading ? (
-        <ActivityIndicator  size="large"  style={{marginTop:'50%',marginHorizontal:10}}/>
+        <ActivityIndicator
+          size="large"
+          style={{marginTop: '50%', marginHorizontal: 10}}
+        />
       ) : (
         <ScrollView style={{backgroundColor: theme.colors.surface}}>
           {appointmentList &&
@@ -235,7 +251,7 @@ const AppointmentList = (props: any) => {
                       <Text
                         style={{color: theme.colors.onSurface}}
                         variant="bodyMedium">
-                        {item.clinicData?.address.address}
+                        {item.clinicData?.address?.address || ''}
                       </Text>
                     </View>
                   </View>
@@ -303,6 +319,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 10,
     alignItems: 'center',
+  },
+  filterOptions: {
+    display: 'flex',
+    alignSelf: 'flex-start',
+    padding: 8,
+    gap: 4,
+    flexDirection: 'row',
+    borderRadius: 12,
+    minWidth: 80,
+    justifyContent: 'space-between',
   },
 });
 export default AppointmentList;

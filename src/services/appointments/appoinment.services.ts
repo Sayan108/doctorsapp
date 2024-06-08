@@ -1,4 +1,4 @@
-import {serializeError} from '../../util/funtions.util';
+import {serializeError, toQueryString} from '../../util/funtions.util';
 import {baseClient} from '../api.cilents';
 import {Endpoints} from '../constants';
 
@@ -6,11 +6,14 @@ export const addAppointment = (payload: any) => {
   return baseClient.post(Endpoints.addAppointment, payload);
 };
 
-export const getAppointmentList = async () => {
+export const getAppointmentList = async (payload: any) => {
   try {
     const config = await baseClient.getUri({url: Endpoints.getAppointmentList});
     console.log('Request configuration:', config);
-    const res = await baseClient.get(Endpoints.getAppointmentList);
+
+    const queryString = toQueryString(payload);
+    const urlWithQuery = `${Endpoints.getAppointmentList}?${queryString}`;
+    const res = await baseClient.get(urlWithQuery);
     return res;
   } catch (err) {
     err = serializeError(err);

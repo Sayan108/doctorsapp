@@ -11,7 +11,7 @@ export function formatDateString(
 }
 
 export function serializeError(error: any) {
-  if (error.name ==="AxiosError") {
+  if (error.name === 'AxiosError') {
     return {
       message: error.message,
       status: error.response?.status,
@@ -19,4 +19,11 @@ export function serializeError(error: any) {
     };
   }
   return {message: error.message};
+}
+
+export function toQueryString(params:any) {
+  return Object.keys(params)
+      .filter(key => params[key] !== null) // Filter out keys with null values
+      .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params[key]))
+      .join('&');
 }

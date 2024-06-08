@@ -51,7 +51,7 @@ export const userDataSlice = createSlice({
       };
     },
 
-    appointmentListRequested: (state: UserData) => {
+    appointmentListRequested: (state: UserData, action:PayloadAction<any>) => {
       return {
         ...state,
         appointmentList: {

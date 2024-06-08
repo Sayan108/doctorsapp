@@ -33,7 +33,8 @@ function* fetchAppointmentList(
   action: ActionType<typeof appointmentListRequested>,
 ): Generator<any, void, any> {
   try {
-    const res = yield call(getAppointmentList);
+    const payload = action.payload;
+    const res = yield call(getAppointmentList,payload);
     yield put(appointmentListSuccess(res.data.data));
   } catch (error:any) {
     yield put(appointmentListFailure(error.message));
