@@ -6,10 +6,13 @@ import {colors} from '../../styles';
 import {Text} from 'react-native-paper';
 import LogoutDialogue from '../../components/logOutDialog';
 import {theme} from '../../theme/theme';
-import AppointmentCard from './appoinmentCard';
+import AppointmentCard from './appointmentCard';
 import AppointmentOverView from './appoinmentOverView';
 import useResponsiveSize from '../../components/useResponsiveSize';
 import useAuthService from '../../hooks/useAuthServices';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../redux';
+import { AppointmentStatus } from '../../config/enum';
 
 const HomePageComponent = (props: any) => {
   const {setIndex, navigation} = props;
@@ -18,8 +21,12 @@ const HomePageComponent = (props: any) => {
   const [visible, setvisible] = useState<boolean>(false);
   const [showLogout, setshowLogout] = useState<boolean>(false);
 
-  const { handleLogOut } = useAuthService();
+  const {handleLogOut} = useAuthService();
+  const appointmentList = useSelector((state: RootState) => {
+    return state.userdata.appointmentList;
+  });
 
+  
   return (
     <View style={[styles.container, {backgroundColor: theme.colors.surface}]}>
       {/* appbar */}
@@ -46,8 +53,7 @@ const HomePageComponent = (props: any) => {
             elevation: 400,
             width: '60%',
             borderRadius: 20,
-          }}
-          >
+          }}>
           <List.Section>
             <List.Item
               title="My profile"
@@ -92,7 +98,11 @@ const HomePageComponent = (props: any) => {
 
       {/* appointment Overview, upcoming Appointment */}
       {showLogout ? (
-        <LogoutDialogue visible={showLogout} setVisible={setshowLogout} navigation={navigation} />
+        <LogoutDialogue
+          visible={showLogout}
+          setVisible={setshowLogout}
+          navigation={navigation}
+        />
       ) : (
         <View style={{display: 'flex', flex: 1}}>
           {/* Appointment overview section */}
@@ -123,7 +133,9 @@ const HomePageComponent = (props: any) => {
               </Text>
             </View>
 
-            <AppointmentCard navigation={navigation} />
+            <AppointmentCard
+              navigation={navigation}
+            />
           </View>
         </View>
       )}
@@ -152,8 +164,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 
-  menuContainer:{
-
-  }
+  menuContainer: {},
 });
 export default HomePageComponent;

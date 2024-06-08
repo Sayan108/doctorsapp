@@ -10,28 +10,34 @@ import UserAvatar from '../../components/userAvataricon';
 import {getAppointmentDetailsRequested} from '../../redux/silces/userdata.slice';
 import {formatDateString} from '../../util/funtions.util';
 import useResponsiveSize from '../../components/useResponsiveSize';
+import { IAppointment } from '../../redux/constants/appointment.constant';
+import AmbulanceIcon from '../../asset/icons/ambulanceicon';
+
+
 
 const AppointmentCard = ({navigation}: {navigation: any}) => {
   const dispatch = useDispatch();
   const appointmentDetails = useSelector(
-    (state: RootState) => state.userdata.upcomingAppointment.data,
+    (state: RootState) => state.userdata.upcomingAppointment,
   );
   // const appointmentDetails = '';
+  console.log('appointmentDetails',appointmentDetails);
 
   return (
     <Provider theme={theme}>
-      {appointmentDetails && (
+      {appointmentDetails ? (
         <Pressable
           onPress={() => {
-            dispatch(
-              getAppointmentDetailsRequested(
-                parseInt(appointmentDetails.appointmentId?appointmentDetails.appointmentId:'') - 1,
-              ),
-            );
+            // dispatch(
+            //   getAppointmentDetailsRequested(
+            //     parseInt(appointmentDetails.appointmentId?appointmentDetails.appointmentId:'') - 1,
+            //   ),
+            // );
             navigation.navigate('appointmentdetails', {
               id: appointmentDetails.appointmentId,
             });
-          }}>
+          }}
+          >
           <Surface
             style={[
               styles.surface,
@@ -83,11 +89,22 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
                 size={useResponsiveSize(24)}
               />
               <Text style={{color: theme.colors.onSurfaceVariant}}>
-                {appointmentDetails.clinicData?.address.address}
+                {appointmentDetails.clinicData?.address?.address}
               </Text>
             </View>
           </Surface>
         </Pressable>
+      ):(
+        <Surface
+        style={{display:'flex',justifyContent: 'center',alignItems:'center',paddingTop:16,paddingBottom:16,borderRadius:4}}
+        >
+         <View style={{display:'flex',justifyContent:'center',width:100,height:100}}>
+         <AmbulanceIcon/>
+         </View>
+          <Text variant="titleMedium">
+            No appointment found !
+          </Text>
+        </Surface>
       )}
     </Provider>
   );

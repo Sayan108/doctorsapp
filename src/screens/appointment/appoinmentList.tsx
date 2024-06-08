@@ -15,6 +15,8 @@ import {RootState} from '../../redux';
 import {
   appointmentListRequested,
   getAppointmentDetailsRequested,
+  updateUpcomingAppointment,
+  
 } from '../../redux/silces/userdata.slice';
 import useResponsiveSize from '../../components/useResponsiveSize';
 import {theme} from '../../theme/theme';
@@ -29,7 +31,6 @@ const AppointmentList = (props: any) => {
 
   const [selectedStatusIndex, setSelectedStatusIndex] = React.useState(0);
   const [selectedClinicIndex, setSelectedClinicIndex] = React.useState(0);
-
 
   //payload
   const [payload, setPayload] = useState<{
@@ -55,14 +56,25 @@ const AppointmentList = (props: any) => {
 
   console.log('clinicList is here', clinicList);
 
-  //loading state
-  const isLoading = useSelector(
-    (state: RootState) => state.userdata.appointmentList.loading,
-  );
-
   //appointment list
   const appointmentList: IAppointment[] = useSelector(
     (state: RootState) => state.userdata.appointmentList.data,
+  );
+
+  //updating upcoming appointment
+  useEffect(() => {
+    const upcomingAppointmentList = appointmentList.length > 0 ?appointmentList.filter((item)=>{return item.status === AppointmentStatus.Upcoming}):null;
+  const upcomingAppAppointment = upcomingAppointmentList?(upcomingAppointmentList.length>0?upcomingAppointmentList[0]:null):null
+    dispatch(
+      updateUpcomingAppointment(
+        upcomingAppAppointment
+      ),
+    );
+  }, [appointmentList]);
+
+  //loading state
+  const isLoading = useSelector(
+    (state: RootState) => state.userdata.appointmentList.loading,
   );
 
   const handleOpenPhoneApp = (phone: string) => {
@@ -84,15 +96,13 @@ const AppointmentList = (props: any) => {
 
   const [statusListVisible, setStatusListVisible] = useState<boolean>(false);
   const displayStatusList = ['All Status', ...AppointmentStatusText];
-  const handleStatusRadioButtonClick = (
-    index: number,
-    item: string,
-  ) => {
+  const handleStatusRadioButtonClick = (index: number, item: string) => {
     setSelectedStatusIndex(index);
-    console.log('selectedStatusIndex',selectedStatusIndex)
+    console.log('selectedStatusIndex', selectedStatusIndex);
     setStatusListVisible(false);
-    if(index>0){ //as 0 is holded by All status, which is not an actual status
-      setPayload({...payload, status:AppointmentStatusText.indexOf(item)});
+    if (index > 0) {
+      //as 0 is holded by All status, which is not an actual status
+      setPayload({...payload, status: AppointmentStatusText.indexOf(item)});
     }
   };
 

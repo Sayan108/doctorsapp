@@ -80,11 +80,13 @@ export interface IAppointmentForm {
 export interface Clinic {}
 
 export interface UserData {
-  upcomingAppointment: {
-    data: IAppointment | null;
-    loading: boolean;
-    error: any;
-  };
+  // upcomingAppointment: {
+  //   data: IAppointment | null;
+  //   loading: boolean;
+  //   error: any;
+  // };
+
+  upcomingAppointment:IAppointment|null,
 
   appointmentList: { data: IAppointment[]; loading: boolean; error: any };
 
@@ -98,11 +100,7 @@ export interface UserData {
 }
 
 export const UserDataInitialState: UserData = {
-  upcomingAppointment: {
-    data: null,
-    loading: false,
-    error: null,
-  },
+  upcomingAppointment: null,
   appointmentList: { data: [], loading: false, error: null },
   
   currentAppointmentDetails: { data: null, loading: false, error: null },

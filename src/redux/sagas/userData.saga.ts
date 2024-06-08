@@ -7,8 +7,8 @@ import {
   getAppointmentDetailsFailure,
   getAppointmentDetailsRequested,
   getAppointmentDetailsSuccess,
-  upcomingAppointmentFailure,
-  upcomingAppointmentRequested,
+  // upcomingAppointmentFailure,
+  // upcomingAppointmentRequested,
 } from '../silces/userdata.slice';
 
 import {
@@ -19,15 +19,15 @@ import {
 // import { addAppoinemt } from "../../services/appointments/api.services";
 import {IAppointment} from '../constants/appointment.constant';
 
-function* fetchUpcomingAppointment(
-  action: ActionType<typeof upcomingAppointmentRequested>,
-) {
-  try {
-    // yield put(upcomingAppointmentSuccess(appointments[5]));
-  } catch (error) {
-    yield put(upcomingAppointmentFailure(error));
-  }
-}
+// function* fetchUpcomingAppointment(
+//   action: ActionType<typeof upcomingAppointmentRequested>,
+// ) {
+//   try {
+//     // yield put(upcomingAppointmentSuccess(appointments[5]));
+//   } catch (error) {
+//     yield put(upcomingAppointmentFailure(error));
+//   }
+// }
 
 function* fetchAppointmentList(
   action: ActionType<typeof appointmentListRequested>,
@@ -57,9 +57,9 @@ function* fetchAppointmentDetails(
   }
 }
 
-export function* watchFetchUpcomingAppointment() {
-  yield takeEvery(upcomingAppointmentRequested.type, fetchUpcomingAppointment);
-}
+// export function* watchFetchUpcomingAppointment() {
+//   yield takeEvery(upcomingAppointmentRequested.type, fetchUpcomingAppointment);
+// }
 
 export function* watchFetchAppointmentList() {
   yield takeEvery(appointmentListRequested.type, fetchAppointmentList);

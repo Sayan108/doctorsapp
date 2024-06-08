@@ -14,41 +14,51 @@ export const userDataSlice = createSlice({
   initialState: UserDataInitialState,
 
   reducers: {
-    upcomingAppointmentRequested: (state: UserData) => {
-      return {
-        ...state,
-        upcomingAppointment: {
-          ...state.upcomingAppointment,
-          loading: true,
-        },
-      };
-    },
-    upcomingAppointmentSuccess: (
-      state: UserData,
-      action: PayloadAction<IAppointment>
-    ) => {
-      return {
-        ...state,
-        upcomingAppointment: {
-          data: { ...action.payload },
-          loading: false,
-          error: {},
-        },
-      };
-    },
+    // upcomingAppointmentRequested: (state: UserData) => {
+    //   return {
+    //     ...state,
+    //     upcomingAppointment: {
+    //       ...state.upcomingAppointment,
+    //       loading: true,
+    //     },
+    //   };
+    // },
+    // upcomingAppointmentSuccess: (
+    //   state: UserData,
+    //   action: PayloadAction<IAppointment>
+    // ) => {
+    //   return {
+    //     ...state,
+    //     upcomingAppointment: {
+    //       data: { ...action.payload },
+    //       loading: false,
+    //       error: {},
+    //     },
+    //   };
+    // },
 
-    upcomingAppointmentFailure: (
-      state: UserData,
-      action: PayloadAction<any>
-    ) => {
+    // upcomingAppointmentFailure: (
+    //   state: UserData,
+    //   action: PayloadAction<any>
+    // ) => {
+    //   return {
+    //     ...state,
+    //     upcomingAppointment: {
+    //       data: IAppointmentInitialState,
+    //       error: action.payload,
+    //       loading: false,
+    //     },
+    //   };
+    // },
+
+    updateUpcomingAppointment:(
+      state:UserData,
+      action:PayloadAction<IAppointment|null>
+    )=>{
       return {
         ...state,
-        upcomingAppointment: {
-          data: IAppointmentInitialState,
-          error: action.payload,
-          loading: false,
-        },
-      };
+        upcomingAppointment:action.payload
+      }
     },
 
     appointmentListRequested: (state: UserData, action:PayloadAction<any>) => {
@@ -172,9 +182,9 @@ export const userDataSlice = createSlice({
 });
 
 export const {
-  upcomingAppointmentFailure,
-  upcomingAppointmentRequested,
-  upcomingAppointmentSuccess,
+  // upcomingAppointmentFailure,
+  // upcomingAppointmentRequested,
+  // upcomingAppointmentSuccess,
   appointmentListFailure,
   appointmentListRequested,
   appointmentListSuccess,
@@ -184,6 +194,7 @@ export const {
   getAppointmentDetailsFailure,
   updateAppointmentList,
   updateAppointmentForm,
+  updateUpcomingAppointment
 } = userDataSlice.actions;
 
 export const userDataReducer = userDataSlice.reducer;

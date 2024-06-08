@@ -1,9 +1,9 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import {colors} from '../../styles';
 import {Provider} from 'react-native-paper';
 import {theme} from '../../theme/theme';
 import {Text} from 'react-native-paper';
+
 
 export default function AppointmentOverView({navigation}: {navigation: any}) {
   const total = 42;
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
     padding: 10,
-    borderRadius: 20,
+    borderRadius: 4,
     alignItems: 'flex-start',
     gap: 10,
   },
