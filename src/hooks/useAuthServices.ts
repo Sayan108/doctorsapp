@@ -52,7 +52,7 @@ const useAuthService = () => {
       const userObject: IUserDetails = {
         userID: data.userId ?? "",
         //userName: username??'',
-        fullname: data.fullName ?? "",
+        fullname: data.fullname ?? "",
         accessToken: data.accessToken,
         userName: "",
         phoneNo: data?.phoneNumber,

@@ -2,11 +2,19 @@ import {StyleSheet} from 'react-native';
 import React, {UIEventHandler, useEffect, useState} from 'react';
 import Layout from '../../components/layOut';
 import {colors} from '../../styles';
-import {ActivityIndicator, Button, Text, TextInput, useTheme} from 'react-native-paper';
+import {
+  ActivityIndicator,
+  Button,
+  Surface,
+  Text,
+  TextInput,
+  useTheme,
+} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../redux';
 import useAuthService from '../../hooks/useAuthServices';
+import UserAvatar from '../../components/userAvataricon';
 
 const MyProfile = ({navigation}: {navigation: any}) => {
   const theme = useTheme();
@@ -16,7 +24,6 @@ const MyProfile = ({navigation}: {navigation: any}) => {
   };
 
   const profileInfo = useSelector((state: RootState) => state.auth.userDetails);
-  
 
   const [profileDetails, setProfileDetails] = useState<{
     fullname: string;
@@ -27,7 +34,6 @@ const MyProfile = ({navigation}: {navigation: any}) => {
   });
 
   const [isTextChanged, setTextChange] = useState(false);
-
 
   const [originalFullName, setOriginalFullName] = useState(
     profileInfo?.fullname || '',
@@ -40,10 +46,10 @@ const MyProfile = ({navigation}: {navigation: any}) => {
   const isLoading = useSelector((state: RootState) => state.auth.isLoading);
 
   const {handleUserUpdate} = useAuthService();
-  const handleButtonPressed = ()=>{
+  const handleButtonPressed = () => {
     setTextChange(!isTextChanged);
-    handleUserUpdate({...profileDetails, userId:profileInfo?.userID});
-  }
+    handleUserUpdate({...profileDetails, userId: profileInfo?.userID});
+  };
 
   useEffect(() => {
     console.log('profileDetails', profileDetails);
@@ -72,29 +78,38 @@ const MyProfile = ({navigation}: {navigation: any}) => {
           display: 'flex',
           gap: 12,
         }}>
-        <TextInput
-          maxLength={50}
-          value={profileDetails?.fullname}
-          label="Full name"
-          mode="outlined"
-          onChangeText={(text: string) => {
-            setProfileDetails({...profileDetails, fullname: text});
-          }}
-          placeholder="Jhon Doe"
-        />
+        <Surface
+          style={{
+            display: 'flex',
+            gap: 12,
+            padding: 10,
+            paddingTop: 16,
+            paddingBottom: 16,
+          }}>
+            <UserAvatar name={originalFullName} size={60}/>
+          <TextInput
+            maxLength={50}
+            value={profileDetails?.fullname}
+            label="Full name"
+            mode="outlined"
+            onChangeText={(text: string) => {
+              setProfileDetails({...profileDetails, fullname: text});
+            }}
+            placeholder="Jhon Doe"
+          />
 
-        <TextInput
-          maxLength={10}
-          value={profileDetails?.phoneNumber}
-          label="Phone"
-          mode="outlined"
-          onChangeText={(text: string) => {
-            setProfileDetails({...profileDetails, phoneNumber: text});
-          }}
-          placeholder="1234567890"
-          keyboardType="phone-pad"
-        />
-        
+          <TextInput
+            maxLength={10}
+            value={profileDetails?.phoneNumber}
+            label="Phone"
+            mode="outlined"
+            onChangeText={(text: string) => {
+              setProfileDetails({...profileDetails, phoneNumber: text});
+            }}
+            placeholder="1234567890"
+            keyboardType="phone-pad"
+          />
+        </Surface>
       </SafeAreaView>
       <Button
         mode="contained"
@@ -111,12 +126,12 @@ const MyProfile = ({navigation}: {navigation: any}) => {
             color: isTextChanged
               ? theme.colors.onPrimary
               : theme.colors.onSurfaceDisabled,
-          }}> 
-         {isLoading ? (
-                <ActivityIndicator size="small" color={theme.colors.onPrimary} />
-              ) : (
-                'Update'
-              )}
+          }}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color={theme.colors.onPrimary} />
+          ) : (
+            'Update'
+          )}
         </Text>
       </Button>
     </Layout>
@@ -155,6 +170,4 @@ const styles = StyleSheet.create({
   },
 });
 
-
 export default MyProfile;
-

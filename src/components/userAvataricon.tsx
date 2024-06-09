@@ -4,6 +4,7 @@ import { View, StyleSheet } from 'react-native';
 
 interface UserAvatarProps {
   name: string;
+  size?: number;
 }
 
 function stringToColor(string: string) {
@@ -26,7 +27,7 @@ function stringToColor(string: string) {
   return color;
 }
 
-const UserAvatar: React.FC<UserAvatarProps> = ({ name }) => {
+const UserAvatar: React.FC<UserAvatarProps> = ({ name ,size=40}) => {
   const nameArray = name.split(' ');
   let letterToShow = '';
   if (nameArray.length > 1) {
@@ -39,7 +40,7 @@ const UserAvatar: React.FC<UserAvatarProps> = ({ name }) => {
     <View style={styles.container}>
       <Avatar.Text
         label={letterToShow}
-        size={40}
+        size={size}
         style={{ backgroundColor: stringToColor(name) }}
       />
     </View>
