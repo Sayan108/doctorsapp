@@ -8,7 +8,7 @@ import {
   Surface,
   ActivityIndicator,
 } from 'react-native-paper';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import CancelAppointmentDialog from '../../components/cancelAppoinmentDialogue';
 import Layout from '../../components/layOut';
 import MarkAsDoneDialog from '../../components/markAsDoneDialog';
@@ -17,7 +17,10 @@ import {colors} from '../../styles';
 import {Text} from 'react-native-paper';
 import {formatDateString} from '../../util/funtions.util';
 import {StackActions} from '@react-navigation/native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import { IUpdateAppointment } from '../../redux/constants/appointment.constant';
+import { AppointmentStatus } from '../../config/enum';
+import { updateAppointmentRequested } from '../../redux/silces/userdata.slice';
 
 interface modalSate {
   isOpen: boolean;
@@ -30,6 +33,7 @@ const AppointmentDetails = ({
   navigation: any;
   route: any;
 }) => {
+  const dispatch = useDispatch();
   const theme = useTheme();
 
   const isLoading = useSelector(
@@ -41,12 +45,23 @@ const AppointmentDetails = ({
   const [showMarkAssDoneModal, setshowMarkAssDoneModal] = useState(false);
   const {id} = route.params;
 
+
   const handleNavigation = () => {
     navigation.navigate('home');
   };
   const {data} = useSelector(
     (state: RootState) => state.userdata.currentAppointmentDetails,
   );
+
+  // const handelMarkAsDone = ()=>{
+  //   const payload:IUpdateAppointment = {
+  //     appointmentId: data?.appointmentId?data.appointmentId:'',
+  //     status:AppointmentStatus.Completed
+  //   }
+
+  //   dispatch(updateAppointmentRequested(payload));
+  // }
+
   return (
     <Layout headerText="Booking details" navigation={handleNavigation}>
       {isLoading ? (
@@ -56,7 +71,7 @@ const AppointmentDetails = ({
         />
       ) : (
         //body
-        <View style={{display:'flex',flex:1}}>
+        <View style={{display: 'flex', flex: 1}}>
           {/* cancel modal */}
           {showCancelModal ? (
             <CancelAppointmentDialog
@@ -251,7 +266,7 @@ const AppointmentDetails = ({
             </ScrollView>
           )}
           {/* buttons */}
-          <View
+         { data?.status===0?(<View
             style={[
               styles.buttonContainer,
               {backgroundColor: theme.colors.surface},
@@ -265,6 +280,7 @@ const AppointmentDetails = ({
               mode="contained"
               onPress={() => {
                 setshowMarkAssDoneModal(true);
+                // handelMarkAsDone()
               }}
               // style={[styles.button]}
             >
@@ -283,9 +299,8 @@ const AppointmentDetails = ({
             >
               Reschedule
             </Button>
-          </View>
+          </View>):null}
         </View>
-
       )}
     </Layout>
   );

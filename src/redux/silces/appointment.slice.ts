@@ -2,8 +2,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   IAppointmentInitialState,
   IAppointment,
+  IUpdateAppointment,
 } from "../constants/appointment.constant";
-import { IAuthState } from "../constants/userdata.constants";
+import { IAuthState, UserData, UserDataInitialState } from "../constants/userdata.constants";
 import { IPatient } from "../constants/patient.constant";
 import { IClinic } from "../constants/clinic.constant";
 
@@ -50,6 +51,7 @@ export const appointmentSlice = createSlice({
       };
     },
 
+
     updateDoctorId: (state: IAppointment, action: PayloadAction<any>) => {
       return {
         ...state,
@@ -61,7 +63,6 @@ export const appointmentSlice = createSlice({
       state: IAppointment,
       action: PayloadAction<IPatient>
     ) => {
-      console.log("fdsjkhfkj", action.payload);
       return {
         ...state,
         patientData: action.payload,
@@ -112,6 +113,7 @@ export const {
   upDateClinic,
   updateSelectedDateTimeSlot,
   updateSelectedPatientData,
+
 } = appointmentSlice.actions;
 
 export const appointmentReducer = appointmentSlice.reducer;

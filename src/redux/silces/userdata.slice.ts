@@ -7,7 +7,8 @@ import {
   UserData,
   UserDataInitialState,
 } from "../constants/userdata.constants";
-import { IAppointment, IAppointmentInitialState } from "../constants/appointment.constant";
+import { IAppointment, IAppointmentInitialState, IUpdateAppointment } from "../constants/appointment.constant";
+import { IPatientInitialState } from "../constants/patient.constant";
 // Redux Toolkit slice
 export const userDataSlice = createSlice({
   name: "userdata",
@@ -178,6 +179,65 @@ export const userDataSlice = createSlice({
         },
       };
     },
+
+
+        //update appointment slices
+        updateAppointmentRequested: (state: UserData, action:PayloadAction<IUpdateAppointment>) => {
+          return {
+            ...state,
+            currentAppointmentDetails: {
+              ...state.currentAppointmentDetails,
+              loading: true,
+            },
+          };
+        },
+    
+        updateAppointmentSuccess: (
+          state: UserData,
+          action: PayloadAction<IUpdateAppointment>
+        ) => {
+          let appointmentDetails:IAppointment={
+            createdBy: "",
+            checkupHour: "",
+            checkupDay: "",
+            bookingDate: "",
+            bookingDayId: "",
+            bookingHourId: "",
+            isDeleted: false,
+            appointmentId: null,
+            createDate: "",
+            isCompleted: false,
+            doctorId: "",
+            clinicData: null,
+            patientData:IPatientInitialState ,
+            clinicId: "",
+            status: 0,
+            problem: null,
+            ...state.currentAppointmentDetails.data
+          }
+          return {
+            ...state,
+            currentAppointmentDetails: {
+              error:'',
+              loading: false,
+              data:{ ...appointmentDetails, ...action.payload},
+            },
+          };
+        },
+    
+        updateAppointmentFailed: (
+          state: UserData,
+          action: PayloadAction<any>
+        ) => {
+          return {
+            ...state,
+            currentAppointmentDetails: {
+              ...state.currentAppointmentDetails,
+              loading: false,
+              error: action.payload,
+            },
+          };
+        },
   },
 });
 
@@ -194,7 +254,10 @@ export const {
   getAppointmentDetailsFailure,
   updateAppointmentList,
   updateAppointmentForm,
-  updateUpcomingAppointment
+  updateUpcomingAppointment,
+  updateAppointmentRequested,
+  updateAppointmentSuccess,
+  updateAppointmentFailed
 } = userDataSlice.actions;
 
 export const userDataReducer = userDataSlice.reducer;

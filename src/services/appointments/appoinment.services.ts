@@ -1,3 +1,5 @@
+import {AxiosResponse} from 'axios';
+import {IUpdateAppointment} from '../../redux/constants/appointment.constant';
 import {serializeError, toQueryString} from '../../util/funtions.util';
 import {baseClient} from '../api.cilents';
 import {Endpoints} from '../constants';
@@ -29,6 +31,19 @@ export const getAppointmentDetails = async (payload: any) => {
   } catch (err) {
     const serializedError = serializeError(err);
     throw serializedError;
+  }
+};
+
+export const updateAppointment = async (params: IUpdateAppointment) => {
+  try {
+    const res: AxiosResponse = await baseClient.patch(
+      Endpoints.updateAppointment,
+      params,
+    );
+    return res;
+  } catch (err) {
+    err = serializeError(err);
+    throw err;
   }
 };
 

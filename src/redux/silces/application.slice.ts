@@ -1,8 +1,6 @@
 import {type PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {
-  IApplicationStates,
-  IApplicationStatesInitialStates,
-} from '../redux.constants';
+import { IApplicationStatesInitialStates, IApplicationStates } from '../constants/userdata.constants';
+
 
 // Redux Toolkit slice
 export const applicationSlice = createSlice({

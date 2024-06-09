@@ -1,6 +1,11 @@
-import { IClinic, IClinicDetails, IClinicDetailsInitialState, IClinicInitialState } from "./clinic.constant";
-import { IDoctor, IDoctorInitialState } from "./doctor.constant";
-import { IPatient, IPatientInitialState } from "./patient.constant";
+import {
+  IClinic,
+  IClinicDetails,
+  IClinicDetailsInitialState,
+  IClinicInitialState,
+} from './clinic.constant';
+import {IDoctor, IDoctorInitialState} from './doctor.constant';
+import {IPatient, IPatientInitialState} from './patient.constant';
 
 export interface IAppointment {
   createdBy: string;
@@ -17,37 +22,41 @@ export interface IAppointment {
   clinicData: IClinicDetails | null;
   patientData: IPatient;
   clinicId: string;
-  status:number;
-  problem:string | null;
+  status: number;
+  problem: string | null;
 }
 
 export const IAppointmentInitialState: IAppointment = {
-  createdBy: "",
-  checkupHour: "",
-  bookingDate: "",
-  bookingDayId: "",
-  bookingHourId: "",
+  createdBy: '',
+  checkupHour: '',
+  bookingDate: '',
+  bookingDayId: '',
+  bookingHourId: '',
   isDeleted: false,
-  appointmentId: "",
-  createDate: "",
+  appointmentId: '',
+  createDate: '',
   isCompleted: false,
   clinicData: IClinicDetailsInitialState,
   patientData: IPatientInitialState,
-  doctorId: "",
-  clinicId: "",
-  checkupDay: "",
+  doctorId: '',
+  clinicId: '',
+  checkupDay: '',
   status: 0,
-  problem:""
+  problem: '',
 };
 
-export interface IAppointmentList{
+export interface IAppointmentList {
   isLoading: boolean;
   appointments: IAppointment[];
   errormessege: string;
 }
 
-export const IAppointmentListInitialState: IAppointmentList={
+export const IAppointmentListInitialState: IAppointmentList = {
   isLoading: false,
   appointments: [],
-  errormessege: "",
-}
+  errormessege: '',
+};
+
+  export interface IUpdateAppointment extends Partial<IAppointment> {
+    
+  }

@@ -2,6 +2,7 @@ import { all } from "redux-saga/effects";
 import {
   watchFetchAppointmentDetails,
   watchFetchAppointmentList,
+  watchUpdateAppointment,
   // watchFetchDateSlots,
   // watchFetchTimeSlotsBasedOnDate,
   // watchFetchUpcomingAppointment,
@@ -24,6 +25,7 @@ export default function* rootSaga() {
     watchDoctorDetailsRequested(),
     watchCreatePatientRequested(),
     watchPatientListRequested(),
-    watchFetchClinicList()
+    watchFetchClinicList(),
+    watchUpdateAppointment()
   ]);
 }

@@ -1,8 +1,12 @@
 import * as React from 'react';
 import {View} from 'react-native';
 import {Button, Dialog, Portal, Provider, Text, TextInput, useTheme} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {colors} from '../styles';
+import { RootState } from '../redux';
+import { updateAppointmentRequested } from '../redux/silces/userdata.slice';
+import { AppointmentStatus } from '../config/enum';
+import { IUpdateAppointment } from '../redux/constants/appointment.constant';
 interface ILogInDialogProps {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<any>>;
@@ -10,6 +14,19 @@ interface ILogInDialogProps {
 
 const MarkAsDoneDialog = (props: ILogInDialogProps) => {
 
+  const {data} = useSelector(
+    (state: RootState) => state.userdata.currentAppointmentDetails,
+  );
+
+  const handelMarkAsDone = ()=>{
+    const payload:IUpdateAppointment = {
+      appointmentId: data?.appointmentId?data.appointmentId:'',
+      status:AppointmentStatus.Completed
+    }
+
+    dispatch(updateAppointmentRequested(payload));
+  }
+  
   const theme = useTheme();
 
   const dispatch = useDispatch();
@@ -59,7 +76,10 @@ const MarkAsDoneDialog = (props: ILogInDialogProps) => {
                 style={{borderRadius: 5, padding: 2}}
                 mode="contained"
                 // style={{backgroundColor: colors.primaryColor}}
-                onPress={hideDialog}>
+                onPress={()=>{
+                  hideDialog();
+                  handelMarkAsDone();
+                }}>
                 Done
               </Button>
             </View>

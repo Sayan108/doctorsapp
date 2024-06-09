@@ -1,15 +1,14 @@
 import {AxiosResponse} from 'axios';
 import {baseClient} from '../api.cilents';
 import {Endpoints} from '../constants';
-import { serializeError } from '../../util/funtions.util';
+import {serializeError} from '../../util/funtions.util';
+import {IUpdateAppointment} from '../../redux/constants/appointment.constant';
 
-export const getClinicList =  async (params: any) => {
-  try{
-    
-    const res = await baseClient.get(Endpoints.clinicList,{params});
+export const getClinicList = async (params: any) => {
+  try {
+    const res = await baseClient.get(Endpoints.clinicList, {params});
     return res;
-
-  }catch(err){
+  } catch (err) {
     serializeError(err);
     throw err;
   }
