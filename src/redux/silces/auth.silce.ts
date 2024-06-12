@@ -1,12 +1,12 @@
-import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import {type PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {
   IAuthState,
   IAuthStateInitialState,
   IUserDetails,
-} from "../constants/userdata.constants";
+} from '../constants/userdata.constants';
 
 export const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState: IAuthStateInitialState,
 
   reducers: {
@@ -20,10 +20,10 @@ export const authSlice = createSlice({
       return {
         ...state,
         userDetails: {
-          userID: "",
-          userName: "",
-          fullname: "",
-          email: "",
+          userID: '',
+          userName: '',
+          fullname: '',
+          email: '',
           phoneNo: action.payload.data.phonenumber,
           accessToken: null,
         },
@@ -51,7 +51,7 @@ export const authSlice = createSlice({
         ...state,
         isAuthenticated: true,
         isLoading: false,
-        userDetails: { ...action.payload },
+        userDetails: {...action.payload},
       };
     },
     authFailed: (state: IAuthState, action: PayloadAction<any>) => {
@@ -81,6 +81,7 @@ export const authSlice = createSlice({
     },
 
     updateUserSuccess: (state: IAuthState, action: PayloadAction<any>) => {
+      console.log(action.payload, 'update user ');
       return {
         ...state,
         isLoading: false,
@@ -107,7 +108,7 @@ export const {
   logOut,
   updateUserRequested,
   updateUserSuccess,
-  updateUserFailed
+  updateUserFailed,
 } = authSlice.actions;
 
 export const authReducer = authSlice.reducer;

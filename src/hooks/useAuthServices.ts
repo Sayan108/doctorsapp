@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import {useDispatch, useSelector} from 'react-redux';
 import {
   authFailed,
   authRequested,
@@ -8,17 +8,16 @@ import {
   otpRequested,
   otpSuccess,
   updateUserFailed,
+  updateUserRequested,
   updateUserSuccess,
-} from "../redux/silces/auth.silce";
+} from '../redux/silces/auth.silce';
 
-import { RootState } from "../redux";
-import {
-  IUserDetails,
-} from "../redux/constants/userdata.constants";
-import { login, requestOTP, updateUser } from "../services/auth/auth.service";
-import { AxiosResponse } from "axios";
-import { serializeError } from "../util/funtions.util";
-import { appointmentListRequested } from "../redux/silces/userdata.slice";
+import {RootState} from '../redux';
+import {IUserDetails} from '../redux/constants/userdata.constants';
+import {login, requestOTP, updateUser} from '../services/auth/auth.service';
+import {AxiosResponse} from 'axios';
+import {serializeError} from '../util/funtions.util';
+import {appointmentListRequested} from '../redux/silces/userdata.slice';
 
 export interface sendOTPPayload {
   phoneNo: string;
@@ -33,8 +32,8 @@ const useAuthService = () => {
     dispatch(otpRequested());
     try {
       const response = await requestOTP(payload);
-      const data = { phonenumber: payload.phoneNo };
-      dispatch(otpSuccess({ data }));
+      const data = {phonenumber: payload.phoneNo};
+      dispatch(otpSuccess({data}));
       navigation.navigate('otpverification');
     } catch (error: any) {
       error = serializeError(error);
@@ -46,20 +45,20 @@ const useAuthService = () => {
     dispatch(authRequested());
     try {
       const {
-        data: { data },
+        data: {data},
       }: AxiosResponse = await login(payload);
 
       const userObject: IUserDetails = {
-        userID: data.userId ?? "",
+        userID: data.userId ?? '',
         //userName: username??'',
-        fullname: data.fullname ?? "",
+        fullname: data.fullname ?? '',
         accessToken: data.accessToken,
-        userName: "",
+        userName: '',
         phoneNo: data?.phoneNumber,
       };
-      console.log(userObject, "getting data");
+      console.log(userObject, 'getting data');
       dispatch(authSuccess(userObject));
-      navigation.navigate("home");
+      navigation.navigate('home');
     } catch (error) {
       error = serializeError(error);
       dispatch(authFailed(error));
@@ -70,19 +69,13 @@ const useAuthService = () => {
     dispatch(logOut());
   };
 
-
   const handleUserUpdate = async (payload: any) => {
-    // dispatch(updateUserRequested());
+    dispatch(updateUserRequested());
     try {
       // const {
       //   data: {data},
       // }: AxiosResponse = await updateUser(payload);
       const response = await updateUser(payload);
-      console.log(response);
-      if (response.data?.statuscode === 200) {
-        const data = {phoneNumber: payload.phoneNo};
-        dispatch(otpSuccess({data}));
-      }
 
       const userObject: IUserDetails = {...response.data};
       dispatch(updateUserSuccess(userObject));
@@ -96,7 +89,7 @@ const useAuthService = () => {
     handleSendOTP,
     handleLogIn,
     handleLogOut,
-    handleUserUpdate
+    handleUserUpdate,
   };
 };
 
