@@ -72,16 +72,13 @@ const useAuthService = () => {
   const handleUserUpdate = async (payload: any) => {
     dispatch(updateUserRequested());
     try {
-      // const {
-      //   data: {data},
-      // }: AxiosResponse = await updateUser(payload);
-      const {data} = await updateUser(payload);
+      const response = await updateUser(payload);
 
-      console.log(data, 'in user update');
+      const data = response?.data?.data ?? response?.data ?? response;
 
       const userObject = {
-        fullname: data?.data?.fullname,
-        phoneNo: data?.data?.phoneNumber,
+        fullname: data?.fullname,
+        phoneNo: data?.phoneNumber,
       };
       dispatch(updateUserSuccess(userObject));
     } catch (err) {
