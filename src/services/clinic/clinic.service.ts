@@ -18,6 +18,6 @@ export const availableSlots = async (params: any) => {
   const res: AxiosResponse = await baseClient.get(Endpoints.availableSlots, {
     params,
   });
-  console.log(res.data);
+  // console.log(res.data);
   return res.data;
 };

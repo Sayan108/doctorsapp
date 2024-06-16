@@ -7,8 +7,8 @@ import ChipsGrid from '../components/gridRadioButtons';
 import {colors} from '../styles';
 import Layout from '../components/layOut';
 import {RootState} from '../redux';
-import { Calendar } from 'react-native-calendars';
-import { theme } from '../theme/theme';
+import {Calendar} from 'react-native-calendars';
+import {theme} from '../theme/theme';
 
 const ChooseDateAndTime = ({
   navigation,
@@ -17,17 +17,12 @@ const ChooseDateAndTime = ({
   navigation: any;
   route: any;
 }) => {
-
   const [selected, setSelected] = useState('');
 
   const {id} = route.params;
   const dispatch = useDispatch();
-  const dateSlots = useSelector(
-    (state: RootState) => state.userdata.dateSlots.data,
-  );
-  const timeSlots = useSelector(
-    (state: RootState) => state.userdata.timeSlots.data,
-  );
+  const dateSlots: any[] = [];
+  const timeSlots: any[] = [];
 
   const [selectedDateId, setselectedDateId] = useState<any>(dateSlots[0]);
   const [selectedTimeSlot, setselectedTimeSlot] = useState<any>(timeSlots[0]);
@@ -43,38 +38,34 @@ const ChooseDateAndTime = ({
   };
 
   const handleNavigation = () => {
-    navigation.navigate('appointmentlist');
+    navigation.navigate('appointmentdetails');
   };
 
   return (
     <Layout navigation={handleNavigation} headerText="Choose date and time">
       <Text style={styles.subtitle}>{'Choose date'}</Text>
       <Calendar
-      style={{
-        // backgroundColor:theme.colors.secondaryContainer,
-        borderColor:theme.colors.outline
-        
-      }}
-      theme={{
-        backgroundColor: theme.colors.secondary,
-        calendarBackground: theme.colors.surface,
-        textSectionTitleColor: theme.colors.onSurface,
-        selectedDayBackgroundColor: theme.colors.primary,
-        selectedDayTextColor: theme.colors.onPrimary,
-        todayTextColor: theme.colors.onSurface,
-        dayTextColor: theme.colors.onSurface,
-        textDisabledColor: theme.colors.surfaceDisabled
-
-      }}
-      current={'2024-05-01'}
-
-      onDayPress={day => {
-        setSelected(day.dateString);
-      }}
-
-    />
+        style={{
+          // backgroundColor:theme.colors.secondaryContainer,
+          borderColor: theme.colors.outline,
+        }}
+        theme={{
+          backgroundColor: theme.colors.secondary,
+          calendarBackground: theme.colors.surface,
+          textSectionTitleColor: theme.colors.onSurface,
+          selectedDayBackgroundColor: theme.colors.primary,
+          selectedDayTextColor: theme.colors.onPrimary,
+          todayTextColor: theme.colors.onSurface,
+          dayTextColor: theme.colors.onSurface,
+          textDisabledColor: theme.colors.surfaceDisabled,
+        }}
+        current={'2024-05-01'}
+        onDayPress={day => {
+          setSelected(day.dateString);
+        }}
+      />
       <Text style={styles.subtitle}>{'Choose time'}</Text>
-      
+
       <Button
         mode="contained"
         onPress={() => {

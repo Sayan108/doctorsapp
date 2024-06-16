@@ -56,7 +56,7 @@ const useAuthService = () => {
         userName: '',
         phoneNo: data?.phoneNumber,
       };
-      console.log(userObject, 'getting data');
+      // console.log(userObject, 'getting data');
       dispatch(authSuccess(userObject));
       navigation.navigate('home');
     } catch (error) {
@@ -75,9 +75,14 @@ const useAuthService = () => {
       // const {
       //   data: {data},
       // }: AxiosResponse = await updateUser(payload);
-      const response = await updateUser(payload);
+      const {data} = await updateUser(payload);
 
-      const userObject: IUserDetails = {...response.data};
+      console.log(data, 'in user update');
+
+      const userObject = {
+        fullname: data?.data?.fullname,
+        phoneNo: data?.data?.phoneNumber,
+      };
       dispatch(updateUserSuccess(userObject));
     } catch (err) {
       err = serializeError(err);

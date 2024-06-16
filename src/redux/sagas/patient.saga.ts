@@ -1,6 +1,6 @@
-import { put, takeEvery } from "redux-saga/effects";
-import { action, ActionType } from "typesafe-actions";
-import * as Effects from "redux-saga/effects";
+import {put, takeEvery} from 'redux-saga/effects';
+import {action, ActionType} from 'typesafe-actions';
+import * as Effects from 'redux-saga/effects';
 import {
   createPatientFailed,
   createPatientRequested,
@@ -8,14 +8,16 @@ import {
   patientListFailed,
   patientListRequested,
   patientListSuccess,
-} from "../silces/patient.slice";
-import { addPatient, getPatientList } from "../../services/patient/patient.services";
+} from '../silces/patient.slice';
+import {
+  addPatient,
+  getPatientList,
+} from '../../services/patient/patient.services';
 
 const call: any = Effects.call;
 
-
 function* createPatient(
-  action: ActionType<typeof createPatientRequested>
+  action: ActionType<typeof createPatientRequested>,
 ): Generator<any, void, any> {
   try {
     const res = yield call(addPatient, action.payload);
@@ -25,14 +27,13 @@ function* createPatient(
   }
 }
 
-
 function* patientList(
-  action: ActionType<typeof createPatientRequested>
+  action: ActionType<typeof createPatientRequested>,
 ): Generator<any, void, any> {
   try {
     const res = yield call(getPatientList);
-    console.log('patientlist response from saga',res);
-    
+    // console.log('patientlist response from saga',res);
+
     yield put(patientListSuccess(res.data.data));
     // action.payload.navigator('/selectdate')
   } catch (err) {
@@ -40,11 +41,9 @@ function* patientList(
   }
 }
 
-
 export function* watchCreatePatientRequested() {
   yield takeEvery(createPatientRequested.type, createPatient);
 }
-
 
 export function* watchPatientListRequested() {
   yield takeEvery(patientListRequested.type, patientList);

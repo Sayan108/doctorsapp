@@ -52,7 +52,7 @@ const MyProfile = ({navigation}: {navigation: any}) => {
   };
 
   useEffect(() => {
-    console.log('profileDetails', profileDetails);
+    // console.log('profileDetails', profileDetails);
     if (
       profileDetails.fullname.length === 0 ||
       profileDetails.phoneNumber.length === 0
@@ -68,7 +68,7 @@ const MyProfile = ({navigation}: {navigation: any}) => {
     }
   }, [profileDetails]);
 
-  console.log('istextChanged', isTextChanged);
+  // console.log('istextChanged', isTextChanged);
 
   return (
     <Layout navigation={handleNavigation} headerText="My profile">
@@ -86,7 +86,7 @@ const MyProfile = ({navigation}: {navigation: any}) => {
             paddingTop: 16,
             paddingBottom: 16,
           }}>
-            <UserAvatar name={originalFullName} size={60}/>
+          <UserAvatar name={originalFullName} size={60} />
           <TextInput
             maxLength={50}
             value={profileDetails?.fullname}

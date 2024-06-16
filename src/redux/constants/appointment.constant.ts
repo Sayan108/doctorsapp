@@ -24,6 +24,7 @@ export interface IAppointment {
   clinicId: string;
   status: number;
   problem: string | null;
+  comment?: string;
 }
 
 export const IAppointmentInitialState: IAppointment = {
@@ -57,6 +58,4 @@ export const IAppointmentListInitialState: IAppointmentList = {
   errormessege: '',
 };
 
-  export interface IUpdateAppointment extends Partial<IAppointment> {
-    
-  }
+export interface IUpdateAppointment extends Partial<IAppointment> {}

@@ -1,10 +1,10 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 // import { IDoctorInitialState, IDoctor } from "../constants/doctor.constant";
-import { IAuthState } from "../constants/userdata.constants";
-import { IDoctorInitialState, IDoctor } from "../constants/doctor.constant";
+import {IAuthState} from '../constants/userdata.constants';
+import {IDoctorInitialState, IDoctor} from '../constants/doctor.constant';
 
 export const doctorSlice = createSlice({
-  name: "doctor",
+  name: 'doctor',
   initialState: IDoctorInitialState,
 
   reducers: {
@@ -16,7 +16,6 @@ export const doctorSlice = createSlice({
     },
 
     doctorDetailsSuccess: (state: IDoctor, action: PayloadAction<any>) => {
-        
       const obj = {
         ...state,
         doctorId: action.payload.doctorId,
@@ -29,7 +28,7 @@ export const doctorSlice = createSlice({
         languagesSpoken: action.payload.languagesSpoken,
         specialization: action.payload.specialization,
       };
-      console.log('obj', obj)
+      // console.log('obj', obj)
       return obj;
     },
 

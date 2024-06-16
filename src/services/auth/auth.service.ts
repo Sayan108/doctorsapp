@@ -20,7 +20,7 @@ export const login = async (payload: any) => {
 
 export const updateUser = async (payload: any) => {
   try {
-    console.log('baseclient is here', baseClient);
+    // console.log('baseclient is here', baseClient);
     const res = await baseClient.patch(Endpoints.updateUser, payload);
     return res;
   } catch (err) {
@@ -29,9 +29,9 @@ export const updateUser = async (payload: any) => {
 };
 
 export const userInfo = async (payload: any) => {
-  try{
+  try {
     // const res = await baseClient.get(Endpoints)
-  }catch(err){
+  } catch (err) {
     throw err;
   }
 };

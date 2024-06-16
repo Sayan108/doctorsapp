@@ -16,7 +16,6 @@ import {
   appointmentListRequested,
   getAppointmentDetailsRequested,
   updateUpcomingAppointment,
-  
 } from '../../redux/silces/userdata.slice';
 import useResponsiveSize from '../../components/useResponsiveSize';
 import {theme} from '../../theme/theme';
@@ -54,7 +53,7 @@ const AppointmentList = (props: any) => {
   };
   clinicList = [allClinic, ...clinicList];
 
-  console.log('clinicList is here', clinicList);
+  // console.log('clinicList is here', clinicList);
 
   //appointment list
   const appointmentList: IAppointment[] = useSelector(
@@ -63,13 +62,18 @@ const AppointmentList = (props: any) => {
 
   //updating upcoming appointment
   useEffect(() => {
-    const upcomingAppointmentList = appointmentList.length > 0 ?appointmentList.filter((item)=>{return item.status === AppointmentStatus.Upcoming}):null;
-  const upcomingAppAppointment = upcomingAppointmentList?(upcomingAppointmentList.length>0?upcomingAppointmentList[0]:null):null
-    dispatch(
-      updateUpcomingAppointment(
-        upcomingAppAppointment
-      ),
-    );
+    const upcomingAppointmentList =
+      appointmentList.length > 0
+        ? appointmentList.filter(item => {
+            return item.status === AppointmentStatus.Upcoming;
+          })
+        : null;
+    const upcomingAppAppointment = upcomingAppointmentList
+      ? upcomingAppointmentList.length > 0
+        ? upcomingAppointmentList[0]
+        : null
+      : null;
+    dispatch(updateUpcomingAppointment(upcomingAppAppointment));
   }, [appointmentList]);
 
   //loading state
@@ -98,7 +102,7 @@ const AppointmentList = (props: any) => {
   const displayStatusList = ['All Status', ...AppointmentStatusText];
   const handleStatusRadioButtonClick = (index: number, item: string) => {
     setSelectedStatusIndex(index);
-    console.log('selectedStatusIndex', selectedStatusIndex);
+    // console.log('selectedStatusIndex', selectedStatusIndex);
     setStatusListVisible(false);
     if (index > 0) {
       //as 0 is holded by All status, which is not an actual status

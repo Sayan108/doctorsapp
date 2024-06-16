@@ -1,15 +1,19 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {
   IAppointmentInitialState,
   IAppointment,
   IUpdateAppointment,
-} from "../constants/appointment.constant";
-import { IAuthState, UserData, UserDataInitialState } from "../constants/userdata.constants";
-import { IPatient } from "../constants/patient.constant";
-import { IClinic } from "../constants/clinic.constant";
+} from '../constants/appointment.constant';
+import {
+  IAuthState,
+  UserData,
+  UserDataInitialState,
+} from '../constants/userdata.constants';
+import {IPatient} from '../constants/patient.constant';
+import {IClinic} from '../constants/clinic.constant';
 
 export const appointmentSlice = createSlice({
-  name: "appointment",
+  name: 'appointment',
   initialState: IAppointmentInitialState,
 
   reducers: {
@@ -22,7 +26,7 @@ export const appointmentSlice = createSlice({
 
     createAppointmentSuccess: (
       state: IAppointment,
-      action: PayloadAction<any>
+      action: PayloadAction<any>,
     ) => {
       return {
         ...state,
@@ -41,7 +45,7 @@ export const appointmentSlice = createSlice({
 
     createAppointmentFailed: (
       state: IAppointment,
-      action: PayloadAction<any>
+      action: PayloadAction<any>,
     ) => {
       return {
         ...state,
@@ -50,7 +54,6 @@ export const appointmentSlice = createSlice({
         errormessage: action.payload,
       };
     },
-
 
     updateDoctorId: (state: IAppointment, action: PayloadAction<any>) => {
       return {
@@ -61,7 +64,7 @@ export const appointmentSlice = createSlice({
 
     updateSelectedPatient: (
       state: IAppointment,
-      action: PayloadAction<IPatient>
+      action: PayloadAction<IPatient>,
     ) => {
       return {
         ...state,
@@ -70,7 +73,7 @@ export const appointmentSlice = createSlice({
     },
 
     upDateClinic: (state: IAppointment, action: PayloadAction<string>) => {
-      console.log("fdsjkhfkj", action.payload);
+      // console.log("fdsjkhfkj", action.payload);
       return {
         ...state,
         clinicId: action.payload,
@@ -79,9 +82,9 @@ export const appointmentSlice = createSlice({
 
     updateSelectedDateTimeSlot: (
       state: IAppointment,
-      action: PayloadAction<any>
+      action: PayloadAction<any>,
     ) => {
-      console.log("fdsjkhfkj", action.payload);
+      // console.log("fdsjkhfkj", action.payload);
       return {
         ...state,
         bookingDate: action.payload.bookingDate,
@@ -93,12 +96,12 @@ export const appointmentSlice = createSlice({
 
     updateSelectedPatientData: (
       state: IAppointment,
-      action: PayloadAction<any>
+      action: PayloadAction<any>,
     ) => {
-      console.log("fdsjkhfkj", action.payload);
+      // console.log("fdsjkhfkj", action.payload);
       return {
         ...state,
-        patientData: { ...state.patientData, ...action.payload },
+        patientData: {...state.patientData, ...action.payload},
       };
     },
   },
@@ -113,7 +116,6 @@ export const {
   upDateClinic,
   updateSelectedDateTimeSlot,
   updateSelectedPatientData,
-
 } = appointmentSlice.actions;
 
 export const appointmentReducer = appointmentSlice.reducer;

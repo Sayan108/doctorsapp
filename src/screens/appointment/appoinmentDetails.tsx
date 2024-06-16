@@ -18,9 +18,10 @@ import {Text} from 'react-native-paper';
 import {formatDateString} from '../../util/funtions.util';
 import {StackActions} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import { IUpdateAppointment } from '../../redux/constants/appointment.constant';
-import { AppointmentStatus } from '../../config/enum';
-import { updateAppointmentRequested } from '../../redux/silces/userdata.slice';
+import {IUpdateAppointment} from '../../redux/constants/appointment.constant';
+import {AppointmentStatus} from '../../config/enum';
+import {updateAppointmentRequested} from '../../redux/silces/userdata.slice';
+import {availableSlotsRequested} from '../../redux/silces/clinic.slice';
 
 interface modalSate {
   isOpen: boolean;
@@ -45,14 +46,18 @@ const AppointmentDetails = ({
   const [showMarkAssDoneModal, setshowMarkAssDoneModal] = useState(false);
   const {id} = route.params;
 
-
   const handleNavigation = () => {
     navigation.navigate('home');
   };
+
   const {data} = useSelector(
     (state: RootState) => state.userdata.currentAppointmentDetails,
   );
 
+  const handleReschedulteClick = (id: any) => {
+    dispatch(availableSlotsRequested(id));
+    navigation.navigate('reschedule');
+  };
   // const handelMarkAsDone = ()=>{
   //   const payload:IUpdateAppointment = {
   //     appointmentId: data?.appointmentId?data.appointmentId:'',
@@ -109,19 +114,21 @@ const AppointmentDetails = ({
                     }}>
                     Patient Details
                   </Text>
+                  {data?.status === 0 ? (
+                    <Pressable
+                      style={{marginLeft: '55%', justifyContent: 'flex-end'}}
+                      onPress={() => {
+                        setvisible(!visible);
+                      }}>
+                      <Icon
+                        name="dots-vertical"
+                        color={theme.colors.onSurfaceVariant}
+                        size={30}
+                        style={[{color: theme.colors.onSurfaceVariant}]}
+                      />
+                    </Pressable>
+                  ) : null}
 
-                  <Pressable
-                    style={{marginLeft: '55%', justifyContent: 'flex-end'}}
-                    onPress={() => {
-                      setvisible(!visible);
-                    }}>
-                    <Icon
-                      name="dots-vertical"
-                      color={theme.colors.onSurfaceVariant}
-                      size={30}
-                      style={[{color: theme.colors.onSurfaceVariant}]}
-                    />
-                  </Pressable>
                   {visible ? (
                     <Surface
                       style={[
@@ -259,47 +266,49 @@ const AppointmentDetails = ({
                   <Text
                     variant="bodyMedium"
                     style={{color: theme.colors.onSurfaceVariant}}>
-                    {'very big problem'}
+                    {data?.problem ?? 'very big problem'}
                   </Text>
                 </View>
               </View>
             </ScrollView>
           )}
           {/* buttons */}
-         { data?.status===0?(<View
-            style={[
-              styles.buttonContainer,
-              {backgroundColor: theme.colors.surface},
-            ]}>
-            <Button
-              style={{
-                backgroundColor: theme.colors.primary,
-                padding: 6,
-                borderRadius: 4,
-              }}
-              mode="contained"
-              onPress={() => {
-                setshowMarkAssDoneModal(true);
-                // handelMarkAsDone()
-              }}
-              // style={[styles.button]}
-            >
-              Mark as done
-            </Button>
-            <Button
-              style={{
-                borderRadius: 4,
-                padding: 6,
-              }}
-              mode="outlined"
-              onPress={() => {
-                navigation.navigate('reschedule');
-              }}
-              // style={styles.buttonOutline}
-            >
-              Reschedule
-            </Button>
-          </View>):null}
+          {data?.status === 0 ? (
+            <View
+              style={[
+                styles.buttonContainer,
+                {backgroundColor: theme.colors.surface},
+              ]}>
+              <Button
+                style={{
+                  backgroundColor: theme.colors.primary,
+                  padding: 6,
+                  borderRadius: 4,
+                }}
+                mode="contained"
+                onPress={() => {
+                  setshowMarkAssDoneModal(true);
+                  // handelMarkAsDone()
+                }}
+                // style={[styles.button]}
+              >
+                Mark as done
+              </Button>
+              <Button
+                style={{
+                  borderRadius: 4,
+                  padding: 6,
+                }}
+                mode="outlined"
+                onPress={() => {
+                  handleReschedulteClick(data.clinicId);
+                }}
+                // style={styles.buttonOutline}
+              >
+                Reschedule
+              </Button>
+            </View>
+          ) : null}
         </View>
       )}
     </Layout>

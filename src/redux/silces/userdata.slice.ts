@@ -1,17 +1,20 @@
-import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import {type PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {
-
   IDateSlots,
   IDateSlotsInitialStates,
   ITimeslots,
   UserData,
   UserDataInitialState,
-} from "../constants/userdata.constants";
-import { IAppointment, IAppointmentInitialState, IUpdateAppointment } from "../constants/appointment.constant";
-import { IPatientInitialState } from "../constants/patient.constant";
+} from '../constants/userdata.constants';
+import {
+  IAppointment,
+  IAppointmentInitialState,
+  IUpdateAppointment,
+} from '../constants/appointment.constant';
+import {IPatientInitialState} from '../constants/patient.constant';
 // Redux Toolkit slice
 export const userDataSlice = createSlice({
-  name: "userdata",
+  name: 'userdata',
   initialState: UserDataInitialState,
 
   reducers: {
@@ -52,17 +55,17 @@ export const userDataSlice = createSlice({
     //   };
     // },
 
-    updateUpcomingAppointment:(
-      state:UserData,
-      action:PayloadAction<IAppointment|null>
-    )=>{
+    updateUpcomingAppointment: (
+      state: UserData,
+      action: PayloadAction<IAppointment | null>,
+    ) => {
       return {
         ...state,
-        upcomingAppointment:action.payload
-      }
+        upcomingAppointment: action.payload,
+      };
     },
 
-    appointmentListRequested: (state: UserData, action:PayloadAction<any>) => {
+    appointmentListRequested: (state: UserData, action: PayloadAction<any>) => {
       return {
         ...state,
         appointmentList: {
@@ -73,7 +76,7 @@ export const userDataSlice = createSlice({
     },
     appointmentListSuccess: (
       state: UserData,
-      action: PayloadAction<IAppointment[]>
+      action: PayloadAction<IAppointment[]>,
     ) => {
       return {
         ...state,
@@ -96,10 +99,9 @@ export const userDataSlice = createSlice({
       };
     },
 
-
     getAppointmentDetailsRequested: (
       state: UserData,
-      action: PayloadAction<string>
+      action: PayloadAction<string>,
     ) => {
       return {
         ...state,
@@ -112,7 +114,7 @@ export const userDataSlice = createSlice({
 
     getAppointmentDetailsSuccess: (
       state: UserData,
-      action: PayloadAction<IAppointment>
+      action: PayloadAction<IAppointment>,
     ) => {
       return {
         ...state,
@@ -126,7 +128,7 @@ export const userDataSlice = createSlice({
 
     getAppointmentDetailsFailure: (
       state: UserData,
-      action: PayloadAction<any>
+      action: PayloadAction<any>,
     ) => {
       return {
         ...state,
@@ -146,18 +148,17 @@ export const userDataSlice = createSlice({
       };
     },
 
-
-   /**
-    * @pupose :- it will update the appointmentForm details of upcomingappointment object of userdata in redux;
-    * @param state : this tpye of data is present in redux which need to updated 
-    * @param action : payloadaction has the new datas for updating userdata
-    */
+    /**
+     * @pupose :- it will update the appointmentForm details of upcomingappointment object of userdata in redux;
+     * @param state : this tpye of data is present in redux which need to updated
+     * @param action : payloadaction has the new datas for updating userdata
+     */
     updateAppointmentForm: (state: UserData, action: PayloadAction<any>) => {
-      console.log('action.payload123',action.payload)
+      // console.log('action.payload123',action.payload)
       return {
         ...state,
-      
-        appointmentForm: {  ...state.appointmentForm, ...action.payload },
+
+        appointmentForm: {...state.appointmentForm, ...action.payload},
       };
     },
     // addAppointmentInListRequested: (state: UserData, action: PayloadAction<any>) => {
@@ -168,9 +169,9 @@ export const userDataSlice = createSlice({
     // },
     updateAppointmentList: (
       state: UserData,
-      action: PayloadAction<IAppointment>
+      action: PayloadAction<IAppointment>,
     ) => {
-      console.log('updateappointmentList', action.payload);
+      // console.log('updateappointmentList', action.payload);
       return {
         ...state,
         appointmentList: {
@@ -180,64 +181,63 @@ export const userDataSlice = createSlice({
       };
     },
 
+    //update appointment slices
+    updateAppointmentRequested: (
+      state: UserData,
+      action: PayloadAction<IUpdateAppointment>,
+    ) => {
+      return {
+        ...state,
+        currentAppointmentDetails: {
+          ...state.currentAppointmentDetails,
+          loading: true,
+        },
+      };
+    },
 
-        //update appointment slices
-        updateAppointmentRequested: (state: UserData, action:PayloadAction<IUpdateAppointment>) => {
-          return {
-            ...state,
-            currentAppointmentDetails: {
-              ...state.currentAppointmentDetails,
-              loading: true,
-            },
-          };
+    updateAppointmentSuccess: (
+      state: UserData,
+      action: PayloadAction<IUpdateAppointment>,
+    ) => {
+      let appointmentDetails: IAppointment = {
+        createdBy: '',
+        checkupHour: '',
+        checkupDay: '',
+        bookingDate: '',
+        bookingDayId: '',
+        bookingHourId: '',
+        isDeleted: false,
+        appointmentId: null,
+        createDate: '',
+        isCompleted: false,
+        doctorId: '',
+        clinicData: null,
+        patientData: IPatientInitialState,
+        clinicId: '',
+        status: 0,
+        problem: null,
+        ...state.currentAppointmentDetails.data,
+      };
+      return {
+        ...state,
+        currentAppointmentDetails: {
+          error: '',
+          loading: false,
+          data: {...appointmentDetails, ...action.payload},
         },
-    
-        updateAppointmentSuccess: (
-          state: UserData,
-          action: PayloadAction<IUpdateAppointment>
-        ) => {
-          let appointmentDetails:IAppointment={
-            createdBy: "",
-            checkupHour: "",
-            checkupDay: "",
-            bookingDate: "",
-            bookingDayId: "",
-            bookingHourId: "",
-            isDeleted: false,
-            appointmentId: null,
-            createDate: "",
-            isCompleted: false,
-            doctorId: "",
-            clinicData: null,
-            patientData:IPatientInitialState ,
-            clinicId: "",
-            status: 0,
-            problem: null,
-            ...state.currentAppointmentDetails.data
-          }
-          return {
-            ...state,
-            currentAppointmentDetails: {
-              error:'',
-              loading: false,
-              data:{ ...appointmentDetails, ...action.payload},
-            },
-          };
+      };
+    },
+
+    updateAppointmentFailed: (state: UserData, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        currentAppointmentDetails: {
+          ...state.currentAppointmentDetails,
+          loading: false,
+          error: action.payload,
         },
-    
-        updateAppointmentFailed: (
-          state: UserData,
-          action: PayloadAction<any>
-        ) => {
-          return {
-            ...state,
-            currentAppointmentDetails: {
-              ...state.currentAppointmentDetails,
-              loading: false,
-              error: action.payload,
-            },
-          };
-        },
+      };
+    },
   },
 });
 
@@ -257,7 +257,7 @@ export const {
   updateUpcomingAppointment,
   updateAppointmentRequested,
   updateAppointmentSuccess,
-  updateAppointmentFailed
+  updateAppointmentFailed,
 } = userDataSlice.actions;
 
 export const userDataReducer = userDataSlice.reducer;

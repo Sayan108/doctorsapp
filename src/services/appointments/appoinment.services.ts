@@ -11,7 +11,7 @@ export const addAppointment = (payload: any) => {
 export const getAppointmentList = async (payload: any) => {
   try {
     const config = await baseClient.getUri({url: Endpoints.getAppointmentList});
-    console.log('Request configuration:', config);
+    // console.log('Request configuration:', config);
 
     const queryString = toQueryString(payload);
     const urlWithQuery = `${Endpoints.getAppointmentList}?${queryString}`;
