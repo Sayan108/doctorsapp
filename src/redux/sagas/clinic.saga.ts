@@ -50,7 +50,9 @@ function* fetchClinicAvailableSlots(
     const params = {
       clinicId: action.payload,
     };
+    console.log(params);
     const res: any = yield call(availableSlots, params);
+    console.log(res);
     yield put(availableSlotsSuccess(res.data));
   } catch (error) {
     yield put(availableSlotsFailed(error));

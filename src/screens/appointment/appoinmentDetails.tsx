@@ -89,134 +89,135 @@ const AppointmentDetails = ({
               setVisible={setshowMarkAssDoneModal}
             />
           ) : (
-            <ScrollView>
-              <View
-                style={[
-                  styles.container,
-                  {backgroundColor: theme.colors.surface},
-                ]}>
-                {/* patient details text and three dots */}
+            <View style={{display: 'flex', flex: 1}}>
+              <ScrollView>
                 <View
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    width: '100%',
-                    // borderWidth: 1,
-                    // borderColor: theme.colors.onSurface,
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                    paddingLeft: 6,
-                  }}>
+                  style={[
+                    styles.container,
+                    {backgroundColor: theme.colors.surface},
+                  ]}>
+                  {/* patient details text and three dots */}
+                  <View
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      width: '100%',
+                      // borderWidth: 1,
+                      // borderColor: theme.colors.onSurface,
+                      justifyContent: 'center',
+                      alignContent: 'center',
+                      paddingLeft: 6,
+                    }}>
+                    <Text
+                      variant="titleMedium"
+                      style={{
+                        color: theme.colors.onSurface,
+                      }}>
+                      Patient Details
+                    </Text>
+                    {data?.status === 0 ? (
+                      <Pressable
+                        style={{marginLeft: '55%', justifyContent: 'flex-end'}}
+                        onPress={() => {
+                          setvisible(!visible);
+                        }}>
+                        <Icon
+                          name="dots-vertical"
+                          color={theme.colors.onSurfaceVariant}
+                          size={30}
+                          style={[{color: theme.colors.onSurfaceVariant}]}
+                        />
+                      </Pressable>
+                    ) : null}
+
+                    {visible ? (
+                      <Surface
+                        style={[
+                          styles.cancelButton,
+                          {
+                            backgroundColor: theme.colors.surfaceVariant,
+                            shadowColor: theme.colors.shadow,
+                          },
+                        ]}>
+                        <List.Section>
+                          <List.Item
+                            title="Cancel"
+                            titleStyle={{
+                              color: theme.colors.onSurfaceVariant,
+                            }}
+                            left={() => (
+                              <Icon
+                                // style={{paddingLeft: 10}}
+                                name="cancel"
+                                size={24}
+                                color={theme.colors.onSecondary}
+                              />
+                            )}
+                            onPress={() => {
+                              setshowCancelModal(true);
+                              setvisible(!visible);
+                            }}
+                          />
+                        </List.Section>
+                      </Surface>
+                    ) : null}
+                  </View>
+
+                  {/* patient details section */}
+                  <View
+                    style={[
+                      styles.section,
+                      {backgroundColor: theme.colors.surfaceVariant},
+                    ]}>
+                    <Text
+                      variant="bodyMedium"
+                      style={{color: theme.colors.onSurfaceVariant}}>
+                      Name: {data?.patientData.fullname}
+                    </Text>
+                    {/* <Text style={styles.sectionDetails}>Email: {data.email}</Text> */}
+                    <Text
+                      variant="bodyMedium"
+                      style={{color: theme.colors.onSurfaceVariant}}>
+                      Phone: {'9098990998'}
+                    </Text>
+                  </View>
+
+                  {/* booking details */}
                   <Text
                     variant="titleMedium"
                     style={{
                       color: theme.colors.onSurface,
+                      marginLeft: 10,
                     }}>
-                    Patient Details
+                    Booking Details
                   </Text>
-                  {data?.status === 0 ? (
-                    <Pressable
-                      style={{marginLeft: '55%', justifyContent: 'flex-end'}}
-                      onPress={() => {
-                        setvisible(!visible);
-                      }}>
-                      <Icon
-                        name="dots-vertical"
-                        color={theme.colors.onSurfaceVariant}
-                        size={30}
-                        style={[{color: theme.colors.onSurfaceVariant}]}
-                      />
-                    </Pressable>
-                  ) : null}
 
-                  {visible ? (
-                    <Surface
-                      style={[
-                        styles.cancelButton,
-                        {
-                          backgroundColor: theme.colors.surfaceVariant,
-                          shadowColor: theme.colors.shadow,
-                        },
-                      ]}>
-                      <List.Section>
-                        <List.Item
-                          title="Cancel"
-                          titleStyle={{
-                            color: theme.colors.onSurfaceVariant,
-                          }}
-                          left={() => (
-                            <Icon
-                              // style={{paddingLeft: 10}}
-                              name="cancel"
-                              size={24}
-                              color={theme.colors.onSecondary}
-                            />
-                          )}
-                          onPress={() => {
-                            setshowCancelModal(true);
-                            setvisible(!visible);
-                          }}
-                        />
-                      </List.Section>
-                    </Surface>
-                  ) : null}
-                </View>
+                  <View
+                    style={[
+                      styles.section,
+                      {backgroundColor: theme.colors.surfaceVariant},
+                    ]}>
+                    <Text
+                      variant="bodyMedium"
+                      style={{color: theme.colors.onSurfaceVariant}}>
+                      Booking id: {data?.appointmentId}
+                    </Text>
+                    <Text
+                      variant="bodyMedium"
+                      style={{color: theme.colors.onSurfaceVariant}}>
+                      Date:{' '}
+                      {formatDateString(
+                        data?.bookingDate ? data.bookingDate : '',
+                      )}
+                    </Text>
+                    <Text
+                      variant="bodyMedium"
+                      style={{color: theme.colors.onSurfaceVariant}}>
+                      Time: {data?.checkupHour}
+                    </Text>
+                  </View>
 
-                {/* patient details section */}
-                <View
-                  style={[
-                    styles.section,
-                    {backgroundColor: theme.colors.surfaceVariant},
-                  ]}>
-                  <Text
-                    variant="bodyMedium"
-                    style={{color: theme.colors.onSurfaceVariant}}>
-                    Name: {data?.patientData.fullname}
-                  </Text>
-                  {/* <Text style={styles.sectionDetails}>Email: {data.email}</Text> */}
-                  <Text
-                    variant="bodyMedium"
-                    style={{color: theme.colors.onSurfaceVariant}}>
-                    Phone: {'9098990998'}
-                  </Text>
-                </View>
-
-                {/* booking details */}
-                <Text
-                  variant="titleMedium"
-                  style={{
-                    color: theme.colors.onSurface,
-                    marginLeft: 10,
-                  }}>
-                  Booking Details
-                </Text>
-
-                <View
-                  style={[
-                    styles.section,
-                    {backgroundColor: theme.colors.surfaceVariant},
-                  ]}>
-                  <Text
-                    variant="bodyMedium"
-                    style={{color: theme.colors.onSurfaceVariant}}>
-                    Booking id: {data?.appointmentId}
-                  </Text>
-                  <Text
-                    variant="bodyMedium"
-                    style={{color: theme.colors.onSurfaceVariant}}>
-                    Date:{' '}
-                    {formatDateString(
-                      data?.bookingDate ? data.bookingDate : '',
-                    )}
-                  </Text>
-                  <Text
-                    variant="bodyMedium"
-                    style={{color: theme.colors.onSurfaceVariant}}>
-                    Time: {data?.checkupHour}
-                  </Text>
-                </View>
-
-                {/* payment details
+                  {/* payment details
             <Text
               variant="titleMedium"
               style={{
@@ -226,8 +227,8 @@ const AppointmentDetails = ({
               Payment Details
             </Text> */}
 
-                {/* payment section */}
-                {/* <View
+                  {/* payment section */}
+                  {/* <View
               style={[
                 styles.section,
                 {backgroundColor: theme.colors.surfaceVariant},
@@ -249,66 +250,67 @@ const AppointmentDetails = ({
               </Text>
             </View> */}
 
-                {/* Problem details */}
-                <Text
-                  variant="titleMedium"
-                  style={{
-                    color: theme.colors.onSurface,
-                    marginLeft: 10,
-                  }}>
-                  Problem
-                </Text>
+                  {/* Problem details */}
+                  <Text
+                    variant="titleMedium"
+                    style={{
+                      color: theme.colors.onSurface,
+                      marginLeft: 10,
+                    }}>
+                    Problem
+                  </Text>
+                  <View
+                    style={[
+                      styles.section,
+                      {backgroundColor: theme.colors.surfaceVariant},
+                    ]}>
+                    <Text
+                      variant="bodyMedium"
+                      style={{color: theme.colors.onSurfaceVariant}}>
+                      {data?.problem ?? 'very big problem'}
+                    </Text>
+                  </View>
+                </View>
+              </ScrollView>
+              {/* buttons */}
+              {data?.status === 0 ? (
                 <View
                   style={[
-                    styles.section,
-                    {backgroundColor: theme.colors.surfaceVariant},
+                    styles.buttonContainer,
+                    {backgroundColor: theme.colors.surface},
                   ]}>
-                  <Text
-                    variant="bodyMedium"
-                    style={{color: theme.colors.onSurfaceVariant}}>
-                    {data?.problem ?? 'very big problem'}
-                  </Text>
+                  <Button
+                    style={{
+                      backgroundColor: theme.colors.primary,
+                      padding: 6,
+                      borderRadius: 4,
+                    }}
+                    mode="contained"
+                    onPress={() => {
+                      setshowMarkAssDoneModal(true);
+                      // handelMarkAsDone()
+                    }}
+                    // style={[styles.button]}
+                  >
+                    Mark as done
+                  </Button>
+                  <Button
+                    style={{
+                      borderRadius: 4,
+                      padding: 6,
+                    }}
+                    mode="outlined"
+                    onPress={() => {
+                      handleReschedulteClick(data.clinicId);
+                    }}
+                    // style={styles.buttonOutline}
+                  >
+                    Reschedule
+                  </Button>
                 </View>
-              </View>
-            </ScrollView>
-          )}
-          {/* buttons */}
-          {data?.status === 0 ? (
-            <View
-              style={[
-                styles.buttonContainer,
-                {backgroundColor: theme.colors.surface},
-              ]}>
-              <Button
-                style={{
-                  backgroundColor: theme.colors.primary,
-                  padding: 6,
-                  borderRadius: 4,
-                }}
-                mode="contained"
-                onPress={() => {
-                  setshowMarkAssDoneModal(true);
-                  // handelMarkAsDone()
-                }}
-                // style={[styles.button]}
-              >
-                Mark as done
-              </Button>
-              <Button
-                style={{
-                  borderRadius: 4,
-                  padding: 6,
-                }}
-                mode="outlined"
-                onPress={() => {
-                  handleReschedulteClick(data.clinicId);
-                }}
-                // style={styles.buttonOutline}
-              >
-                Reschedule
-              </Button>
+              ) : null}
             </View>
-          ) : null}
+          )}
         </View>
       )}
     </Layout>

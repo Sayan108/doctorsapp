@@ -19,6 +19,12 @@ const ChooseDateAndTime = ({
 }) => {
   const [selected, setSelected] = useState('');
 
+  const data = useSelector((state: RootState) => {
+    state.clinicData.availableDayAndHour;
+  });
+
+  console.log(data, 'updated value');
+
   const {id} = route.params;
   const dispatch = useDispatch();
   const dateSlots: any[] = [];
@@ -60,7 +66,7 @@ const ChooseDateAndTime = ({
           textDisabledColor: theme.colors.surfaceDisabled,
         }}
         current={'2024-05-01'}
-        onDayPress={day => {
+        onDayPress={(day: any) => {
           setSelected(day.dateString);
         }}
       />

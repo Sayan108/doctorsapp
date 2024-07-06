@@ -40,7 +40,7 @@ const AppointmentList = (props: any) => {
   //api call to get appointment list
   useEffect(() => {
     dispatch(appointmentListRequested(payload));
-  }, [payload]);
+  }, []);
 
   //formatting clinic list
   let clinicList: IClinicDetails[] = useSelector(
