@@ -7,6 +7,7 @@ import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux';
 import {clinicListRequested} from '../../redux/silces/clinic.slice';
+import ClinicList from '../clinicList';
 
 const HomeScreen = ({navigation}: {navigation: any}) => {
   const {userDetails} = useSelector((state: RootState) => state.auth);
@@ -31,7 +32,7 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
   const allAppointmentList = () => (
     <AppointmentList navigation={navigation} setIndex={handleIndexChange} />
   );
-  const allClinicList = () => <Text style={{color: 'black'}}>all clinic</Text>;
+  const allClinicList = () => <ClinicList />;
 
   const [routes] = React.useState([
     {
