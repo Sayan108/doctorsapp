@@ -7,7 +7,7 @@ import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux';
 import {clinicListRequested} from '../../redux/silces/clinic.slice';
-import ClinicList from '../clinicList';
+import { ClinicList } from '../clinic/clinicList';
 
 const HomeScreen = ({navigation}: {navigation: any}) => {
   const {userDetails} = useSelector((state: RootState) => state.auth);
@@ -50,8 +50,8 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
     {
       key: 'clinics',
       title: 'Clinics',
-      focusedIcon: 'timer-sand-full',
-      unfocusedIcon: 'timer-sand-empty',
+      focusedIcon: 'list-alt',
+      unfocusedIcon: 'list-alt',
     },
   ]);
 
