@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {BottomNavigation, useTheme} from 'react-native-paper';
+import {BottomNavigation, Text, useTheme} from 'react-native-paper';
 import HomePageComponent from './homePageComponents';
 import {StyleSheet} from 'react-native';
 import AppointmentList from '../appointment/appoinmentList';
@@ -31,6 +31,7 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
   const allAppointmentList = () => (
     <AppointmentList navigation={navigation} setIndex={handleIndexChange} />
   );
+  const allClinicList = () => <Text style={{color: 'black'}}>all clinic</Text>;
 
   const [routes] = React.useState([
     {
@@ -45,11 +46,18 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
       focusedIcon: 'timer-sand-full',
       unfocusedIcon: 'timer-sand-empty',
     },
+    {
+      key: 'clinics',
+      title: 'Clinics',
+      focusedIcon: 'timer-sand-full',
+      unfocusedIcon: 'timer-sand-empty',
+    },
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
     home: homePageRoute,
     appointments: allAppointmentList,
+    clinics: allClinicList,
   });
 
   return (
