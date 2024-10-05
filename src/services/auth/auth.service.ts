@@ -1,4 +1,4 @@
-import {authClient, baseClient} from '../api.cilents';
+import {authClient, baseClient, protectedAuthClient} from '../api.cilents';
 import {Endpoints} from '../constants';
 
 export const requestOTP = (payload: any) => {
@@ -21,7 +21,7 @@ export const login = async (payload: any) => {
 export const updateUser = async (payload: any) => {
   try {
     // console.log('baseclient is here', baseClient);
-    const res = await baseClient.patch(Endpoints.updateUser, payload);
+    const res = await protectedAuthClient.patch(Endpoints.updateUser, payload);
     return res;
   } catch (err) {
     throw err;

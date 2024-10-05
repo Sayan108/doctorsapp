@@ -52,7 +52,7 @@ const useAuthService = () => {
         userID: data.userId ?? '',
         //userName: username??'',
         fullname: data.fullname ?? '',
-        accessToken: data.accessToken,
+        accessToken: data.access_token,
         userName: '',
         phoneNo: data?.phoneNumber,
       };

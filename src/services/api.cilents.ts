@@ -1,17 +1,19 @@
 // apiClient.ts
 import axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
 import {BaseURLs} from './constants';
-import {store} from '../redux';
+import {RootState, store} from '../redux';
+import {useSelector} from 'react-redux';
+import {useEffect} from 'react';
 
 const axiosConfig: AxiosRequestConfig = {
-  baseURL: BaseURLs.baseurl,
+  baseURL: BaseURLs.baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
 };
 
 const axiosAuthConfig: AxiosRequestConfig = {
-  baseURL: BaseURLs.baseurl,
+  baseURL: BaseURLs.authBaseURL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -20,20 +22,47 @@ const axiosAuthConfig: AxiosRequestConfig = {
 export const baseClient: AxiosInstance = axios.create(axiosConfig);
 export const authClient: AxiosInstance = axios.create(axiosAuthConfig);
 
-baseClient.interceptors.request.use(
-  config => {
-    const state = store.getState();
-    const token = state.auth.userDetails?.accessToken;
+export const protectedAuthClient: AxiosInstance = axios.create(axiosAuthConfig);
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+export function AxiosInterceptor({
+  children,
+}: {
+  children: JSX.Element;
+}): JSX.Element {
+  const accessToken = useSelector(
+    (state: RootState) => state.auth.userDetails?.accessToken,
+  );
+  useEffect(() => {
+    const reqBaseClientInterceptor = (request: any) => {
+      request.headers.Authorization = `Bearer ${accessToken}`;
+      return request;
+    };
 
-    // console.log('Request configuration headers:', config.headers);
+    const reqProtectedAuthClientInterceptor = (request: any) => {
+      request.headers.Authorization = `Bearer ${accessToken}`;
+      return request;
+    };
 
-    return config;
-  },
-  error => {
-    return Promise.reject(error);
-  },
-);
+    const errorHandler = async (error: any): Promise<any> => {
+      return await Promise.reject(error.response.data);
+    };
+
+    const interceptorBaseClient = baseClient.interceptors.request.use(
+      reqBaseClientInterceptor,
+      errorHandler,
+    );
+    const interceptorProtectedAuthClient =
+      protectedAuthClient.interceptors.request.use(
+        reqProtectedAuthClientInterceptor,
+        errorHandler,
+      );
+    return () => {
+      baseClient.interceptors.request.eject(interceptorBaseClient);
+      protectedAuthClient.interceptors.request.eject(
+        interceptorProtectedAuthClient,
+      );
+    };
+  }, [accessToken]);
+
+  return children;
+}
