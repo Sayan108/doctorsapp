@@ -50,8 +50,8 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
     {
       key: 'clinics',
       title: 'Clinics',
-      focusedIcon: 'list-alt',
-      unfocusedIcon: 'list-alt',
+      focusedIcon: 'microwave',
+      unfocusedIcon: 'microwave',
     },
   ]);
 

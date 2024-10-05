@@ -11,10 +11,12 @@ export default function AppointmentOverView({navigation}: {navigation: any}) {
   const todaysAppointments = 45;
   const percentage = (todaysAppointments / total) * 100;
 
+  
+
   return (
     <Provider theme={theme}>
       <View style={[styles.container, {backgroundColor: theme.colors.primary}]}>
-        <Text variant="titleLarge" style={{color: theme.colors.onPrimary}}>
+        <Text variant="headlineLarge" style={{color: theme.colors.onPrimary}}>
           {`Total ${total}`}
         </Text>
 
