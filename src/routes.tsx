@@ -1,7 +1,7 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import PhoneInputScreen from './screens/login/phoneInputScreen';
+// import PasswordLoginScreen from './screens/login/PasswordLoginScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useSelector} from 'react-redux';
 import {RootState} from './redux';
@@ -11,6 +11,7 @@ import ChooseDateAndTime from './screens/chooseDateandTime';
 import MyProfile from './screens/profile/myProfile';
 import AppointmentList from './screens/appointment/appoinmentList';
 import AppointmentDetails from './screens/appointment/appoinmentDetails';
+import PasswordLoginScreen from './screens/login/passwordLogin';
 
 const Routes = () => {
   const {isAuthenticated} = useSelector((state: RootState) => state.auth);
@@ -24,31 +25,34 @@ const Routes = () => {
           headerShown: false,
         }}>
         <Stack.Group>
-          <Stack.Screen name="phoneinput" component={PhoneInputScreen} />
-          <Stack.Screen name="otpverification" component={OTPInputScreen} />
+          {/* <Stack.Screen name="phoneinput" component={PasswordLoginScreen} />
+          <Stack.Screen name="otpverification" component={OTPInputScreen} /> */}
+
+          <Stack.Screen name="login" component={PasswordLoginScreen} />
+
           <Stack.Screen
             name="home"
-            component={isAuthenticated ? HomeScreen : PhoneInputScreen}
+            component={isAuthenticated ? HomeScreen : PasswordLoginScreen}
           />
           <Stack.Screen
             name="appointmentlist"
-            component={isAuthenticated ? AppointmentList : PhoneInputScreen}
+            component={isAuthenticated ? AppointmentList : PasswordLoginScreen}
           />
 
           <Stack.Screen
             name="reschedule"
-            component={isAuthenticated ? ChooseDateAndTime : PhoneInputScreen}
+            component={isAuthenticated ? ChooseDateAndTime : PasswordLoginScreen}
             initialParams={{id: -1}}
           />
 
           <Stack.Screen
             name="myprofile"
-            component={isAuthenticated ? MyProfile : PhoneInputScreen}
+            component={isAuthenticated ? MyProfile : PasswordLoginScreen}
           />
 
           <Stack.Screen
             name="appointmentdetails"
-            component={isAuthenticated ? AppointmentDetails : PhoneInputScreen}
+            component={isAuthenticated ? AppointmentDetails : PasswordLoginScreen}
             initialParams={{id: -1}}
           />
         </Stack.Group>
