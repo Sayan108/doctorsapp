@@ -22,14 +22,14 @@ const PasswordLoginScreen: React.FC<{navigation: any}> = ({navigation}) => {
       Alert.alert('Error', 'Please fill in both fields');
       return;
     }
-    const data = {username: email, password, loginMethod: 'password_based'};
+    const data = {username: email, password};
     handleLogIn(data, navigation);
     navigation.navigate('home');
   };
 
-  const handleNavigation = () => {
-    navigation.navigate('home');
-  };
+//   const handleNavigation = () => {
+//     navigation.navigate('home');
+//   };
   //   const handleRedirectToWebsite = () => {
   //     const url = 'https://www.kediapolymer.co.in'; // Replace with your website's order page URL
   //     Linking.openURL(url);

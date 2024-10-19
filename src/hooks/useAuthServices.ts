@@ -53,7 +53,7 @@ const useAuthService = () => {
         //userName: username??'',
         fullname: data.fullname ?? '',
         accessToken: data.access_token,
-        userName: '',
+        userName: data.userName ?? '',
         phoneNo: data?.phoneNumber,
       };
       // console.log(userObject, 'getting data');
