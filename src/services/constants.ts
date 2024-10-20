@@ -23,4 +23,4 @@ export const Endpoints = {
   updatePatient: '/patient/update',
 };
 
-export const defaultDoctorId = 'e0f64f05-3fa2-4356-b130-3aa30d3237b7';
+export const defaultDoctorId = '349e3b14-54a5-463b-81e4-276d6508fe37';

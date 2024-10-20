@@ -8,13 +8,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux';
 import {clinicListRequested} from '../../redux/silces/clinic.slice';
 import { ClinicList } from '../clinic/clinicList';
+import { defaultDoctorId } from '../../services/constants';
 
 const HomeScreen = ({navigation}: {navigation: any}) => {
   const {userDetails} = useSelector((state: RootState) => state.auth);
   const theme = useTheme();
   const dispatch = useDispatch();
 
-  const params = {doctorId: '0f7b8341-6bd6-4af8-b427-6f6e66ffd354'};
+  const params = {doctorId: defaultDoctorId};
 
   useEffect(() => {
     dispatch(clinicListRequested(params));

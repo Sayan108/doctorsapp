@@ -113,7 +113,7 @@ const AppointmentList = (props: any) => {
   const {navigation, setIndex} = props;
 
   const conditionalFunction = () => {
-    setIndex !== undefined ? setIndex(0) : navigation.navigate('home');
+     navigation.navigate('home');
   };
 
   return (

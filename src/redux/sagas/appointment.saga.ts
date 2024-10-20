@@ -23,6 +23,7 @@ import {store} from '..';
 import {updateAppointmentList} from '../silces/userdata.slice';
 import {AxiosResponse} from 'axios';
 import { serializeError } from '../../util/funtions.util';
+import { defaultDoctorId } from '../../services/constants';
 
 const call: any = Effects.call;
 
@@ -33,7 +34,7 @@ function* createAppointment(
     const {newAppointmentData} = store.getState();
 
     const payload = {
-      doctorId: '0f7b8341-6bd6-4af8-b427-6f6e66ffd354',
+      doctorId: defaultDoctorId,
       patientId: newAppointmentData.patientData.patientId,
       clinicId: newAppointmentData.clinicId,
       bookingDayId: newAppointmentData.bookingDayId,
