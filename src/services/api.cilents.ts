@@ -34,6 +34,7 @@ export function AxiosInterceptor({
   );
   useEffect(() => {
     const reqBaseClientInterceptor = (request: any) => {
+      console.log(accessToken?.length , "getting token length")
       request.headers.Authorization = `Bearer ${accessToken}`;
       return request;
     };

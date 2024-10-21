@@ -14,12 +14,14 @@ import {IClinicDetails} from '../../redux/constants/clinic.constant';
 import {
   availableSlotsRequested,
   clinicDetailsSuccess,
+  clinicListRequested,
 } from '../../redux/silces/clinic.slice';
 import {RootState} from '../../redux';
 import {patientListRequested} from '../../redux/silces/patient.slice';
 import {upDateClinic} from '../../redux/silces/appointment.slice';
 import {FAB, Provider as PaperProvider} from 'react-native-paper';
 import {theme} from '../../theme/theme';
+import { defaultDoctorId } from '../../services/constants';
 
 export const ClinicList = () => {
   const selectedClinicId: any = useSelector(
@@ -38,7 +40,10 @@ export const ClinicList = () => {
   );
 
   const [selectedClinicIndex, setSelectedClinicIndex] = useState(0);
-
+  useEffect(() => {
+    const params = {doctorId: defaultDoctorId};
+    dispatch(clinicListRequested(params));
+  }, []);
   return (
     <PaperProvider theme={theme}>
       {isLoading ? (

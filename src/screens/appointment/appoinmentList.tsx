@@ -24,6 +24,7 @@ import {IAppointment} from '../../redux/constants/appointment.constant';
 import {AppointmentStatus, AppointmentStatusText} from '../../config/enum';
 import {IClinicDetails} from '../../redux/constants/clinic.constant';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import { doctorId } from '../../redux/redux.constants';
 
 const AppointmentList = (props: any) => {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ const AppointmentList = (props: any) => {
 
   //api call to get appointment list
   useEffect(() => {
-    dispatch(appointmentListRequested(payload));
+    dispatch(appointmentListRequested({doctorId}));
   }, []);
 
   //formatting clinic list

@@ -33,7 +33,7 @@ const LogoutDialogue = (props: ILogInDialogProps) => {
   const handleYesPress = () =>{
     hideDialog();
     handleLogOut();
-    props.navigation.navigate('phoneinput');
+    props.navigation.navigate('login');
   }
 
   return (

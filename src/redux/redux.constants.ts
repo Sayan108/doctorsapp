@@ -344,3 +344,4 @@
 //   {id: '1d2bbcb2-1a06-4fc9-8e1b-4ec95bf1a66f', value: '10:00 AM'},
 //   {id: '5cf4f6e3-cb78-4c4e-9613-8ab93b378336', value: '11:00 AM'},
 // ];
+export const doctorId=''

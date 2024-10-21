@@ -47,16 +47,17 @@ const useAuthService = () => {
       const {
         data: {data},
       }: AxiosResponse = await login(payload);
+      console.log(data)
 
       const userObject: IUserDetails = {
         userID: data.userId ?? '',
         //userName: username??'',
         fullname: data.fullname ?? '',
-        accessToken: data.access_token,
+        accessToken: data.accessToken ?? data?.access_token,
         userName: data.userName ?? '',
         phoneNo: data?.phoneNumber,
       };
-      // console.log(userObject, 'getting data');
+      console.log(userObject, 'getting data');
       dispatch(authSuccess(userObject));
       navigation.navigate('home');
     } catch (error) {

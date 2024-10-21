@@ -15,11 +15,9 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
-  const params = {doctorId: defaultDoctorId};
+  
 
-  useEffect(() => {
-    dispatch(clinicListRequested(params));
-  }, []); // The dependency array ensures this effect runs once after the initial render
+ // The dependency array ensures this effect runs once after the initial render
 
   const [index, setIndex] = React.useState(0);
   const handleIndexChange = (params: number) => {

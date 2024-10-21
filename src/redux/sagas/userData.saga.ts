@@ -41,7 +41,7 @@ function* fetchAppointmentList(
   try {
     const payload = action.payload;
     const res = yield call(getAppointmentList,payload);
-    yield put(appointmentListSuccess(res.data.data));
+    yield put(appointmentListSuccess(res?.data?.data));
   } catch (error:any) {
     yield put(appointmentListFailure(error.message));
   }

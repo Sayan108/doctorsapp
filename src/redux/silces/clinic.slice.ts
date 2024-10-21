@@ -62,7 +62,7 @@ export const clinicSlice = createSlice({
       return {
         ...state,
         ClinicList: {
-          error: action.payload,
+          error: action.payload[0],
           isLoading: false,
           data:null,
         },
