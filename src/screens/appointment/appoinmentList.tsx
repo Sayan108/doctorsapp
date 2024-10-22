@@ -24,7 +24,8 @@ import {IAppointment} from '../../redux/constants/appointment.constant';
 import {AppointmentStatus, AppointmentStatusText} from '../../config/enum';
 import {IClinicDetails} from '../../redux/constants/clinic.constant';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import { doctorId } from '../../redux/redux.constants';
+import {doctorId} from '../../redux/redux.constants';
+import { EmptyPage } from '../../components/emptyPage';
 
 const AppointmentList = (props: any) => {
   const dispatch = useDispatch();
@@ -34,10 +35,10 @@ const AppointmentList = (props: any) => {
 
   //payload
   const [payload, setPayload] = useState<{
-    doctorId: string,
+    doctorId: string;
     clinicId: string | null;
     status: number | null;
-  }>({doctorId:doctorId, clinicId: null, status: null});
+  }>({doctorId: doctorId, clinicId: null, status: null});
 
   //api call to get appointment list
   useEffect(() => {
@@ -116,7 +117,7 @@ const AppointmentList = (props: any) => {
   const {navigation, setIndex} = props;
 
   const conditionalFunction = () => {
-     navigation.navigate('home');
+    navigation.navigate('home');
   };
 
   return (
@@ -251,7 +252,7 @@ const AppointmentList = (props: any) => {
           size="large"
           style={{marginTop: '50%', marginHorizontal: 10}}
         />
-      ) : (
+      ) : appointmentList.length > 0 ? (
         <ScrollView style={{backgroundColor: theme.colors.surface}}>
           {appointmentList &&
             appointmentList?.map((item: IAppointment, index: number) => (
@@ -381,6 +382,9 @@ const AppointmentList = (props: any) => {
               </Pressable>
             ))}
         </ScrollView>
+      ) : (
+        //showing empty page if no appointment found
+       <EmptyPage text={'sorry! no appointment found'}/>
       )}
     </Layout>
   );
