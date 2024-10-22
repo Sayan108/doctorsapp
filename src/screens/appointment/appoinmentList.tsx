@@ -34,14 +34,15 @@ const AppointmentList = (props: any) => {
 
   //payload
   const [payload, setPayload] = useState<{
+    doctorId: string,
     clinicId: string | null;
     status: number | null;
-  }>({clinicId: null, status: null});
+  }>({doctorId:doctorId, clinicId: null, status: null});
 
   //api call to get appointment list
   useEffect(() => {
-    dispatch(appointmentListRequested({doctorId}));
-  }, []);
+    dispatch(appointmentListRequested(payload));
+  }, [payload]);
 
   //formatting clinic list
   let clinicList: IClinicDetails[] = useSelector(
@@ -89,6 +90,7 @@ const AppointmentList = (props: any) => {
     Linking.openURL(`whatsapp://send?phone=${number}`);
   };
 
+  //filter by clinic list logic
   const handleClinicRadioButtonClick = (
     index: number,
     item: IClinicDetails,

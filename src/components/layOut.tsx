@@ -37,7 +37,7 @@ const Layout = (props: Props) => {
             }}
             style={styles.backButton}
           >
-            <Icon name="arrow-back" size={24} color="black" />
+            <Icon name="arrow-back" size={24}/>
           </TouchableOpacity>
         ) : null}
 
