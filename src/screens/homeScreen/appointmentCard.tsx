@@ -19,7 +19,6 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
     (state: RootState) => state.userdata.upcomingAppointment,
   );
   // const appointmentDetails = '';
-  console.log('appointmentDetails', appointmentDetails);
 
   return (
     <Provider theme={theme}>

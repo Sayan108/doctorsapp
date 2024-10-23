@@ -33,7 +33,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(sagamiddleware,logger),
+    }).concat(sagamiddleware, logger),
 });
 
 sagamiddleware.run(rootSaga);

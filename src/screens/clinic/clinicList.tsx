@@ -21,7 +21,7 @@ import {patientListRequested} from '../../redux/silces/patient.slice';
 import {upDateClinic} from '../../redux/silces/appointment.slice';
 import {FAB, Provider as PaperProvider} from 'react-native-paper';
 import {theme} from '../../theme/theme';
-import { defaultDoctorId } from '../../services/constants';
+import {defaultDoctorId} from '../../services/constants';
 
 export const ClinicList = () => {
   const selectedClinicId: any = useSelector(
@@ -48,7 +48,10 @@ export const ClinicList = () => {
     <PaperProvider theme={theme}>
       {isLoading ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" />
+          <ActivityIndicator
+            size="large"
+            style={{marginTop: '50%', marginHorizontal: 10}}
+          />
         </View>
       ) : (
         <View
@@ -61,8 +64,8 @@ export const ClinicList = () => {
             {clinicList?.map((item, index) => (
               <View key={index} style={styles.clinicContainer}>
                 <View style={styles.clinicDetails}>
-                  <Text variant='titleMedium' >{item.clinicName}</Text>
-                  <Text variant='bodyMedium'>{item?.address?.address}</Text>
+                  <Text variant="titleMedium">{item.clinicName}</Text>
+                  <Text variant="bodyMedium">{item?.address?.address}</Text>
                   <Text>{item?.address?.city}</Text>
                   <Text>{item?.address?.pincode}</Text>
                 </View>

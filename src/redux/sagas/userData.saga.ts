@@ -4,9 +4,15 @@ import {
   appointmentListFailure,
   appointmentListRequested,
   appointmentListSuccess,
+  dateTimeSlotFailure,
+  dateTimeSlotRequested,
+  dateTimeSlotSuccess,
   getAppointmentDetailsFailure,
   getAppointmentDetailsRequested,
   getAppointmentDetailsSuccess,
+  removeFromAppoinmentListFailed,
+  removeFromAppoinmentListRequested,
+  removeFromAppoinmentListSuccess,
   updateAppointmentFailed,
   updateAppointmentRequested,
   updateAppointmentSuccess,
@@ -21,9 +27,13 @@ import {
   updateAppointment,
 } from '../../services/appointments/appoinment.services';
 // import { addAppoinemt } from "../../services/appointments/api.services";
-import {IAppointment} from '../constants/appointment.constant';
-import { AxiosResponse } from 'axios';
-import { serializeError } from '../../util/funtions.util';
+import {
+  IAppointment,
+  IUpdateAppointment,
+} from '../constants/appointment.constant';
+import {AxiosResponse} from 'axios';
+import {formatDateString, serializeError} from '../../util/funtions.util';
+import {availableSlots} from '../../services/clinic/clinic.service';
 
 // function* fetchUpcomingAppointment(
 //   action: ActionType<typeof upcomingAppointmentRequested>,
@@ -40,29 +50,27 @@ function* fetchAppointmentList(
 ): Generator<any, void, any> {
   try {
     const payload = action.payload;
-    const res = yield call(getAppointmentList,payload);
+    const res = yield call(getAppointmentList, payload);
     yield put(appointmentListSuccess(res?.data?.data));
-  } catch (error:any) {
+  } catch (error: any) {
     yield put(appointmentListFailure(error.message));
   }
 }
 
 function* fetchAppointmentDetails(
   action: ActionType<typeof getAppointmentDetailsRequested>,
-): Generator<any, void, any>  {
+): Generator<any, void, any> {
   try {
-
-    const payload ={
-      appointmentId:action.payload
-    }
+    const payload = {
+      appointmentId: action.payload,
+    };
     // const res: any = yield call(addAppointment, payload);
-    const res:any = yield call(getAppointmentDetails,payload);
+    const res: any = yield call(getAppointmentDetails, payload);
     yield put(getAppointmentDetailsSuccess(res.data.data));
   } catch (error) {
     yield put(getAppointmentDetailsFailure(error));
   }
 }
-
 
 function* updateSelectedAppointment(
   action: ActionType<typeof updateAppointmentRequested>,
@@ -70,18 +78,63 @@ function* updateSelectedAppointment(
   try {
     const params = action.payload;
     const res: AxiosResponse = yield call(updateAppointment, params);
-    yield put(updateAppointmentSuccess(params));
+    yield put(updateAppointmentSuccess(action.payload));
 
-    return 
+    return;
   } catch (err) {
     err = serializeError(err);
-    updateAppointmentFailed(err);
+    yield put(updateAppointmentFailed(err));
+  }
+}
+
+function* cancelSelectedAppointment(
+  action: ActionType<typeof removeFromAppoinmentListRequested>,
+) {
+  try {
+    const params: IUpdateAppointment = {
+      isDeleted: true,
+      appointmentId: action.payload,
+    };
+    const res: AxiosResponse = yield call(updateAppointment, params);
+    yield put(removeFromAppoinmentListSuccess(action.payload));
+
+    return;
+  } catch (err) {
+    err = serializeError(err);
+    removeFromAppoinmentListFailed();
   }
 }
 
 // export function* watchFetchUpcomingAppointment() {
 //   yield takeEvery(upcomingAppointmentRequested.type, fetchUpcomingAppointment);
 // }
+function* fetchDateTimeSlot(action: ActionType<typeof dateTimeSlotRequested>) {
+  try {
+    const res: AxiosResponse = yield call(availableSlots, action.payload);
+
+    const data = res?.data?.data?.map((item: any) => ({
+      value: formatDateString(item?.date),
+      id: item?.dayId,
+      hourAndSlot: item?.hourAndSlot?.map((slotItem: any) => ({
+        value: slotItem?.hour,
+        id: slotItem?.hourId,
+      })),
+    }));
+
+    yield put(dateTimeSlotSuccess(data));
+
+    return;
+  } catch (err) {
+    err = serializeError(err);
+    yield put(dateTimeSlotFailure());
+  }
+}
+export function* watchCancelAppoinment() {
+  yield takeEvery(
+    removeFromAppoinmentListRequested.type,
+    cancelSelectedAppointment,
+  );
+}
 
 export function* watchFetchAppointmentList() {
   yield takeEvery(appointmentListRequested.type, fetchAppointmentList);
@@ -93,4 +146,8 @@ export function* watchFetchAppointmentDetails() {
 
 export function* watchUpdateAppointment() {
   yield takeEvery(updateAppointmentRequested.type, updateSelectedAppointment);
+}
+
+export function* watchFetchDateTimeSlot() {
+  yield takeEvery(dateTimeSlotRequested.type, fetchDateTimeSlot);
 }

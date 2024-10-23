@@ -47,7 +47,6 @@ const useAuthService = () => {
       const {
         data: {data},
       }: AxiosResponse = await login(payload);
-      console.log(data)
 
       const userObject: IUserDetails = {
         userID: data.userId ?? '',
@@ -57,7 +56,7 @@ const useAuthService = () => {
         userName: data.userName ?? '',
         phoneNo: data?.phoneNumber,
       };
-      console.log(userObject, 'getting data');
+
       dispatch(authSuccess(userObject));
       navigation.navigate('home');
     } catch (error) {

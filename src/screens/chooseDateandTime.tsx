@@ -1,41 +1,55 @@
 import {View, Text, StyleSheet} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {Button} from 'react-native-paper';
+import {ActivityIndicator, Button} from 'react-native-paper';
 
 import ChipsGrid from '../components/gridRadioButtons';
 import {colors} from '../styles';
 import Layout from '../components/layOut';
 import {RootState} from '../redux';
-import {Calendar} from 'react-native-calendars';
-import {theme} from '../theme/theme';
+import {
+  dateTimeSlotRequested,
+  updateAppointmentRequested,
+} from '../redux/silces/userdata.slice';
+import {parseDateString} from '../util/funtions.util';
 
-const ChooseDateAndTime = ({
+const ChooseDateandTime = ({
   navigation,
   route,
 }: {
   navigation: any;
   route: any;
 }) => {
-  const [selected, setSelected] = useState('');
-
-  const data = useSelector((state: RootState) => {
-    state.clinicData.availableDayAndHour;
-  });
-
-  console.log(data, 'updated value');
-
   const {id} = route.params;
   const dispatch = useDispatch();
-  const dateSlots: any[] = [];
-  const timeSlots: any[] = [];
+  const dateSlots = useSelector((state: RootState) => state.userdata.dateSlots);
+  const timeSlots = useSelector((state: RootState) => state.userdata.timeSlots);
+  const clinicid = useSelector(
+    (state: RootState) =>
+      state.userdata.currentAppointmentDetails.data?.clinicId,
+  );
+  const appoinmentId = useSelector(
+    (state: RootState) =>
+      state.userdata.currentAppointmentDetails.data?.appointmentId,
+  );
+  const loading = useSelector(
+    (state: RootState) => state.userdata.dateTimeSlotLoading,
+  );
+  useEffect(() => {
+    dispatch(dateTimeSlotRequested(clinicid ?? ''));
+  }, []);
 
-  const [selectedDateId, setselectedDateId] = useState<any>(dateSlots[0]);
-  const [selectedTimeSlot, setselectedTimeSlot] = useState<any>(timeSlots[0]);
+  const [selectedDateId, setselectedDateId] = useState<any>(null);
+  const [selectedTimeSlots, setselectedTimeSlots] = useState<any[]>([]);
+  const [selectedTimeSlot, setselectedTimeSlot] = useState<any>(null);
 
   // Handler for chip selection
   const handleDateSelect = (item: any) => {
     setselectedDateId(item);
+
+    setselectedTimeSlots(item?.hourAndSlot);
+
+    setselectedTimeSlot(item?.hourAndSlot[0]);
   };
 
   const handleTimeSlotSelect = (item: any) => {
@@ -44,48 +58,62 @@ const ChooseDateAndTime = ({
   };
 
   const handleNavigation = () => {
+    navigation.navigate('appoinmentdetails');
+  };
+
+  const handleButtonClick = () => {
+    const payload = {
+      appointmentId: appoinmentId ?? '',
+      isDeleted: false,
+      bookingDate: parseDateString(selectedDateId?.value),
+      bookingTime: selectedTimeSlot?.value,
+      bookingHourId: selectedTimeSlot?.id,
+      bookingDayId: selectedDateId?.id,
+    };
+    console.log(new Date(selectedDateId?.value), 'updated data');
+
+    dispatch(updateAppointmentRequested(payload));
     navigation.navigate('appointmentdetails');
   };
 
+  useEffect(() => {
+    if (dateSlots?.length > 0) {
+      setselectedDateId(dateSlots[0]);
+      setselectedTimeSlots(dateSlots[0]?.hourAndSlot);
+
+      setselectedTimeSlot(dateSlots[0]?.hourAndSlot[0]);
+    }
+  }, [dateSlots, clinicid]);
+
   return (
     <Layout navigation={handleNavigation} headerText="Choose date and time">
-      <Text style={styles.subtitle}>{'Choose date'}</Text>
-      <Calendar
-        style={{
-          // backgroundColor:theme.colors.secondaryContainer,
-          borderColor: theme.colors.outline,
-        }}
-        theme={{
-          backgroundColor: theme.colors.secondary,
-          calendarBackground: theme.colors.surface,
-          textSectionTitleColor: theme.colors.onSurface,
-          selectedDayBackgroundColor: theme.colors.primary,
-          selectedDayTextColor: theme.colors.onPrimary,
-          todayTextColor: theme.colors.onSurface,
-          dayTextColor: theme.colors.onSurface,
-          textDisabledColor: theme.colors.surfaceDisabled,
-        }}
-        current={'2024-05-01'}
-        onDayPress={(day: any) => {
-          setSelected(day.dateString);
-        }}
-      />
-      <Text style={styles.subtitle}>{'Choose time'}</Text>
-
-      <Button
-        mode="contained"
-        onPress={() => {
-          navigation.navigate(
-            id === -1 ? 'appointmentdetails' : 'appointmentdetails',
-            {
-              id: id,
-            },
-          );
-        }}
-        style={styles.button}
-        labelStyle={styles.buttonLabel}>
-        Reschedule
-      </Button>
+      {loading || !selectedTimeSlot || !selectedDateId ? (
+        <ActivityIndicator />
+      ) : (
+        <>
+          <Text style={styles.subtitle}>{'Choose date'}</Text>
+          <ChipsGrid
+            data={dateSlots}
+            onSelect={handleDateSelect}
+            selectedId={selectedDateId}
+            type="date"
+          />
+          <Text style={styles.subtitle}>{'Choose time'}</Text>
+          <ChipsGrid
+            data={selectedTimeSlots}
+            onSelect={handleTimeSlotSelect}
+            selectedId={selectedTimeSlot}
+            type="time"
+          />
+          <Button
+            mode="contained"
+            onPress={handleButtonClick}
+            style={styles.button}
+            labelStyle={styles.buttonLabel}>
+            Next
+          </Button>
+        </>
+      )}
     </Layout>
   );
 };
@@ -125,4 +153,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChooseDateAndTime;
+export default ChooseDateandTime;

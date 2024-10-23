@@ -6,7 +6,7 @@ import {colors} from '../styles';
 interface ChipsGridProps {
   data: any[];
   onSelect: (item: any) => void;
-  selectedId: number;
+  selectedId: any;
   type: 'date' | 'time';
 }
 
@@ -28,7 +28,7 @@ const ChipsGrid: React.FC<ChipsGridProps> = ({
   };
 
   const renderChips = () => {
-    return data.map((chip: any, index: number) => (
+    return data?.map((chip: any, index: number) => (
       <Chip
         key={index}
         style={[
@@ -36,7 +36,9 @@ const ChipsGrid: React.FC<ChipsGridProps> = ({
           {
             //  width: calculateChipWidth(chip.value),
             backgroundColor:
-              chip.id === selectedId ? 'rgba(245, 71, 73, 0.3)' : 'white',
+              chip?.value === selectedId?.value
+                ? 'rgba(245, 71, 73, 0.3)'
+                : 'white',
           },
         ]}
         onPress={() => handleChipPress(chip)}

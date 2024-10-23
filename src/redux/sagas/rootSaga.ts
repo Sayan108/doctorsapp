@@ -1,19 +1,30 @@
-import { all } from "redux-saga/effects";
+import {all} from 'redux-saga/effects';
 import {
+  watchFetchDateTimeSlot,
+  watchCancelAppoinment,
   watchFetchAppointmentDetails,
   watchFetchAppointmentList,
   watchUpdateAppointment,
   // watchFetchDateSlots,
   // watchFetchTimeSlotsBasedOnDate,
   // watchFetchUpcomingAppointment,
-} from "./userData.saga";
-import { watchFetchAvailableSlots, watchFetchClinicDetails, watchFetchClinicList } from "./clinic.saga";
-import { watchCreateAppointmentRequested } from "./appointment.saga";
-import { watchDoctorDetailsRequested } from "./doctor.saga";
-import { watchCreatePatientRequested, watchPatientListRequested } from "./patient.saga";
+} from './userData.saga';
+import {
+  watchFetchAvailableSlots,
+  watchFetchClinicDetails,
+  watchFetchClinicList,
+} from './clinic.saga';
+import {watchCreateAppointmentRequested} from './appointment.saga';
+import {watchDoctorDetailsRequested} from './doctor.saga';
+import {
+  watchCreatePatientRequested,
+  watchPatientListRequested,
+} from './patient.saga';
 export default function* rootSaga() {
   yield all([
     watchFetchAppointmentList(),
+    watchCancelAppoinment(),
+    watchFetchDateTimeSlot(),
     // watchFetchDateSlots(),
     // watchFetchTimeSlotsBasedOnDate(),
     // watchFetchUpcomingAppointment(),
@@ -26,6 +37,6 @@ export default function* rootSaga() {
     watchCreatePatientRequested(),
     watchPatientListRequested(),
     watchFetchClinicList(),
-    watchUpdateAppointment()
+    watchUpdateAppointment(),
   ]);
 }

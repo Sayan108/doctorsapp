@@ -1,5 +1,5 @@
-import { put, takeEvery } from "redux-saga/effects";
-import { ActionType } from "typesafe-actions";
+import {put, takeEvery} from 'redux-saga/effects';
+import {ActionType} from 'typesafe-actions';
 import {
   availableSlotsFailed,
   availableSlotsRequested,
@@ -9,17 +9,17 @@ import {
   clinicListFailed,
   clinicListRequested,
   clinicListSuccess,
-} from "../silces/clinic.slice";
+} from '../silces/clinic.slice';
 import {
   availableSlots,
   getClinicList,
-} from "../../services/clinic/clinic.service";
-import * as Effects from "redux-saga/effects";
+} from '../../services/clinic/clinic.service';
+import * as Effects from 'redux-saga/effects';
 
 const call: any = Effects.call;
 
 function* fetchClinicDetails(
-  action: ActionType<typeof clinicDetailsRequested>
+  action: ActionType<typeof clinicDetailsRequested>,
 ) {
   try {
     yield put(clinicDetailsRequested(action.payload));
@@ -29,7 +29,7 @@ function* fetchClinicDetails(
 }
 
 function* fetchClinicList(
-  action: ActionType<typeof clinicListRequested>
+  action: ActionType<typeof clinicListRequested>,
 ): Generator<any, void, any> {
   try {
     const params = action.payload;
@@ -42,15 +42,15 @@ function* fetchClinicList(
 }
 
 function* fetchClinicAvailableSlots(
-  action: ActionType<typeof availableSlotsRequested>
+  action: ActionType<typeof availableSlotsRequested>,
 ): Generator<any, void, any> {
   try {
     const params = {
       clinicId: action.payload,
     };
-    console.log(params);
+
     const res: any = yield call(availableSlots, params);
-    console.log(res);
+
     yield put(availableSlotsSuccess(res.data));
   } catch (error) {
     yield put(availableSlotsFailed(error));
@@ -58,7 +58,7 @@ function* fetchClinicAvailableSlots(
 }
 
 function* addAvailableSlotsInSaga(
-  action: ActionType<typeof availableSlotsRequested>
+  action: ActionType<typeof availableSlotsRequested>,
 ) {}
 
 export function* watchFetchClinicDetails() {

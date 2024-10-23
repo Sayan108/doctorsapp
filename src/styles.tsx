@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 export const colors = {
-  primaryColor: '#F54749',
+  primaryColor: '#65558F',
   textColor: '#000000',
   backGroundColor: '#FFFFFF',
 };
@@ -10,10 +10,10 @@ export const style = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     display: 'flex',
-    width:'100%',
-    borderWidth:1,
-    flex:1,
-    gap:16
+    width: '100%',
+    borderWidth: 1,
+    flex: 1,
+    gap: 16,
   },
   headerView: {
     justifyContent: 'center',
@@ -31,7 +31,7 @@ export const style = StyleSheet.create({
   loginPageTextContainer: {
     width: 300,
     height: 60,
-    gap:8
+    gap: 8,
   },
   loginPageTextPrimary: {
     color: colors.textColor,

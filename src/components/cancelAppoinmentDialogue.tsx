@@ -8,8 +8,11 @@ import {
   Text,
   useTheme,
 } from 'react-native-paper';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {colors} from '../styles';
+import {removeFromAppoinmentListRequested} from '../redux/silces/userdata.slice';
+import {RootState} from '../redux';
+import {useNavigation} from '@react-navigation/native';
 interface ILogInDialogProps {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<any>>;
@@ -18,10 +21,20 @@ interface ILogInDialogProps {
 const CancelAppointmentDialog = (props: ILogInDialogProps) => {
   const theme = useTheme();
 
+  const appoinMentId = useSelector(
+    (state: RootState) =>
+      state.userdata.currentAppointmentDetails.data?.appointmentId,
+  );
+
   const dispatch = useDispatch();
   const {visible, setVisible} = props;
+  const navigation = useNavigation<any>();
 
-  const hideDialog = () => setVisible(false);
+  const hideDialog = () => {
+    dispatch(removeFromAppoinmentListRequested(appoinMentId ?? '')),
+      setVisible(false);
+    navigation.navigate('appointmentlist');
+  };
 
   return (
     <View style={{zIndex: 1000}}>

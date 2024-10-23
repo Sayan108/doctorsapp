@@ -1,4 +1,4 @@
-import { IAppointment } from "./appointment.constant";
+import {IAppointment} from './appointment.constant';
 
 export interface IAuthState {
   isLoading: boolean;
@@ -16,11 +16,11 @@ export interface IUserDetails {
 }
 
 export const IUserDetailsInitialState: IUserDetails = {
-  userID: "",
-  userName: "",
-  fullname: "",
-  email: "",
-  phoneNo: "",
+  userID: '',
+  userName: '',
+  fullname: '',
+  email: '',
+  phoneNo: '',
   accessToken: null,
 };
 
@@ -39,14 +39,14 @@ export const IApplicationStatesInitialStates: IApplicationStates = {
 };
 
 const IPaymentDetailsInitialState: IPaymentDetails = {
-  paymentId: "",
-  ammount: "",
-  paymentType: "cash",
+  paymentId: '',
+  ammount: '',
+  paymentType: 'cash',
 };
 export interface IPaymentDetails {
   paymentId: string;
   ammount: string;
-  paymentType: "creditcard" | "debitcard" | "cash" | "upi";
+  paymentType: 'creditcard' | 'debitcard' | 'cash' | 'upi';
 }
 
 export interface IDateSlots {
@@ -55,8 +55,8 @@ export interface IDateSlots {
 }
 
 export const IDateSlotsInitialStates: IDateSlots = {
-  id: "",
-  value: "",
+  id: '',
+  value: '',
 };
 
 export interface ITimeslots {
@@ -86,9 +86,9 @@ export interface UserData {
   //   error: any;
   // };
 
-  upcomingAppointment:IAppointment|null,
+  upcomingAppointment: IAppointment | null;
 
-  appointmentList: { data: IAppointment[]; loading: boolean; error: any };
+  appointmentList: {data: IAppointment[]; loading: boolean; error: any};
 
   currentAppointmentDetails: {
     data: IAppointment | null;
@@ -97,14 +97,18 @@ export interface UserData {
   };
 
   appointmentForm?: IAppointmentForm;
+  dateSlots: any[];
+  timeSlots: any[];
+  dateTimeSlotLoading: boolean;
 }
 
 export const UserDataInitialState: UserData = {
   upcomingAppointment: null,
-  appointmentList: { data: [], loading: false, error: null },
-  
-  currentAppointmentDetails: { data: null, loading: false, error: null },
-  appointmentForm: { loading: false },
+  appointmentList: {data: [], loading: false, error: null},
+
+  currentAppointmentDetails: {data: null, loading: false, error: null},
+  appointmentForm: {loading: false},
+  dateSlots: [],
+  timeSlots: [],
+  dateTimeSlotLoading: false,
 };
-
-

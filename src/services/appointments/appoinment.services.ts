@@ -47,4 +47,16 @@ export const updateAppointment = async (params: IUpdateAppointment) => {
   }
 };
 
+export const getDateTimeSlot = async (params: string) => {
+  try {
+    const res: AxiosResponse = await baseClient.get(
+      Endpoints.updateAppointment,
+    );
+    return res;
+  } catch (err) {
+    err = serializeError(err);
+    throw err;
+  }
+};
+
 //appointment update api call funtion

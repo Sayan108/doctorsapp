@@ -182,6 +182,65 @@ export const userDataSlice = createSlice({
     },
 
     //update appointment slices
+    removeFromAppoinmentListRequested: (
+      state: UserData,
+      action: PayloadAction<string>,
+    ) => {
+      return {
+        ...state,
+        appointmentList: {
+          ...state.appointmentList,
+          loading: true,
+        },
+      };
+    },
+    removeFromAppoinmentListSuccess: (
+      state: UserData,
+      action: PayloadAction<string>,
+    ) => {
+      const filteredAppoinmentList = state.appointmentList.data.filter(
+        (appointment: IAppointment) => {
+          appointment.appointmentId !== action.payload;
+        },
+      );
+      return {
+        ...state,
+        appointmentList: {
+          ...state.appointmentList,
+          data: filteredAppoinmentList,
+          loading: false,
+        },
+      };
+    },
+    removeFromAppoinmentListFailed: (state: UserData) => {
+      return {
+        ...state,
+        appointmentList: {
+          ...state.appointmentList,
+          loading: false,
+        },
+      };
+    },
+
+    dateTimeSlotRequested: (state: UserData, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        dateTimeSlotLoading: true,
+      };
+    },
+    dateTimeSlotSuccess: (state: UserData, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        dateTimeSlotLoading: false,
+        dateSlots: action.payload,
+      };
+    },
+    dateTimeSlotFailure: (state: UserData) => {
+      return {
+        ...state,
+        dateTimeSlotLoading: false,
+      };
+    },
     updateAppointmentRequested: (
       state: UserData,
       action: PayloadAction<IUpdateAppointment>,
@@ -258,6 +317,12 @@ export const {
   updateAppointmentRequested,
   updateAppointmentSuccess,
   updateAppointmentFailed,
+  removeFromAppoinmentListFailed,
+  removeFromAppoinmentListRequested,
+  removeFromAppoinmentListSuccess,
+  dateTimeSlotRequested,
+  dateTimeSlotSuccess,
+  dateTimeSlotFailure,
 } = userDataSlice.actions;
 
 export const userDataReducer = userDataSlice.reducer;

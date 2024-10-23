@@ -394,7 +394,7 @@ const AppointmentList = (props: any) => {
         //showing empty page if no appointment found
        <EmptyPage text={'sorry! no appointment found'}/>
       )}
-     <AddAppointmentButton/>
+     {/* <AddAppointmentButton/> */}
     </Layout>
   );
 };
