@@ -12,6 +12,7 @@ import MyProfile from './screens/profile/myProfile';
 import AppointmentList from './screens/appointment/appoinmentList';
 import AppointmentDetails from './screens/appointment/appoinmentDetails';
 import PasswordLoginScreen from './screens/login/passwordLogin';
+import AddAppointment from './screens/appointment/adddAppoinment';
 
 const Routes = () => {
   const {isAuthenticated} = useSelector((state: RootState) => state.auth);
@@ -38,7 +39,10 @@ const Routes = () => {
             name="appointmentlist"
             component={isAuthenticated ? AppointmentList : PasswordLoginScreen}
           />
-
+<Stack.Screen
+            name="addappoinment"
+            component={isAuthenticated ? AddAppointment : PasswordLoginScreen}
+          />
           <Stack.Screen
             name="reschedule"
             component={isAuthenticated ? ChooseDateAndTime : PasswordLoginScreen}

@@ -26,6 +26,7 @@ import {IClinicDetails} from '../../redux/constants/clinic.constant';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {doctorId} from '../../redux/redux.constants';
 import { EmptyPage } from '../../components/emptyPage';
+import AddAppointmentButton from '../../components/addAppoinmentButton';
 
 const AppointmentList = (props: any) => {
   const dispatch = useDispatch();
@@ -252,140 +253,148 @@ const AppointmentList = (props: any) => {
           size="large"
           style={{marginTop: '50%', marginHorizontal: 10}}
         />
-      ) : appointmentList.length > 0 ? (
-        <ScrollView style={{backgroundColor: theme.colors.surface}}>
-          {appointmentList &&
-            appointmentList?.map((item: IAppointment, index: number) => (
-              <Pressable
-                key={item.appointmentId}
-                onPress={() => {
-                  dispatch(
-                    getAppointmentDetailsRequested(item.appointmentId || ''),
-                  );
-                  navigation.navigate('appointmentdetails');
-                }}>
-                <View
-                  style={[
-                    styles.card,
-                    {
-                      borderColor: theme.colors.outline,
-                      backgroundColor: theme.colors.surface,
-                    },
-                  ]}
-                  key={item?.appointmentId}>
-                  {/*  patientName, ... other details */}
-                  <View style={styles.textContainer}>
+      ) : appointmentList.length > 0 ? 
+     
+      (
+
+        <View><ScrollView style={{backgroundColor: theme.colors.surface}}>
+        {appointmentList &&
+          appointmentList?.map((item: IAppointment, index: number) => (
+            <Pressable
+              key={item.appointmentId}
+              onPress={() => {
+                dispatch(
+                  getAppointmentDetailsRequested(item.appointmentId || ''),
+                );
+                navigation.navigate('appointmentdetails');
+              }}>
+              <View
+                style={[
+                  styles.card,
+                  {
+                    borderColor: theme.colors.outline,
+                    backgroundColor: theme.colors.surface,
+                  },
+                ]}
+                key={item?.appointmentId}>
+                {/*  patientName, ... other details */}
+                <View style={styles.textContainer}>
+                  <Text
+                    style={{color: theme.colors.onSurface}}
+                    variant="titleMedium">
+                    {item.patientData?.fullname}{' '}
+                  </Text>
+                  {/* <Text variant="bodyMedium">{item.doctorName}</Text> */}
+
+                  {/* status */}
+                  <View
+                    style={{
+                      backgroundColor:
+                        item.status === AppointmentStatus.Upcoming
+                          ? theme.colors.statusUpcoming
+                          : item.status === AppointmentStatus.Completed
+                          ? theme.colors.success
+                          : item.status === AppointmentStatus.Cancelled
+                          ? theme.colors.error
+                          : 'transparent',
+                      padding: 4,
+                      borderRadius: 4,
+                      alignSelf: 'flex-start',
+                    }}>
                     <Text
-                      style={{color: theme.colors.onSurface}}
-                      variant="titleMedium">
-                      {item.patientData?.fullname}{' '}
-                    </Text>
-                    {/* <Text variant="bodyMedium">{item.doctorName}</Text> */}
-
-                    {/* status */}
-                    <View
                       style={{
-                        backgroundColor:
+                        color:
                           item.status === AppointmentStatus.Upcoming
-                            ? theme.colors.statusUpcoming
+                            ? theme.colors.onStatusUpcoming
                             : item.status === AppointmentStatus.Completed
-                            ? theme.colors.success
+                            ? theme.colors.onSuccess
                             : item.status === AppointmentStatus.Cancelled
-                            ? theme.colors.error
+                            ? theme.colors.onError
                             : 'transparent',
-                        padding: 4,
-                        borderRadius: 4,
-                        alignSelf: 'flex-start',
-                      }}>
-                      <Text
-                        style={{
-                          color:
-                            item.status === AppointmentStatus.Upcoming
-                              ? theme.colors.onStatusUpcoming
-                              : item.status === AppointmentStatus.Completed
-                              ? theme.colors.onSuccess
-                              : item.status === AppointmentStatus.Cancelled
-                              ? theme.colors.onError
-                              : 'transparent',
-                        }}
-                        variant="bodySmall">
-                        {' '}
-                        {AppointmentStatusText[item.status]}{' '}
-                      </Text>
-                    </View>
-
-                    {/* date time section */}
-                    <View style={styles.section}>
-                      {/* <Icon
-                      name="clock-outline"
-                      color={theme.colors.onSurface}
-                      size={useResponsiveSize(24)}
-                    /> */}
-                      <Text
-                        style={{color: theme.colors.onSurface}}
-                        variant="labelMedium">
-                        {item.checkupHour} |{' '}
-                        {formatDateString(item.bookingDate)}
-                      </Text>
-                    </View>
-
-                    {/* address section */}
-                    <View
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        gap: 6,
-                      }}>
-                      <Icon
-                        name="location-on"
-                        color={theme.colors.onSurface}
-                        size={useResponsiveSize(20)}
-                      />
-                      <Text
-                        style={{color: theme.colors.onSurface}}
-                        variant="bodyMedium">
-                        {item.clinicData?.address?.address || ''}
-                      </Text>
-                    </View>
+                      }}
+                      variant="bodySmall">
+                      {' '}
+                      {AppointmentStatusText[item.status]}{' '}
+                    </Text>
                   </View>
 
-                  {/* whatsapp and call icon */}
+                  {/* date time section */}
+                  <View style={styles.section}>
+                    {/* <Icon
+                    name="clock-outline"
+                    color={theme.colors.onSurface}
+                    size={useResponsiveSize(24)}
+                  /> */}
+                    <Text
+                      style={{color: theme.colors.onSurface}}
+                      variant="labelMedium">
+                      {item.checkupHour} |{' '}
+                      {formatDateString(item.bookingDate)}
+                    </Text>
+                  </View>
+
+                  {/* address section */}
                   <View
                     style={{
                       display: 'flex',
                       flexDirection: 'row',
-                      gap: 16,
+                      gap: 6,
                     }}>
                     <Icon
-                      onPress={() => handleOpenPhoneApp('9098675568')}
-                      name="phone"
-                      color={theme.colors.onTertiaryContainer}
-                      size={useResponsiveSize(24)}
-                      style={{
-                        // borderWidth: 1,
-                        borderRadius: 100,
-                        padding: 8,
-                        // borderColor: theme.colors.primaryContainer,
-                        backgroundColor: theme.colors.tertiaryContainer,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
+                      name="location-on"
+                      color={theme.colors.onSurface}
+                      size={useResponsiveSize(20)}
                     />
-                    {/* <Icon
-                    onPress={() => handleOpenWhatsApp(item.clinicPhone)}
-                    name="whatsapp"
-                    color={'green'}
-                    size={useResponsiveSize(32)}
-                  /> */}
+                    <Text
+                      style={{color: theme.colors.onSurface}}
+                      variant="bodyMedium">
+                      {item.clinicData?.address?.address || ''}
+                    </Text>
                   </View>
                 </View>
-              </Pressable>
-            ))}
-        </ScrollView>
+
+                {/* whatsapp and call icon */}
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: 16,
+                  }}>
+                  <Icon
+                    onPress={() => handleOpenPhoneApp('9098675568')}
+                    name="phone"
+                    color={theme.colors.onTertiaryContainer}
+                    size={useResponsiveSize(24)}
+                    style={{
+                      // borderWidth: 1,
+                      borderRadius: 100,
+                      padding: 8,
+                      // borderColor: theme.colors.primaryContainer,
+                      backgroundColor: theme.colors.tertiaryContainer,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  />
+                  {/* <Icon
+                  onPress={() => handleOpenWhatsApp(item.clinicPhone)}
+                  name="whatsapp"
+                  color={'green'}
+                  size={useResponsiveSize(32)}
+                /> */}
+                </View>
+              </View>
+            </Pressable>
+          ))}
+      </ScrollView>
+   
+    
+      </View>
+        
       ) : (
         //showing empty page if no appointment found
        <EmptyPage text={'sorry! no appointment found'}/>
       )}
+     <AddAppointmentButton/>
     </Layout>
   );
 };

@@ -122,14 +122,14 @@ const HomePageComponent = (props: any) => {
               <Text
                 variant="titleMedium"
                 style={{color: theme.colors.onSurface, marginBottom: 10}}>
-                Upcoming appointments
+                Latest appointment
               </Text>
 
               <Text
                 variant="labelMedium"
                 style={{color: theme.colors.error}}
                 onPress={() => setIndex(1)}>
-                show all
+                Show All
               </Text>
             </View>
 
