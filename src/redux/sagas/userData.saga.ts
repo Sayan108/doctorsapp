@@ -114,6 +114,7 @@ function* fetchDateTimeSlot(action: ActionType<typeof dateTimeSlotRequested>) {
 
     const data = res?.data?.data?.map((item: any) => ({
       value: formatDateString(item?.date),
+      originalvalue: item?.date,
       id: item?.dayId,
       hourAndSlot: item?.hourAndSlot?.map((slotItem: any) => ({
         value: slotItem?.hour,
