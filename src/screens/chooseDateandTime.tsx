@@ -65,7 +65,7 @@ const ChooseDateandTime = ({
     const payload = {
       appointmentId: appoinmentId ?? '',
       isDeleted: false,
-      bookingDate: parseDateString(selectedDateId?.value),
+      bookingDate: selectedDateId?.originalvalue ,
       bookingTime: selectedTimeSlot?.value,
       bookingHourId: selectedTimeSlot?.id,
       bookingDayId: selectedDateId?.id,
