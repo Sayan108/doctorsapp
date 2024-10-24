@@ -68,6 +68,7 @@ export const userDataSlice = createSlice({
     appointmentListRequested: (state: UserData, action: PayloadAction<any>) => {
       return {
         ...state,
+        upcomingAppointment: null,
         appointmentList: {
           ...state.appointmentList,
           loading: true,
@@ -80,6 +81,7 @@ export const userDataSlice = createSlice({
     ) => {
       return {
         ...state,
+        upcomingAppointment: action.payload[0],
         appointmentList: {
           ...state.appointmentList,
           data: action.payload,

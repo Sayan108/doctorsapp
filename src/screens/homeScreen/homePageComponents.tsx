@@ -1,5 +1,5 @@
 import {View, Image, StyleSheet, Dimensions} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Appbar, List, Provider, useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '../../styles';
@@ -10,9 +10,11 @@ import AppointmentCard from './appointmentCard';
 import AppointmentOverView from './appoinmentOverView';
 import useResponsiveSize from '../../components/useResponsiveSize';
 import useAuthService from '../../hooks/useAuthServices';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux';
-import { AppointmentStatus } from '../../config/enum';
+import {AppointmentStatus} from '../../config/enum';
+import {appointmentListRequested} from '../../redux/silces/userdata.slice';
+import {doctorId} from '../../redux/redux.constants';
 
 const HomePageComponent = (props: any) => {
   const {setIndex, navigation} = props;
@@ -22,11 +24,16 @@ const HomePageComponent = (props: any) => {
   const [showLogout, setshowLogout] = useState<boolean>(false);
 
   const {handleLogOut} = useAuthService();
+  const dispatch = useDispatch();
   const appointmentList = useSelector((state: RootState) => {
     return state.userdata.appointmentList;
   });
 
-  
+  useEffect(() => {
+    dispatch(appointmentListRequested({doctorid: doctorId}));
+    console.log('got data');
+  }, [dispatch]);
+
   return (
     <View style={[styles.container, {backgroundColor: theme.colors.surface}]}>
       {/* appbar */}
@@ -133,9 +140,7 @@ const HomePageComponent = (props: any) => {
               </Text>
             </View>
 
-            <AppointmentCard
-              navigation={navigation}
-            />
+            <AppointmentCard navigation={navigation} />
           </View>
         </View>
       )}

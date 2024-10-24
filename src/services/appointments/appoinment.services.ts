@@ -3,6 +3,7 @@ import {IUpdateAppointment} from '../../redux/constants/appointment.constant';
 import {serializeError, toQueryString} from '../../util/funtions.util';
 import {baseClient} from '../api.cilents';
 import {Endpoints} from '../constants';
+import {doctorId} from '../../redux/redux.constants';
 
 export const addAppointment = (payload: any) => {
   return baseClient.post(Endpoints.addAppointment, payload);
@@ -40,6 +41,18 @@ export const updateAppointment = async (params: IUpdateAppointment) => {
       Endpoints.updateAppointment,
       params,
     );
+    return res;
+  } catch (err) {
+    err = serializeError(err);
+    throw err;
+  }
+};
+
+export const getDashBoardData = async () => {
+  try {
+    const res: AxiosResponse = await baseClient.get(Endpoints.dashboardData, {
+      params: {doctorid: doctorId},
+    });
     return res;
   } catch (err) {
     err = serializeError(err);

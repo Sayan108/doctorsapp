@@ -65,7 +65,7 @@ const ChooseDateandTime = ({
     const payload = {
       appointmentId: appoinmentId ?? '',
       isDeleted: false,
-      bookingDate: selectedDateId?.originalvalue ,
+      bookingDate: selectedDateId?.originalvalue,
       bookingTime: selectedTimeSlot?.value,
       bookingHourId: selectedTimeSlot?.id,
       bookingDayId: selectedDateId?.id,
@@ -88,7 +88,10 @@ const ChooseDateandTime = ({
   return (
     <Layout navigation={handleNavigation} headerText="Choose date and time">
       {loading || !selectedTimeSlot || !selectedDateId ? (
-        <ActivityIndicator />
+        <ActivityIndicator
+          size="large"
+          style={{marginTop: '50%', marginHorizontal: 10}}
+        />
       ) : (
         <>
           <Text style={styles.subtitle}>{'Choose date'}</Text>
@@ -110,7 +113,7 @@ const ChooseDateandTime = ({
             onPress={handleButtonClick}
             style={styles.button}
             labelStyle={styles.buttonLabel}>
-            Next
+            Reschedule
           </Button>
         </>
       )}
@@ -146,6 +149,8 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 24,
     backgroundColor: colors.primaryColor,
+    width: '50%',
+    alignSelf: 'center',
   },
   buttonLabel: {
     color: 'white',

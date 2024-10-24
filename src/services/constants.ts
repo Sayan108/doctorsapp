@@ -21,6 +21,7 @@ export const Endpoints = {
   appointmentDetails: '/appointment/details',
   updateAppointment: '/appointment',
   updatePatient: '/patient/update',
+  dashboardData: '/dashboard',
 };
 
 export const defaultDoctorId = '349e3b14-54a5-463b-81e4-276d6508fe37';

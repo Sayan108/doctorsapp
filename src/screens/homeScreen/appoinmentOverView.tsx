@@ -1,57 +1,75 @@
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
-import {Provider} from 'react-native-paper';
+import React, {useEffect, useState} from 'react';
+import {ActivityIndicator, Provider} from 'react-native-paper';
 import {theme} from '../../theme/theme';
 import {Text} from 'react-native-paper';
-
+import {getDashBoardData} from '../../services/appointments/appoinment.services';
+import {doctorId} from '../../redux/redux.constants';
 
 export default function AppointmentOverView({navigation}: {navigation: any}) {
   const total = 42;
   const newPatients = 40;
   const todaysAppointments = 45;
   const percentage = (todaysAppointments / total) * 100;
-
-  
+  const [dashboardData, setdashboardData] = useState<any>(null);
+  const getDashBoardDatGetter = async () => {
+    try {
+      const data = await getDashBoardData();
+      setdashboardData(data?.data?.data);
+      console.log(data?.data?.data);
+    } catch (error) {}
+  };
+  useEffect(() => {
+    getDashBoardDatGetter();
+  }, [doctorId]);
 
   return (
     <Provider theme={theme}>
-      <View style={[styles.container, {backgroundColor: theme.colors.primary}]}>
-        <Text variant="headlineLarge" style={{color: theme.colors.onPrimary}}>
-          {`Total ${total}`}
-        </Text>
-
-        {/* Today's Appointments Section */}
-        <View style={styles.row}>
-          <Text variant="bodyLarge" style={{color: theme.colors.onPrimary}}>
-            New appointments {todaysAppointments}
+      {dashboardData !== null ? (
+        <View
+          style={[styles.container, {backgroundColor: theme.colors.primary}]}>
+          <Text variant="headlineLarge" style={{color: theme.colors.onPrimary}}>
+            {`Today's appointments ${dashboardData?.todaysAppointments}`}
           </Text>
-          <View
-            style={[
-              styles.percentageBox,
-              {backgroundColor: theme.colors.success},
-            ]}>
-            <Text variant="bodyLarge" style={{color: theme.colors.onSuccess}}>
-              {percentage.toFixed(2)}%
-            </Text>
-          </View>
-        </View>
 
-        {/* New Patients Section */}
-        <View style={styles.row}>
-          <Text variant="bodyLarge" style={{color: theme.colors.onPrimary}}>
-            Old patients {newPatients}
-          </Text>
-          <View
-            style={[
-              styles.percentageBox,
-              {backgroundColor: theme.colors.success},
-            ]}>
-            <Text variant="bodyLarge" style={{color: theme.colors.onSuccess}}>
-              {percentage.toFixed(2)}%
+          {/* Today's Appointments Section */}
+          <View style={styles.row}>
+            <Text variant="bodyLarge" style={{color: theme.colors.onPrimary}}>
+              Total appointments {dashboardData?.totalAppointments}
             </Text>
+            <View
+              style={[
+                styles.percentageBox,
+                {backgroundColor: theme.colors.success},
+              ]}>
+              <Text variant="bodyLarge" style={{color: theme.colors.onSuccess}}>
+                {percentage.toFixed(2)}%
+              </Text>
+            </View>
           </View>
+
+          {/* New Patients Section */}
+          {/* <View style={styles.row}>
+            <Text variant="bodyLarge" style={{color: theme.colors.onPrimary}}>
+              Old patients {newPatients}
+            </Text>
+            <View
+              style={[
+                styles.percentageBox,
+                {backgroundColor: theme.colors.success},
+              ]}>
+              <Text variant="bodyLarge" style={{color: theme.colors.onSuccess}}>
+                {percentage.toFixed(2)}%
+              </Text>
+            </View>
+          </View> */}
         </View>
-      </View>
+      ) : (
+        <ActivityIndicator
+          size="large"
+          style={{marginTop: '25%', marginHorizontal: 10}}
+        />
+      )}
     </Provider>
   );
 }
