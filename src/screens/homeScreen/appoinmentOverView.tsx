@@ -28,13 +28,13 @@ export default function AppointmentOverView({navigation}: {navigation: any}) {
       {dashboardData !== null ? (
         <View
           style={[styles.container, {backgroundColor: theme.colors.primary}]}>
-          <Text variant="headlineLarge" style={{color: theme.colors.onPrimary}}>
-            {`Today's appointments ${dashboardData?.todaysAppointments}`}
+          <Text variant="headlineMedium" style={{color: theme.colors.onPrimary}}>
+            {`Today's appointments: ${dashboardData?.todaysAppointments}`}
           </Text>
 
           {/* Today's Appointments Section */}
           <View style={styles.row}>
-            <Text variant="bodyLarge" style={{color: theme.colors.onPrimary}}>
+            <Text variant="headlineSmall" style={{color: theme.colors.onPrimary}}>
               Total appointments {dashboardData?.totalAppointments}
             </Text>
             <View
@@ -76,11 +76,14 @@ export default function AppointmentOverView({navigation}: {navigation: any}) {
 
 const styles = StyleSheet.create({
   container: {
+    display: 'flex',
+    minHeight:160,
     borderWidth: 1,
     padding: 10,
     borderRadius: 4,
-    alignItems: 'flex-start',
-    gap: 10,
+    justifyContent: 'space-evenly',
+
+    // alignItems: 'flex-start',
   },
   row: {
     display: 'flex',
@@ -90,7 +93,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   percentageBox: {
-    width: 100,
+    width: 80,
     height: 30,
     padding: 4,
     paddingHorizontal: 8,
