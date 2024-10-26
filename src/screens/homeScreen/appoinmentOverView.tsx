@@ -6,22 +6,17 @@ import {Text} from 'react-native-paper';
 import {getDashBoardData} from '../../services/appointments/appoinment.services';
 import {doctorId} from '../../redux/redux.constants';
 
-export default function AppointmentOverView({navigation}: {navigation: any}) {
+export default function AppointmentOverView({
+  navigation,
+  dashboardData,
+}: {
+  navigation: any;
+  dashboardData: any;
+}) {
   const total = 42;
   const newPatients = 40;
   const todaysAppointments = 45;
   const percentage = (todaysAppointments / total) * 100;
-  const [dashboardData, setdashboardData] = useState<any>(null);
-  const getDashBoardDatGetter = async () => {
-    try {
-      const data = await getDashBoardData();
-      setdashboardData(data?.data?.data);
-      console.log(data?.data?.data);
-    } catch (error) {}
-  };
-  useEffect(() => {
-    getDashBoardDatGetter();
-  }, [doctorId]);
 
   return (
     <Provider theme={theme}>

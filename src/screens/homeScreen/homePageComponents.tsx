@@ -15,6 +15,7 @@ import {RootState} from '../../redux';
 import {AppointmentStatus} from '../../config/enum';
 import {appointmentListRequested} from '../../redux/silces/userdata.slice';
 import {doctorId} from '../../redux/redux.constants';
+import {getDashBoardData} from '../../services/appointments/appoinment.services';
 
 const HomePageComponent = (props: any) => {
   const {setIndex, navigation} = props;
@@ -28,9 +29,18 @@ const HomePageComponent = (props: any) => {
   const appointmentList = useSelector((state: RootState) => {
     return state.userdata.appointmentList;
   });
+  const [dashboardData, setdashboardData] = useState<any>(null);
+  const getDashBoardDatGetter = async () => {
+    try {
+      const data = await getDashBoardData();
+      setdashboardData(data?.data?.data);
+      console.log(data?.data?.data);
+    } catch (error) {}
+  };
 
   useEffect(() => {
     dispatch(appointmentListRequested({doctorid: doctorId}));
+    getDashBoardDatGetter();
     console.log('got data');
   }, [dispatch]);
 
@@ -119,7 +129,7 @@ const HomePageComponent = (props: any) => {
               style={{color: theme.colors.onSurface, marginBottom: 10}}>
               Appointment overview
             </Text>
-            <AppointmentOverView navigation={navigation} />
+            <AppointmentOverView navigation={navigation} dashboardData={dashboardData} />
           </View>
 
           {/* Upcoming appointment section */}
