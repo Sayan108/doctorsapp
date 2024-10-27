@@ -24,7 +24,10 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
   return (
     <Provider theme={theme}>
       {loading ? (
-        <ActivityIndicator />
+        <ActivityIndicator
+          size="large"
+          style={{marginTop: '25%', marginHorizontal: 10}}
+        />
       ) : upcomingAppoinment?.appointmentId ? (
         <Pressable
           onPress={() => {
@@ -129,6 +132,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'flex-start',
     gap: 16,
+    zIndex: 1000000,
   },
   iconContainer: {
     display: 'flex',

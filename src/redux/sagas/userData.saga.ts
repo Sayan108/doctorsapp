@@ -140,7 +140,11 @@ function* fetchDashboardData(
   action: ActionType<typeof dashboardDataRequested>,
 ) {
   try {
-    const res: AxiosResponse = yield call(getDashBoardData, action.payload);
+    const res: AxiosResponse = yield call(
+      getDashBoardData,
+      action.payload.doctorid,
+      action.payload.accessToken,
+    );
     const data = res?.data?.data;
     const dashboardData = {
       totalAppointments: data?.totalAppointments,

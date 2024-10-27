@@ -24,7 +24,7 @@ export const userDataSlice = createSlice({
   reducers: {
     dashboardDataRequested: (
       state: UserData,
-      action: PayloadAction<string>,
+      action: PayloadAction<{doctorid: string; accessToken: string}>,
     ) => {
       return {
         ...state,

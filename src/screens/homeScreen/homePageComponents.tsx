@@ -1,5 +1,5 @@
 import {View, StyleSheet} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Appbar, List, useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '../../styles';
@@ -20,9 +20,13 @@ import useResponsiveSize from '../../components/useResponsiveSize';
 // import {doctorId} from '../../redux/redux.constants';
 // import {getDashBoardData} from '../../services/appointments/appoinment.services';
 import {useRoute} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {dashboardDataRequested} from '../../redux/silces/userdata.slice';
+import {doctorId} from '../../redux/redux.constants';
+import {RootState} from '../../redux';
 
 const HomePageComponent = (props: any) => {
-  const {setIndex, navigation} = props;
+  const {setIndex, navigation, index} = props;
   const routes = useRoute();
   console.log(routes);
   // const dispatch = useDispatch();
@@ -30,9 +34,21 @@ const HomePageComponent = (props: any) => {
   const [visible, setvisible] = useState<boolean>(false);
   const [showLogout, setshowLogout] = useState<boolean>(false);
 
-  // const dispatch = useDispatch();
+  const accessToken = useSelector(
+    (state: RootState) => state.auth.userDetails?.accessToken,
+  );
+
+  const dispatch = useDispatch();
 
   const [dashboardData] = useState<any>(null);
+
+  useEffect(() => {
+    console.log(accessToken, 'getting token');
+    if (index === 0 && accessToken && accessToken?.length > 0) {
+      console.log('calling when index 0');
+      dispatch(dashboardDataRequested({doctorid: doctorId, accessToken}));
+    }
+  }, [index, accessToken]);
 
   return (
     <View style={[styles.container, {backgroundColor: theme.colors.surface}]}>

@@ -5,12 +5,8 @@ import {StyleSheet} from 'react-native';
 import AppointmentList from '../appointment/appoinmentList';
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../redux';
-// import {clinicListRequested} from '../../redux/silces/clinic.slice';
+
 import {ClinicList} from '../clinic/clinicList';
-// import { defaultDoctorId } from '../../services/constants';
-import {dashboardDataRequested} from '../../redux/silces/userdata.slice';
-import {doctorId} from '../../redux/redux.constants';
 
 const HomeScreen = ({navigation}: {navigation: any}) => {
   // const {userDetails} = useSelector((state: RootState) => state.auth);
@@ -25,7 +21,11 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
   };
 
   const homePageRoute = () => (
-    <HomePageComponent setIndex={handleIndexChange} navigation={navigation} />
+    <HomePageComponent
+      index={index}
+      setIndex={handleIndexChange}
+      navigation={navigation}
+    />
   );
 
   const allAppointmentList = () => (
@@ -59,9 +59,7 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
     appointments: allAppointmentList,
     clinics: allClinicList,
   });
-  useEffect(() => {
-    if (index === 0) dispatch(dashboardDataRequested(doctorId));
-  }, [index]);
+
   return (
     <BottomNavigation
       navigationState={{index, routes}}

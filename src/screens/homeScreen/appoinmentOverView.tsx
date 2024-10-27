@@ -27,13 +27,13 @@ export default function AppointmentOverView({
         <View
           style={[styles.container, {backgroundColor: theme.colors.primary}]}>
           <Text variant="headlineLarge" style={{color: theme.colors.onPrimary}}>
-            {`Today's appointments ${dashboardData?.todaysAppointments}`}
+            {`Today's appointments ${dashboardData?.todaysAppointments ?? 0}`}
           </Text>
 
           {/* Today's Appointments Section */}
           <View style={styles.row}>
             <Text variant="bodyLarge" style={{color: theme.colors.onPrimary}}>
-              Total appointments {dashboardData?.totalAppointments}
+              Total appointments {dashboardData?.totalAppointments ?? 0}
             </Text>
             <View
               style={[
