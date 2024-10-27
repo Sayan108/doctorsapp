@@ -175,14 +175,30 @@ const AppointmentDetails = ({
                     <Text
                       variant="bodyMedium"
                       style={{color: theme.colors.onSurfaceVariant}}>
-                      Name: {data?.patientData.fullname}
+                      <Text
+                        variant="bodyMedium"
+                        style={{
+                          color: theme.colors.onSurfaceVariant,
+                          fontWeight: 'bold',
+                        }}>
+                        Name:
+                      </Text>
+                      {data?.patientData.fullname}
                     </Text>
                     {/* <Text style={styles.sectionDetails}>Email: {data.email}</Text> */}
                     {data?.patientData?.phoneNumber && (
                       <Text
                         variant="bodyMedium"
                         style={{color: theme.colors.onSurfaceVariant}}>
-                        Phone: {data?.patientData?.phoneNumber}
+                        <Text
+                          variant="bodyMedium"
+                          style={{
+                            color: theme.colors.onSurfaceVariant,
+                            fontWeight: 'bold',
+                          }}>
+                          Phone :
+                        </Text>
+                        {data?.patientData?.phoneNumber}
                       </Text>
                     )}
                   </View>
@@ -205,12 +221,54 @@ const AppointmentDetails = ({
                     <Text
                       variant="bodyMedium"
                       style={{color: theme.colors.onSurfaceVariant}}>
-                      Appointment number: {data?.appointmentNumber}
+                      <Text
+                        variant="bodyMedium"
+                        style={{
+                          color: theme.colors.onSurfaceVariant,
+                          fontWeight: 'bold',
+                        }}>
+                        Appointment number:
+                      </Text>
+                      {data?.appointmentNumber}
                     </Text>
                     <Text
                       variant="bodyMedium"
                       style={{color: theme.colors.onSurfaceVariant}}>
-                      Date:{' '}
+                      <Text
+                        variant="bodyMedium"
+                        style={{
+                          color: theme.colors.onSurfaceVariant,
+                          fontWeight: 'bold',
+                        }}>
+                        Clinic name:
+                      </Text>
+                      {`${data?.clinicData?.clinicName}`}
+                    </Text>
+                    <Text
+                      variant="bodyMedium"
+                      style={{color: theme.colors.onSurfaceVariant}}>
+                      <Text
+                        variant="bodyMedium"
+                        style={{
+                          color: theme.colors.onSurfaceVariant,
+                          fontWeight: 'bold',
+                        }}>
+                        Clinic address:
+                      </Text>
+
+                      {`${data?.clinicData?.address?.address} , ${data?.clinicData?.address?.city}`}
+                    </Text>
+                    <Text
+                      variant="bodyMedium"
+                      style={{color: theme.colors.onSurfaceVariant}}>
+                      <Text
+                        variant="bodyMedium"
+                        style={{
+                          color: theme.colors.onSurfaceVariant,
+                          fontWeight: 'bold',
+                        }}>
+                        Date:
+                      </Text>
                       {formatDateString(
                         data?.bookingDate ? data.bookingDate : '',
                       )}
@@ -218,7 +276,15 @@ const AppointmentDetails = ({
                     <Text
                       variant="bodyMedium"
                       style={{color: theme.colors.onSurfaceVariant}}>
-                      Time: {data?.checkupHour}
+                      <Text
+                        variant="bodyMedium"
+                        style={{
+                          color: theme.colors.onSurfaceVariant,
+                          fontWeight: 'bold',
+                        }}>
+                        Time:
+                      </Text>{' '}
+                      {data?.checkupHour}
                     </Text>
                   </View>
 
@@ -274,6 +340,30 @@ const AppointmentDetails = ({
                           variant="bodyMedium"
                           style={{color: theme.colors.onSurfaceVariant}}>
                           {data?.problem ?? 'very big problem'}
+                        </Text>
+                      </View>
+                    </>
+                  )}
+
+                  {data?.comment && (
+                    <>
+                      <Text
+                        variant="titleMedium"
+                        style={{
+                          color: theme.colors.onSurface,
+                          marginLeft: 10,
+                        }}>
+                        Comment
+                      </Text>
+                      <View
+                        style={[
+                          styles.section,
+                          {backgroundColor: theme.colors.surfaceVariant},
+                        ]}>
+                        <Text
+                          variant="bodyMedium"
+                          style={{color: theme.colors.onSurfaceVariant}}>
+                          {data?.comment ?? 'very big problem'}
                         </Text>
                       </View>
                     </>
