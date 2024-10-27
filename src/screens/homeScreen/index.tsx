@@ -1,23 +1,23 @@
 import * as React from 'react';
-import {BottomNavigation, Text, useTheme} from 'react-native-paper';
+import {BottomNavigation, useTheme} from 'react-native-paper';
 import HomePageComponent from './homePageComponents';
 import {StyleSheet} from 'react-native';
 import AppointmentList from '../appointment/appoinmentList';
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux';
-import {clinicListRequested} from '../../redux/silces/clinic.slice';
-import { ClinicList } from '../clinic/clinicList';
-import { defaultDoctorId } from '../../services/constants';
+// import {clinicListRequested} from '../../redux/silces/clinic.slice';
+import {ClinicList} from '../clinic/clinicList';
+// import { defaultDoctorId } from '../../services/constants';
+import {dashboardDataRequested} from '../../redux/silces/userdata.slice';
+import {doctorId} from '../../redux/redux.constants';
 
 const HomeScreen = ({navigation}: {navigation: any}) => {
-  const {userDetails} = useSelector((state: RootState) => state.auth);
+  // const {userDetails} = useSelector((state: RootState) => state.auth);
   const theme = useTheme();
   const dispatch = useDispatch();
 
-  
-
- // The dependency array ensures this effect runs once after the initial render
+  // The dependency array ensures this effect runs once after the initial render
 
   const [index, setIndex] = React.useState(0);
   const handleIndexChange = (params: number) => {
@@ -59,7 +59,9 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
     appointments: allAppointmentList,
     clinics: allClinicList,
   });
-
+  useEffect(() => {
+    if (index === 0) dispatch(dashboardDataRequested(doctorId));
+  }, [index]);
   return (
     <BottomNavigation
       navigationState={{index, routes}}

@@ -1,74 +1,70 @@
 import {type PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {
-  IDateSlots,
-  IDateSlotsInitialStates,
-  ITimeslots,
+  // IDateSlots,
+  // IDateSlotsInitialStates,
+  // ITimeslots,
   UserData,
   UserDataInitialState,
 } from '../constants/userdata.constants';
 import {
   IAppointment,
-  IAppointmentInitialState,
+  // IAppointmentInitialState,
   IUpdateAppointment,
 } from '../constants/appointment.constant';
 import {IPatientInitialState} from '../constants/patient.constant';
+export interface IDashboardData {
+  upcommingAppoinment: IAppointment;
+  dashboardData: any;
+}
 // Redux Toolkit slice
 export const userDataSlice = createSlice({
   name: 'userdata',
   initialState: UserDataInitialState,
 
   reducers: {
-    // upcomingAppointmentRequested: (state: UserData) => {
-    //   return {
-    //     ...state,
-    //     upcomingAppointment: {
-    //       ...state.upcomingAppointment,
-    //       loading: true,
-    //     },
-    //   };
-    // },
-    // upcomingAppointmentSuccess: (
-    //   state: UserData,
-    //   action: PayloadAction<IAppointment>
-    // ) => {
-    //   return {
-    //     ...state,
-    //     upcomingAppointment: {
-    //       data: { ...action.payload },
-    //       loading: false,
-    //       error: {},
-    //     },
-    //   };
-    // },
-
-    // upcomingAppointmentFailure: (
-    //   state: UserData,
-    //   action: PayloadAction<any>
-    // ) => {
-    //   return {
-    //     ...state,
-    //     upcomingAppointment: {
-    //       data: IAppointmentInitialState,
-    //       error: action.payload,
-    //       loading: false,
-    //     },
-    //   };
-    // },
-
-    updateUpcomingAppointment: (
+    dashboardDataRequested: (
       state: UserData,
-      action: PayloadAction<IAppointment | null>,
+      action: PayloadAction<string>,
     ) => {
       return {
         ...state,
-        upcomingAppointment: action.payload,
+        dashboardData: {
+          ...state.dashboardData,
+          loading: true,
+        },
+      };
+    },
+    dashboardDataSuccess: (
+      state: UserData,
+      action: PayloadAction<IDashboardData>,
+    ) => {
+      return {
+        ...state,
+        dashboardData: {
+          upcomingAppoinment: action?.payload?.upcommingAppoinment,
+          dashboardData: action.payload.dashboardData,
+          loading: false,
+          error: {},
+        },
+      };
+    },
+
+    dashboardDataFailure: (state: UserData, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        dashboardData: {
+          upcomingAppoinment: null,
+          dashboardData: null,
+          error: action.payload,
+          loading: false,
+        },
       };
     },
 
     appointmentListRequested: (state: UserData, action: PayloadAction<any>) => {
       return {
         ...state,
-        upcomingAppointment: null,
+        // upcomingAppointment: null,
         appointmentList: {
           ...state.appointmentList,
           loading: true,
@@ -81,7 +77,7 @@ export const userDataSlice = createSlice({
     ) => {
       return {
         ...state,
-        upcomingAppointment: action.payload[0],
+        // upcomingAppointment: action.payload[0],
         appointmentList: {
           ...state.appointmentList,
           data: action.payload,
@@ -303,9 +299,9 @@ export const userDataSlice = createSlice({
 });
 
 export const {
-  // upcomingAppointmentFailure,
-  // upcomingAppointmentRequested,
-  // upcomingAppointmentSuccess,
+  dashboardDataRequested,
+  dashboardDataSuccess,
+  dashboardDataFailure,
   appointmentListFailure,
   appointmentListRequested,
   appointmentListSuccess,
@@ -315,7 +311,7 @@ export const {
   getAppointmentDetailsFailure,
   updateAppointmentList,
   updateAppointmentForm,
-  updateUpcomingAppointment,
+
   updateAppointmentRequested,
   updateAppointmentSuccess,
   updateAppointmentFailed,

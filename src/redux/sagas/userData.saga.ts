@@ -4,12 +4,16 @@ import {
   appointmentListFailure,
   appointmentListRequested,
   appointmentListSuccess,
+  dashboardDataFailure,
+  dashboardDataRequested,
+  dashboardDataSuccess,
   dateTimeSlotFailure,
   dateTimeSlotRequested,
   dateTimeSlotSuccess,
   getAppointmentDetailsFailure,
   getAppointmentDetailsRequested,
   getAppointmentDetailsSuccess,
+  IDashboardData,
   removeFromAppoinmentListFailed,
   removeFromAppoinmentListRequested,
   removeFromAppoinmentListSuccess,
@@ -24,6 +28,7 @@ import {
   addAppointment,
   getAppointmentDetails,
   getAppointmentList,
+  getDashBoardData,
   updateAppointment,
 } from '../../services/appointments/appoinment.services';
 // import { addAppoinemt } from "../../services/appointments/api.services";
@@ -130,6 +135,31 @@ function* fetchDateTimeSlot(action: ActionType<typeof dateTimeSlotRequested>) {
     yield put(dateTimeSlotFailure());
   }
 }
+
+function* fetchDashboardData(
+  action: ActionType<typeof dashboardDataRequested>,
+) {
+  try {
+    const res: AxiosResponse = yield call(getDashBoardData, action.payload);
+    const data = res?.data?.data;
+    const dashboardData = {
+      totalAppointments: data?.totalAppointments,
+      todaysAppointments: data?.todaysAppointments,
+    };
+    const newData: IDashboardData = {
+      upcommingAppoinment: data?.latestAppointment,
+      dashboardData,
+    };
+    console.log(newData);
+    yield put(dashboardDataSuccess(newData));
+
+    return;
+  } catch (err) {
+    err = serializeError(err);
+    console.log(err);
+    yield put(dashboardDataFailure(err));
+  }
+}
 export function* watchCancelAppoinment() {
   yield takeEvery(
     removeFromAppoinmentListRequested.type,
@@ -151,4 +181,8 @@ export function* watchUpdateAppointment() {
 
 export function* watchFetchDateTimeSlot() {
   yield takeEvery(dateTimeSlotRequested.type, fetchDateTimeSlot);
+}
+
+export function* watchFetchDashboardData() {
+  yield takeEvery(dashboardDataRequested.type, fetchDashboardData);
 }

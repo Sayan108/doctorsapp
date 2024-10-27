@@ -5,10 +5,11 @@ import {theme} from '../../theme/theme';
 import {Text} from 'react-native-paper';
 import {getDashBoardData} from '../../services/appointments/appoinment.services';
 import {doctorId} from '../../redux/redux.constants';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../redux';
 
 export default function AppointmentOverView({
   navigation,
-  dashboardData,
 }: {
   navigation: any;
   dashboardData: any;
@@ -17,10 +18,12 @@ export default function AppointmentOverView({
   const newPatients = 40;
   const todaysAppointments = 45;
   const percentage = (todaysAppointments / total) * 100;
-
+  const {loading, dashboardData} = useSelector(
+    (state: RootState) => state.userdata.dashboardData,
+  );
   return (
     <Provider theme={theme}>
-      {dashboardData !== null ? (
+      {!loading ? (
         <View
           style={[styles.container, {backgroundColor: theme.colors.primary}]}>
           <Text variant="headlineLarge" style={{color: theme.colors.onPrimary}}>

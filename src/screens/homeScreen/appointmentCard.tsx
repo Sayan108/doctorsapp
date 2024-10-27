@@ -1,7 +1,7 @@
 import {View, Pressable, StyleSheet} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Text, Provider, Surface} from 'react-native-paper';
+import {Text, Provider, Surface, ActivityIndicator} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux';
 // import { getAppointmentDetailsRequested } from '../../redux/slices/userdata.slice';
@@ -14,15 +14,18 @@ import {IAppointment} from '../../redux/constants/appointment.constant';
 import AmbulanceIcon from '../../asset/icons/ambulanceicon';
 
 const AppointmentCard = ({navigation}: {navigation: any}) => {
-  const dispatch = useDispatch();
-  const appointmentDetails = useSelector(
-    (state: RootState) => state.userdata.upcomingAppointment,
+  // const dispatch = useDispatch();
+  const {upcomingAppoinment, loading} = useSelector(
+    (state: RootState) => state.userdata.dashboardData,
   );
-  // const appointmentDetails = '';
+
+  console.log(upcomingAppoinment);
 
   return (
     <Provider theme={theme}>
-      {appointmentDetails ? (
+      {loading ? (
+        <ActivityIndicator />
+      ) : upcomingAppoinment?.appointmentId ? (
         <Pressable
           onPress={() => {
             // dispatch(
@@ -31,7 +34,7 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
             //   ),
             // );
             navigation.navigate('appointmentdetails', {
-              id: appointmentDetails.appointmentId,
+              id: upcomingAppoinment?.appointmentId,
             });
           }}>
           <Surface
@@ -47,11 +50,11 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
               />
               <View>
                 <Text variant="titleMedium">
-                  {appointmentDetails?.patientData?.fullname ?? ''}
+                  {upcomingAppoinment?.patientData?.fullname ?? ''}
                 </Text>
                 <Text variant="bodySmall">
-                  {appointmentDetails?.patientData?.gender} | Age{' '}
-                  {appointmentDetails.patientData?.age}
+                  {upcomingAppoinment?.patientData?.gender} | Age{' '}
+                  {upcomingAppoinment?.patientData?.age}
                 </Text>
               </View>
             </View>
@@ -64,7 +67,7 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
                   size={useResponsiveSize(24)}
                 />
                 <Text style={{color: theme.colors.onSurfaceVariant}}>
-                  {formatDateString(appointmentDetails.bookingDate)}
+                  {formatDateString(upcomingAppoinment?.bookingDate ?? '')}
                 </Text>
               </View>
               <View style={styles.detailItem}>
@@ -74,7 +77,7 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
                   size={useResponsiveSize(24)}
                 />
                 <Text style={{color: theme.colors.onSurfaceVariant}}>
-                  {appointmentDetails.checkupHour}
+                  {upcomingAppoinment?.checkupHour}
                 </Text>
               </View>
             </View>
@@ -86,7 +89,7 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
                 size={useResponsiveSize(24)}
               />
               <Text style={{color: theme.colors.onSurfaceVariant}}>
-                {appointmentDetails.clinicData?.address?.address}
+                {upcomingAppoinment?.clinicData?.address?.address}
               </Text>
             </View>
           </Surface>

@@ -1,48 +1,38 @@
-import {View, Image, StyleSheet, Dimensions} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {Appbar, List, Provider, useTheme} from 'react-native-paper';
+import {View, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {Appbar, List, useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '../../styles';
 import {Text} from 'react-native-paper';
 import LogoutDialogue from '../../components/logOutDialog';
-import {theme} from '../../theme/theme';
+// import {theme} from '../../theme/theme';
 import AppointmentCard from './appointmentCard';
 import AppointmentOverView from './appoinmentOverView';
 import useResponsiveSize from '../../components/useResponsiveSize';
-import useAuthService from '../../hooks/useAuthServices';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../redux';
-import {AppointmentStatus} from '../../config/enum';
-import {appointmentListRequested} from '../../redux/silces/userdata.slice';
-import {doctorId} from '../../redux/redux.constants';
-import {getDashBoardData} from '../../services/appointments/appoinment.services';
+// import useAuthService from '../../hooks/useAuthServices';
+// import {useDispatch} from 'react-redux';
+// import {RootState} from '../../redux';
+// import {AppointmentStatus} from '../../config/enum';
+// import {
+//   appointmentListRequested,
+//   dashboardDataRequested,
+// } from '../../redux/silces/userdata.slice';
+// import {doctorId} from '../../redux/redux.constants';
+// import {getDashBoardData} from '../../services/appointments/appoinment.services';
+import {useRoute} from '@react-navigation/native';
 
 const HomePageComponent = (props: any) => {
   const {setIndex, navigation} = props;
+  const routes = useRoute();
+  console.log(routes);
   // const dispatch = useDispatch();
   const theme = useTheme();
   const [visible, setvisible] = useState<boolean>(false);
   const [showLogout, setshowLogout] = useState<boolean>(false);
 
-  const {handleLogOut} = useAuthService();
-  const dispatch = useDispatch();
-  const appointmentList = useSelector((state: RootState) => {
-    return state.userdata.appointmentList;
-  });
-  const [dashboardData, setdashboardData] = useState<any>(null);
-  const getDashBoardDatGetter = async () => {
-    try {
-      const data = await getDashBoardData();
-      setdashboardData(data?.data?.data);
-      console.log(data?.data?.data);
-    } catch (error) {}
-  };
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(appointmentListRequested({doctorid: doctorId}));
-    getDashBoardDatGetter();
-    console.log('got data');
-  }, [dispatch]);
+  const [dashboardData] = useState<any>(null);
 
   return (
     <View style={[styles.container, {backgroundColor: theme.colors.surface}]}>
@@ -129,7 +119,10 @@ const HomePageComponent = (props: any) => {
               style={{color: theme.colors.onSurface, marginBottom: 10}}>
               Appointment overview
             </Text>
-            <AppointmentOverView navigation={navigation} dashboardData={dashboardData} />
+            <AppointmentOverView
+              navigation={navigation}
+              dashboardData={dashboardData}
+            />
           </View>
 
           {/* Upcoming appointment section */}

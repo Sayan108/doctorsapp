@@ -48,10 +48,10 @@ export const updateAppointment = async (params: IUpdateAppointment) => {
   }
 };
 
-export const getDashBoardData = async () => {
+export const getDashBoardData = async (doctorid: string) => {
   try {
     const res: AxiosResponse = await baseClient.get(Endpoints.dashboardData, {
-      params: {doctorid: doctorId},
+      params: {doctorid},
     });
     return res;
   } catch (err) {
