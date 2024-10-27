@@ -12,6 +12,7 @@ import {
   IUpdateAppointment,
 } from '../constants/appointment.constant';
 import {IPatientInitialState} from '../constants/patient.constant';
+import {AppointmentStatus} from '../../config/enum';
 export interface IDashboardData {
   upcommingAppoinment: IAppointment;
   dashboardData: any;
@@ -196,11 +197,15 @@ export const userDataSlice = createSlice({
       state: UserData,
       action: PayloadAction<string>,
     ) => {
-      const filteredAppoinmentList = state.appointmentList.data.filter(
-        (appointment: IAppointment) => {
-          appointment.appointmentId !== action.payload;
-        },
-      );
+      const filteredAppoinmentList: IAppointment[] = [];
+      for (let index = 0; index < state.appointmentList.data.length; index++) {
+        const appointment = state.appointmentList.data[index];
+        if (appointment.appointmentId === action.payload) {
+          appointment.status = AppointmentStatus.Cancelled;
+        }
+        filteredAppoinmentList.push(appointment);
+      }
+
       return {
         ...state,
         appointmentList: {
@@ -257,6 +262,7 @@ export const userDataSlice = createSlice({
       action: PayloadAction<IUpdateAppointment>,
     ) => {
       let appointmentDetails: IAppointment = {
+        appointmentNumber: '',
         createdBy: '',
         checkupHour: '',
         checkupDay: '',

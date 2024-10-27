@@ -18,7 +18,7 @@ const RNRedux = () => (
         loading={
           <ActivityIndicator
             size="large"
-            style={{marginTop: '25%', marginHorizontal: 10}}
+            style={{marginTop: '50%', marginHorizontal: 10}}
           />
         }
         persistor={persistor}>

@@ -19,9 +19,10 @@ import {formatDateString} from '../../util/funtions.util';
 import {StackActions} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {IUpdateAppointment} from '../../redux/constants/appointment.constant';
-import {AppointmentStatus} from '../../config/enum';
+import {AppointmentStatus, AppointmentStatusText} from '../../config/enum';
 import {updateAppointmentRequested} from '../../redux/silces/userdata.slice';
 import {availableSlotsRequested} from '../../redux/silces/clinic.slice';
+import {theme as newTheme} from '../../theme/theme';
 
 interface modalSate {
   isOpen: boolean;
@@ -54,6 +55,8 @@ const AppointmentDetails = ({
     (state: RootState) => state.userdata.currentAppointmentDetails,
   );
 
+  console.log(data, 'appoinment details');
+
   const handleReschedulteClick = (id: any) => {
     dispatch(availableSlotsRequested(id));
     navigation.navigate('reschedule');
@@ -68,7 +71,7 @@ const AppointmentDetails = ({
   // }
 
   return (
-    <Layout headerText="Booking details" navigation={handleNavigation}>
+    <Layout headerText="Appointment details" navigation={handleNavigation}>
       {isLoading ? (
         <ActivityIndicator
           size="large"
@@ -104,8 +107,8 @@ const AppointmentDetails = ({
                       width: '100%',
                       // borderWidth: 1,
                       // borderColor: theme.colors.onSurface,
-                      justifyContent: 'center',
-                      alignContent: 'center',
+                      // justifyContent: 'center',
+
                       paddingLeft: 6,
                     }}>
                     <Text
@@ -175,11 +178,13 @@ const AppointmentDetails = ({
                       Name: {data?.patientData.fullname}
                     </Text>
                     {/* <Text style={styles.sectionDetails}>Email: {data.email}</Text> */}
-                    <Text
-                      variant="bodyMedium"
-                      style={{color: theme.colors.onSurfaceVariant}}>
-                      Phone: {'9098990998'}
-                    </Text>
+                    {data?.patientData?.phoneNumber && (
+                      <Text
+                        variant="bodyMedium"
+                        style={{color: theme.colors.onSurfaceVariant}}>
+                        Phone: {data?.patientData?.phoneNumber}
+                      </Text>
+                    )}
                   </View>
 
                   {/* booking details */}
@@ -189,7 +194,7 @@ const AppointmentDetails = ({
                       color: theme.colors.onSurface,
                       marginLeft: 10,
                     }}>
-                    Booking Details
+                    Appointment Details
                   </Text>
 
                   <View
@@ -200,7 +205,7 @@ const AppointmentDetails = ({
                     <Text
                       variant="bodyMedium"
                       style={{color: theme.colors.onSurfaceVariant}}>
-                      Booking id: {data?.appointmentId}
+                      Appointment number: {data?.appointmentNumber}
                     </Text>
                     <Text
                       variant="bodyMedium"
@@ -249,26 +254,72 @@ const AppointmentDetails = ({
                 Total Amount: {data?.paymentDetails?.ammount}
               </Text>
             </View> */}
-
                   {/* Problem details */}
+                  {data?.problem && (
+                    <>
+                      <Text
+                        variant="titleMedium"
+                        style={{
+                          color: theme.colors.onSurface,
+                          marginLeft: 10,
+                        }}>
+                        Problem
+                      </Text>
+                      <View
+                        style={[
+                          styles.section,
+                          {backgroundColor: theme.colors.surfaceVariant},
+                        ]}>
+                        <Text
+                          variant="bodyMedium"
+                          style={{color: theme.colors.onSurfaceVariant}}>
+                          {data?.problem ?? 'very big problem'}
+                        </Text>
+                      </View>
+                    </>
+                  )}
                   <Text
                     variant="titleMedium"
                     style={{
                       color: theme.colors.onSurface,
                       marginLeft: 10,
                     }}>
-                    Problem
+                    Appointment Status
                   </Text>
                   <View
                     style={[
                       styles.section,
                       {backgroundColor: theme.colors.surfaceVariant},
                     ]}>
-                    <Text
-                      variant="bodyMedium"
-                      style={{color: theme.colors.onSurfaceVariant}}>
-                      {data?.problem ?? 'very big problem'}
-                    </Text>
+                    <View
+                      style={{
+                        backgroundColor:
+                          data?.status === AppointmentStatus.Upcoming
+                            ? newTheme.colors.statusUpcoming
+                            : data?.status === AppointmentStatus.Completed
+                            ? newTheme.colors.success
+                            : data?.status === AppointmentStatus.Cancelled
+                            ? newTheme.colors.error
+                            : 'transparent',
+                        padding: 4,
+                        borderRadius: 4,
+                        alignSelf: 'flex-start',
+                      }}>
+                      <Text
+                        style={{
+                          color:
+                            data?.status === AppointmentStatus.Upcoming
+                              ? newTheme.colors.onStatusUpcoming
+                              : data?.status === AppointmentStatus.Completed
+                              ? newTheme?.colors.onSuccess
+                              : data?.status === AppointmentStatus.Cancelled
+                              ? newTheme.colors.onError
+                              : 'transparent',
+                        }}
+                        variant="bodySmall">
+                        {AppointmentStatusText[data?.status ?? 0]}
+                      </Text>
+                    </View>
                   </View>
                 </View>
               </ScrollView>

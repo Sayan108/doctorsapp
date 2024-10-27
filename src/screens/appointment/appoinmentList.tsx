@@ -36,8 +36,8 @@ const AppointmentList = (props: any) => {
   //payload
   const [payload, setPayload] = useState<{
     doctorId: string;
-    clinicId: string | null;
-    status: number | null;
+    clinicId?: string | null;
+    status?: number | null;
   }>({doctorId: doctorId, clinicId: null, status: null});
 
   //api call to get appointment list
@@ -105,12 +105,17 @@ const AppointmentList = (props: any) => {
   const [statusListVisible, setStatusListVisible] = useState<boolean>(false);
   const displayStatusList = ['All Status', ...AppointmentStatusText];
   const handleStatusRadioButtonClick = (index: number, item: string) => {
+    const {doctorId, clinicId, status} = payload;
+
     setSelectedStatusIndex(index);
     // console.log('selectedStatusIndex', selectedStatusIndex);
     setStatusListVisible(false);
     if (index > 0) {
       //as 0 is holded by All status, which is not an actual status
       setPayload({...payload, status: AppointmentStatusText.indexOf(item)});
+    } else {
+      if (clinicId) setPayload({doctorId, clinicId});
+      else setPayload({doctorId});
     }
   };
 
@@ -121,7 +126,10 @@ const AppointmentList = (props: any) => {
   };
 
   return (
-    <Layout headerText="All appointments" navigation={conditionalFunction}>
+    <Layout
+      headerText="All appointments"
+      navigation={conditionalFunction}
+      hideBackButton>
       {/* filter options */}
       <SafeAreaView
         style={{
@@ -133,6 +141,7 @@ const AppointmentList = (props: any) => {
         {/* clinic based filter */}
         <TouchableOpacity
           onPress={() => {
+            setStatusListVisible(false);
             setClinicListVisible(!clinicListVisible);
           }}>
           <View
@@ -156,6 +165,7 @@ const AppointmentList = (props: any) => {
         {/* status based filter  */}
         <TouchableOpacity
           onPress={() => {
+            setClinicListVisible(false);
             setStatusListVisible(!statusListVisible);
           }}>
           <View
@@ -233,7 +243,7 @@ const AppointmentList = (props: any) => {
                 right={() => (
                   <RadioButton
                     status={
-                      index === selectedClinicIndex ? 'checked' : 'unchecked'
+                      index === selectedStatusIndex ? 'checked' : 'unchecked'
                     }
                     onPress={() => {
                       handleStatusRadioButtonClick(index, item);
@@ -351,34 +361,38 @@ const AppointmentList = (props: any) => {
                     </View>
 
                     {/* whatsapp and call icon */}
-                    <View
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        gap: 16,
-                      }}>
-                      <Icon
-                        onPress={() => handleOpenPhoneApp('9098675568')}
-                        name="phone"
-                        color={theme.colors.onTertiaryContainer}
-                        size={useResponsiveSize(24)}
+                    {item?.patientData?.phoneNumber && (
+                      <View
                         style={{
-                          // borderWidth: 1,
-                          borderRadius: 100,
-                          padding: 8,
-                          // borderColor: theme.colors.primaryContainer,
-                          backgroundColor: theme.colors.tertiaryContainer,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}
-                      />
-                      {/* <Icon
+                          display: 'flex',
+                          flexDirection: 'row',
+                          gap: 16,
+                        }}>
+                        <Icon
+                          onPress={() =>
+                            handleOpenPhoneApp(item?.patientData?.phoneNumber)
+                          }
+                          name="phone"
+                          color={theme.colors.onTertiaryContainer}
+                          size={useResponsiveSize(24)}
+                          style={{
+                            // borderWidth: 1,
+                            borderRadius: 100,
+                            padding: 8,
+                            // borderColor: theme.colors.primaryContainer,
+                            backgroundColor: theme.colors.tertiaryContainer,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}
+                        />
+                        {/* <Icon
                   onPress={() => handleOpenWhatsApp(item.clinicPhone)}
                   name="whatsapp"
                   color={'green'}
                   size={useResponsiveSize(32)}
                 /> */}
-                    </View>
+                      </View>
+                    )}
                   </View>
                 </Pressable>
               ))}

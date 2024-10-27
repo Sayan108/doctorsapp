@@ -8,6 +8,7 @@ import {IDoctor, IDoctorInitialState} from './doctor.constant';
 import {IPatient, IPatientInitialState} from './patient.constant';
 
 export interface IAppointment {
+  appointmentNumber: string;
   createdBy: string;
   checkupHour: string;
   checkupDay: string;
@@ -28,6 +29,7 @@ export interface IAppointment {
 }
 
 export const IAppointmentInitialState: IAppointment = {
+  appointmentNumber: '',
   createdBy: '',
   checkupHour: '',
   bookingDate: '',
