@@ -7,14 +7,24 @@ import App from './App';
 import {name as appName} from './app.json';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
-import {PaperProvider, Text} from 'react-native-paper';
+import {ActivityIndicator, PaperProvider, Text} from 'react-native-paper';
 import {theme} from './src/theme/theme';
+import {AxiosInterceptor} from './src/services/api.cilents';
 
 const RNRedux = () => (
   <PaperProvider theme={theme}>
     <Provider store={store}>
-      <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
-        <App />
+      <PersistGate
+        loading={
+          <ActivityIndicator
+            size="large"
+            style={{marginTop: '25%', marginHorizontal: 10}}
+          />
+        }
+        persistor={persistor}>
+        <AxiosInterceptor>
+          <App />
+        </AxiosInterceptor>
       </PersistGate>
     </Provider>
   </PaperProvider>
