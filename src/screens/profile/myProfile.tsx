@@ -71,7 +71,7 @@ const MyProfile = ({navigation}: {navigation: any}) => {
   // console.log('istextChanged', isTextChanged);
 
   return (
-    <Layout navigation={handleNavigation} headerText="My profile">
+    <Layout>
       <SafeAreaView
         style={{
           backgroundColor: theme.colors.surface,

@@ -13,39 +13,53 @@ import AppointmentList from './screens/appointment/appoinmentList';
 import AppointmentDetails from './screens/appointment/appoinmentDetails';
 import PasswordLoginScreen from './screens/login/passwordLogin';
 import AddAppointment from './screens/appointment/adddAppoinment';
+import {useTheme} from 'react-native-paper';
 
 const Routes = () => {
   const {isAuthenticated} = useSelector((state: RootState) => state.auth);
   const Stack = createNativeStackNavigator();
 
+  const theme = useTheme();
+
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="home"
+        // initialRouteName="home"
         screenOptions={{
-          headerShown: false,
+          // headerShown: false,
+          headerStyle: {backgroundColor: theme.colors.surface},
+          headerTintColor: theme.colors.onSurface,
+          headerTitleAlign: 'center',
         }}>
         <Stack.Group>
           {/* <Stack.Screen name="phoneinput" component={PasswordLoginScreen} />
           <Stack.Screen name="otpverification" component={OTPInputScreen} /> */}
 
-          <Stack.Screen name="login" component={PasswordLoginScreen} />
+          <Stack.Screen
+            name="login"
+            component={PasswordLoginScreen}
+            options={{headerTitle: 'Login'}}
+          />
 
           <Stack.Screen
             name="home"
             component={isAuthenticated ? HomeScreen : PasswordLoginScreen}
+    
           />
           <Stack.Screen
             name="appointmentlist"
             component={isAuthenticated ? AppointmentList : PasswordLoginScreen}
+            options={{headerTitle: 'AppointmentList'}}
           />
-<Stack.Screen
+          <Stack.Screen
             name="addappoinment"
             component={isAuthenticated ? AddAppointment : PasswordLoginScreen}
           />
           <Stack.Screen
             name="reschedule"
-            component={isAuthenticated ? ChooseDateAndTime : PasswordLoginScreen}
+            component={
+              isAuthenticated ? ChooseDateAndTime : PasswordLoginScreen
+            }
             initialParams={{id: -1}}
           />
 
@@ -56,7 +70,9 @@ const Routes = () => {
 
           <Stack.Screen
             name="appointmentdetails"
-            component={isAuthenticated ? AppointmentDetails : PasswordLoginScreen}
+            component={
+              isAuthenticated ? AppointmentDetails : PasswordLoginScreen
+            }
             initialParams={{id: -1}}
           />
         </Stack.Group>

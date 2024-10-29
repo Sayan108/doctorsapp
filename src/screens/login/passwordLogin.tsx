@@ -36,7 +36,7 @@ const PasswordLoginScreen: React.FC<{navigation: any}> = ({navigation}) => {
   //   };
 
   return (
-    <Layout headerText="Login" hideBackButton={true}>
+    <Layout>
     <View style={[style.view, {backgroundColor: theme.colors.surface}]}>
     {/* doctor icon */}
         <View style={{}}>
