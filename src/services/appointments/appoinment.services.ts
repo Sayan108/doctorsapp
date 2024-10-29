@@ -1,8 +1,8 @@
-import {AxiosResponse} from 'axios';
+import axios, {AxiosResponse} from 'axios';
 import {IUpdateAppointment} from '../../redux/constants/appointment.constant';
 import {serializeError, toQueryString} from '../../util/funtions.util';
 import {baseClient} from '../api.cilents';
-import {Endpoints} from '../constants';
+import {BaseURLs, Endpoints} from '../constants';
 import {doctorId} from '../../redux/redux.constants';
 
 export const addAppointment = (payload: any) => {
@@ -48,15 +48,25 @@ export const updateAppointment = async (params: IUpdateAppointment) => {
   }
 };
 
-export const getDashBoardData = async () => {
+export const getDashBoardData = async (
+  doctorid: string,
+  accessToken: string,
+): Promise<AxiosResponse> => {
   try {
-    const res: AxiosResponse = await baseClient.get(Endpoints.dashboardData, {
-      params: {doctorid: doctorId},
-    });
+    const res: AxiosResponse = await axios.get(
+      `${BaseURLs.baseURL}${Endpoints.dashboardData}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        params: {doctorid},
+      },
+    );
     return res;
   } catch (err) {
-    err = serializeError(err);
-    throw err;
+    const serializedError = serializeError(err);
+    throw serializedError;
   }
 };
 

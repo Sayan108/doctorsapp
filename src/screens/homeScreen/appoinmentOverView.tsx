@@ -5,37 +5,35 @@ import {theme} from '../../theme/theme';
 import {Text} from 'react-native-paper';
 import {getDashBoardData} from '../../services/appointments/appoinment.services';
 import {doctorId} from '../../redux/redux.constants';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../redux';
 
-export default function AppointmentOverView({navigation}: {navigation: any}) {
+export default function AppointmentOverView({
+  navigation,
+}: {
+  navigation: any;
+  dashboardData: any;
+}) {
   const total = 42;
   const newPatients = 40;
   const todaysAppointments = 45;
   const percentage = (todaysAppointments / total) * 100;
-  const [dashboardData, setdashboardData] = useState<any>(null);
-  const getDashBoardDatGetter = async () => {
-    try {
-      const data = await getDashBoardData();
-      setdashboardData(data?.data?.data);
-      console.log(data?.data?.data);
-    } catch (error) {}
-  };
-  useEffect(() => {
-    getDashBoardDatGetter();
-  }, [doctorId]);
-
+  const {loading, dashboardData} = useSelector(
+    (state: RootState) => state.userdata.dashboardData,
+  );
   return (
     <Provider theme={theme}>
-      {dashboardData !== null ? (
+      {!loading ? (
         <View
           style={[styles.container, {backgroundColor: theme.colors.primary}]}>
-          <Text variant="headlineMedium" style={{color: theme.colors.onPrimary}}>
-            {`Today's appointments: ${dashboardData?.todaysAppointments}`}
+          <Text variant="headlineLarge" style={{color: theme.colors.onPrimary}}>
+            {`Today's appointments ${dashboardData?.todaysAppointments ?? 0}`}
           </Text>
 
           {/* Today's Appointments Section */}
           <View style={styles.row}>
-            <Text variant="headlineSmall" style={{color: theme.colors.onPrimary}}>
-              Total appointments {dashboardData?.totalAppointments}
+            <Text variant="bodyLarge" style={{color: theme.colors.onPrimary}}>
+              Total appointments {dashboardData?.totalAppointments ?? 0}
             </Text>
             <View
               style={[
@@ -77,7 +75,7 @@ export default function AppointmentOverView({navigation}: {navigation: any}) {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    minHeight:160,
+    minHeight: 160,
     borderWidth: 1,
     padding: 10,
     borderRadius: 4,
