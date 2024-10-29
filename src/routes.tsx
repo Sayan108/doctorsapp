@@ -38,13 +38,13 @@ const Routes = () => {
           <Stack.Screen
             name="login"
             component={PasswordLoginScreen}
-            options={{headerTitle: 'Login'}}
+            options={{headerTitle: 'Login',headerBackVisible:false}}
           />
 
           <Stack.Screen
             name="home"
             component={isAuthenticated ? HomeScreen : PasswordLoginScreen}
-    
+            options={{headerTitle: 'Home',headerBackVisible:false}}
           />
           <Stack.Screen
             name="appointmentlist"

@@ -1,6 +1,6 @@
 import {StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, Provider} from 'react-native-paper';
+import {ActivityIndicator, Provider, useTheme} from 'react-native-paper';
 import {theme} from '../../theme/theme';
 import {Text} from 'react-native-paper';
 import {getDashBoardData} from '../../services/appointments/appoinment.services';
@@ -14,6 +14,8 @@ export default function AppointmentOverView({
   navigation: any;
   dashboardData: any;
 }) {
+
+
   const total = 42;
   const newPatients = 40;
   const todaysAppointments = 45;
@@ -22,45 +24,84 @@ export default function AppointmentOverView({
     (state: RootState) => state.userdata.dashboardData,
   );
   return (
-    <Provider theme={theme}>
+    <Provider>
       {!loading ? (
-        <View
-          style={[styles.container, {backgroundColor: theme.colors.primary}]}>
-          <Text variant="headlineLarge" style={{color: theme.colors.onPrimary}}>
-            {`Today's appointments ${dashboardData?.todaysAppointments ?? 0}`}
-          </Text>
-
-          {/* Today's Appointments Section */}
-          <View style={styles.row}>
-            <Text variant="bodyLarge" style={{color: theme.colors.onPrimary}}>
-              Total appointments {dashboardData?.totalAppointments ?? 0}
+        <View style={styles.container}>
+          {/* Todays appointment box */}
+          <View
+            style={[
+              styles.gridItem,
+              {backgroundColor: theme.colors.successContainer},
+            ]}>
+            <Text
+              style={{color: theme.colors.onSuccessContainer}}
+              variant="titleLarge">
+              {' '}
+              Today{' '}
             </Text>
-            <View
-              style={[
-                styles.percentageBox,
-                {backgroundColor: theme.colors.success},
-              ]}>
-              <Text variant="bodyLarge" style={{color: theme.colors.onSuccess}}>
-                {percentage.toFixed(2)}%
-              </Text>
-            </View>
+            <Text
+              style={{color: theme.colors.onSuccessContainer}}
+              variant="displayMedium">
+              23
+            </Text>
           </View>
 
-          {/* New Patients Section */}
-          {/* <View style={styles.row}>
-            <Text variant="bodyLarge" style={{color: theme.colors.onPrimary}}>
-              Old patients {newPatients}
+          {/* upcoming appointment box */}
+          <View
+            style={[
+              styles.gridItem,
+              {backgroundColor: theme.colors.statusUpcoming},
+            ]}>
+            <Text
+              style={{color: theme.colors.onStatusUpcomingContainer}}
+              variant="titleLarge">
+              {' '}
+              Upcoming{' '}
             </Text>
-            <View
-              style={[
-                styles.percentageBox,
-                {backgroundColor: theme.colors.success},
-              ]}>
-              <Text variant="bodyLarge" style={{color: theme.colors.onSuccess}}>
-                {percentage.toFixed(2)}%
-              </Text>
-            </View>
-          </View> */}
+            <Text
+              style={{color: theme.colors.onStatusUpcomingContainer}}
+              variant="displayMedium">
+              23
+            </Text>
+          </View>
+
+          {/* Total appointment box */}
+          <View
+            style={[
+              styles.gridItem,
+              {backgroundColor: theme.colors.primaryContainer},
+            ]}>
+            <Text
+              style={{color: theme.colors.onPrimaryContainer}}
+              variant="titleLarge">
+              {' '}
+              Total{' '}
+            </Text>
+            <Text
+              style={{color: theme.colors.onPrimaryContainer}}
+              variant="displayMedium">
+              23
+            </Text>
+          </View>
+
+          {/* canceled appointment box */}
+          <View
+            style={[
+              styles.gridItem,
+              {backgroundColor: theme.colors.errorContainer},
+            ]}>
+            <Text
+              style={{color: theme.colors.onErrorContainer}}
+              variant="titleLarge">
+              {' '}
+              Canceled{' '}
+            </Text>
+            <Text
+              style={{color: theme.colors.onErrorContainer}}
+              variant="displayMedium">
+              23
+            </Text>
+          </View>
         </View>
       ) : (
         <ActivityIndicator
@@ -74,14 +115,19 @@ export default function AppointmentOverView({
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
-    minHeight: 160,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 4,
-    justifyContent: 'space-evenly',
-
-    // alignItems: 'flex-start',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    width: '100%',
+  },
+  gridItem: {
+    width: '44%', // Width to fit 2 items per row
+    height: 100, // Adjust height as needed
+    alignItems: 'center',
+    // justifyContent: 'center',
+    marginBottom: 20,
+    borderRadius: 8,
+    padding: 4,
   },
   row: {
     display: 'flex',

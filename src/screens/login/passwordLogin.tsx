@@ -39,21 +39,11 @@ const PasswordLoginScreen: React.FC<{navigation: any}> = ({navigation}) => {
     <Layout>
     <View style={[style.view, {backgroundColor: theme.colors.surface}]}>
     {/* doctor icon */}
-        <View style={{}}>
+        <View style={{marginTop:20}}>
           <DoctorIcon />
         </View>
 
-        {/* <View style={styles.messageContainer}>
-        <Text style={styles.messageText}>
-          Do you want to know about Kedia Polymer trading product ?
-        </Text>
-        <Text style={styles.messageText}>
-          We sell Astral pipes, Sintex tanks, Berger paints, G.I pipes.
-        </Text>
-        <Text style={styles.linkText} onPress={handleRedirectToWebsite}>
-          For details visit our website.
-        </Text>
-      </View> */}
+       
 
         <View style={styles.loginPageTextContainer}>
           <View>
