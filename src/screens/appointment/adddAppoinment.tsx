@@ -16,7 +16,7 @@ const AddAppointment = ({navigation}: {navigation: any}) => {
     navigation.navigate('home');
   };
   return (
-    <Layout navigation={handleNavigation} headerText="Add an appointment">
+    <Layout>
       <TextInput
         maxLength={50}
         autoFocus

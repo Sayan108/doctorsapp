@@ -126,10 +126,7 @@ const AppointmentList = (props: any) => {
   };
 
   return (
-    <Layout
-      headerText="All appointments"
-      navigation={conditionalFunction}
-      hideBackButton>
+    <Layout>
       {/* filter options */}
       <SafeAreaView
         style={{

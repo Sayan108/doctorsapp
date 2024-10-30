@@ -71,7 +71,7 @@ const AppointmentDetails = ({
   // }
 
   return (
-    <Layout headerText="Appointment details" navigation={handleNavigation}>
+    <Layout>
       {isLoading ? (
         <ActivityIndicator
           size="large"

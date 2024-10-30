@@ -1,4 +1,4 @@
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Appbar, List, useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -53,7 +53,7 @@ const HomePageComponent = (props: any) => {
   return (
     <View style={[styles.container, {backgroundColor: theme.colors.surface}]}>
       {/* appbar */}
-      <Appbar.Header>
+      {/* <Appbar.Header>
         <Icon
           name="account-circle-outline"
           size={35}
@@ -62,7 +62,7 @@ const HomePageComponent = (props: any) => {
             setvisible(!visible);
           }}
         />
-      </Appbar.Header>
+      </Appbar.Header> */}
 
       {visible ? (
         <View
@@ -127,41 +127,44 @@ const HomePageComponent = (props: any) => {
           navigation={navigation}
         />
       ) : (
-        <View style={{display: 'flex', flex: 1}}>
-          {/* Appointment overview section */}
-          <View style={styles.section}>
-            <Text
-              variant="titleMedium"
-              style={{color: theme.colors.onSurface, marginBottom: 10}}>
-              Appointment overview
-            </Text>
-            <AppointmentOverView
-              navigation={navigation}
-              dashboardData={dashboardData}
-            />
-          </View>
+        <ScrollView>
+          <View style={{display: 'flex', gap: 40, marginTop: 20}}>
+            {/* Appointment overview section */}
 
-          {/* Upcoming appointment section */}
-          <View style={styles.section}>
-            {/* Upcoming appointment text and see all button */}
-            <View style={styles.header}>
+            <View style={styles.section}>
               <Text
                 variant="titleMedium"
                 style={{color: theme.colors.onSurface, marginBottom: 10}}>
-                Latest appointment
+               Appointment Overview
               </Text>
-
-              <Text
-                variant="labelMedium"
-                style={{color: theme.colors.error}}
-                onPress={() => setIndex(1)}>
-                Show All
-              </Text>
+              <AppointmentOverView
+                navigation={navigation}
+                dashboardData={dashboardData}
+              />
             </View>
 
-            <AppointmentCard navigation={navigation} />
+            {/* Upcoming appointment section */}
+            <View style={styles.section}>
+              {/* Upcoming appointment text and see all button */}
+              <View style={styles.header}>
+                <Text
+                  variant="titleMedium"
+                  style={{color: theme.colors.onSurface, marginBottom: 10}}>
+                  Latest appointment
+                </Text>
+
+                <Text
+                  variant="labelMedium"
+                  style={{color: theme.colors.error}}
+                  onPress={() => setIndex(1)}>
+                  Show All
+                </Text>
+              </View>
+
+              <AppointmentCard navigation={navigation} />
+            </View>
           </View>
-        </View>
+        </ScrollView>
       )}
     </View>
   );

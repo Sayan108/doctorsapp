@@ -11,9 +11,9 @@ export const style = StyleSheet.create({
     alignItems: 'center',
     display: 'flex',
     width: '100%',
-    borderWidth: 1,
+    // borderWidth: 1,
     flex: 1,
-    gap: 16,
+    gap: 20,
   },
   headerView: {
     justifyContent: 'center',
