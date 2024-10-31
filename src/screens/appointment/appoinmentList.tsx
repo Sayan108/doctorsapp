@@ -56,12 +56,14 @@ const AppointmentList = (props: any) => {
   };
   clinicList = [allClinic, ...clinicList];
 
-  // console.log('clinicList is here', clinicList);
+  // //'clinicList is here', clinicList);
 
   //appointment list
   const appointmentList: IAppointment[] = useSelector(
     (state: RootState) => state.userdata.appointmentList.data,
   );
+
+  console.log(appointmentList[0], 'getting appointmentlist');
 
   //updating upcoming appointment
   // useEffect(() => {
@@ -108,7 +110,7 @@ const AppointmentList = (props: any) => {
     const {doctorId, clinicId, status} = payload;
 
     setSelectedStatusIndex(index);
-    // console.log('selectedStatusIndex', selectedStatusIndex);
+    // //'selectedStatusIndex', selectedStatusIndex);
     setStatusListVisible(false);
     if (index > 0) {
       //as 0 is holded by All status, which is not an actual status

@@ -55,7 +55,7 @@ const AppointmentDetails = ({
     (state: RootState) => state.userdata.currentAppointmentDetails,
   );
 
-  console.log(data, 'appoinment details');
+  //data, 'appoinment details');
 
   const handleReschedulteClick = (id: any) => {
     dispatch(availableSlotsRequested(id));

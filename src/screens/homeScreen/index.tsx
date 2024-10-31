@@ -7,6 +7,9 @@ import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {ClinicList} from '../clinic/clinicList';
+import {changehomeScreenTab} from '../../redux/silces/application.slice';
+import {appointmentListRequested} from '../../redux/silces/userdata.slice';
+import {doctorId} from '../../redux/redux.constants';
 
 const HomeScreen = ({navigation}: {navigation: any}) => {
   // const {userDetails} = useSelector((state: RootState) => state.auth);
@@ -18,7 +21,12 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
   const [index, setIndex] = React.useState(0);
   const handleIndexChange = (params: number) => {
     setIndex(params);
+    dispatch(changehomeScreenTab(params));
   };
+
+  useEffect(() => {
+    if (index === 2) dispatch(appointmentListRequested({doctorId}));
+  }, [index]);
 
   const homePageRoute = () => (
     <HomePageComponent

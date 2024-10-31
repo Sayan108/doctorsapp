@@ -1,4 +1,5 @@
-import {IAppointment} from './appointment.constant';
+import {IDashboardData} from '../silces/userdata.slice';
+import {IAppointment, IAppointmentInitialState} from './appointment.constant';
 
 export interface IAuthState {
   isLoading: boolean;
@@ -82,7 +83,7 @@ export interface Clinic {}
 export interface UserData {
   dashboardData: {
     upcomingAppoinment: IAppointment | null;
-    dashboardData: any;
+    dashboardData: IDashboardOverViewData | null;
     loading: boolean;
     error: any;
   };
@@ -104,7 +105,12 @@ export interface UserData {
 export const UserDataInitialState: UserData = {
   dashboardData: {
     upcomingAppoinment: null,
-    dashboardData: null,
+    dashboardData: {
+      totalAppointments: 0,
+      todaysAppointments: 0,
+      cancelledAppointments: 0,
+      upcomingAppointments: 0,
+    },
     loading: false,
     error: null,
   },
@@ -116,3 +122,10 @@ export const UserDataInitialState: UserData = {
   timeSlots: [],
   dateTimeSlotLoading: false,
 };
+
+export interface IDashboardOverViewData {
+  totalAppointments: number;
+  todaysAppointments: number;
+  upcomingAppointments: number;
+  cancelledAppointments: number;
+}

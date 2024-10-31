@@ -28,7 +28,7 @@ import {RootState} from '../../redux';
 const HomePageComponent = (props: any) => {
   const {setIndex, navigation, index} = props;
   const routes = useRoute();
-  console.log(routes);
+  //routes);
   // const dispatch = useDispatch();
   const theme = useTheme();
   const [visible, setvisible] = useState<boolean>(false);
@@ -43,9 +43,9 @@ const HomePageComponent = (props: any) => {
   const [dashboardData] = useState<any>(null);
 
   useEffect(() => {
-    console.log(accessToken, 'getting token');
+    //accessToken, 'getting token');
     if (index === 0 && accessToken && accessToken?.length > 0) {
-      console.log('calling when index 0');
+      //'calling when index 0');
       dispatch(dashboardDataRequested({doctorid: doctorId, accessToken}));
     }
   }, [index, accessToken]);
@@ -135,7 +135,7 @@ const HomePageComponent = (props: any) => {
               <Text
                 variant="titleMedium"
                 style={{color: theme.colors.onSurface, marginBottom: 10}}>
-               Appointment Overview
+                Appointment Overview
               </Text>
               <AppointmentOverView
                 navigation={navigation}

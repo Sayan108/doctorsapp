@@ -14,8 +14,6 @@ export default function AppointmentOverView({
   navigation: any;
   dashboardData: any;
 }) {
-
-
   const total = 42;
   const newPatients = 40;
   const todaysAppointments = 45;
@@ -42,7 +40,7 @@ export default function AppointmentOverView({
             <Text
               style={{color: theme.colors.onSuccessContainer}}
               variant="displayMedium">
-              23
+              {dashboardData?.todaysAppointments}
             </Text>
           </View>
 
@@ -61,7 +59,7 @@ export default function AppointmentOverView({
             <Text
               style={{color: theme.colors.onStatusUpcomingContainer}}
               variant="displayMedium">
-              23
+              {dashboardData?.upcomingAppointments}
             </Text>
           </View>
 
@@ -80,7 +78,7 @@ export default function AppointmentOverView({
             <Text
               style={{color: theme.colors.onPrimaryContainer}}
               variant="displayMedium">
-              23
+              {dashboardData?.totalAppointments}
             </Text>
           </View>
 
@@ -94,12 +92,12 @@ export default function AppointmentOverView({
               style={{color: theme.colors.onErrorContainer}}
               variant="titleLarge">
               {' '}
-              Canceled{' '}
+              Cancelled{' '}
             </Text>
             <Text
               style={{color: theme.colors.onErrorContainer}}
               variant="displayMedium">
-              23
+              {dashboardData?.cancelledAppointments}
             </Text>
           </View>
         </View>

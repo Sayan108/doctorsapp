@@ -32,7 +32,7 @@ function* patientList(
 ): Generator<any, void, any> {
   try {
     const res = yield call(getPatientList);
-    // console.log('patientlist response from saga',res);
+    // //'patientlist response from saga',res);
 
     yield put(patientListSuccess(res.data.data));
     // action.payload.navigator('/selectdate')

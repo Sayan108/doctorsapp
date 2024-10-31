@@ -73,7 +73,7 @@ export const appointmentSlice = createSlice({
     },
 
     upDateClinic: (state: IAppointment, action: PayloadAction<string>) => {
-      // console.log("fdsjkhfkj", action.payload);
+      // //"fdsjkhfkj", action.payload);
       return {
         ...state,
         clinicId: action.payload,
@@ -84,7 +84,7 @@ export const appointmentSlice = createSlice({
       state: IAppointment,
       action: PayloadAction<any>,
     ) => {
-      // console.log("fdsjkhfkj", action.payload);
+      // //"fdsjkhfkj", action.payload);
       return {
         ...state,
         bookingDate: action.payload.bookingDate,
@@ -98,7 +98,7 @@ export const appointmentSlice = createSlice({
       state: IAppointment,
       action: PayloadAction<any>,
     ) => {
-      // console.log("fdsjkhfkj", action.payload);
+      // //"fdsjkhfkj", action.payload);
       return {
         ...state,
         patientData: {...state.patientData, ...action.payload},

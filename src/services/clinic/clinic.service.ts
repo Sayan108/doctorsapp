@@ -15,7 +15,7 @@ export const getClinicList = async (params: any) => {
 };
 
 export const availableSlots = async (params: string) => {
-  console.log('inside api call');
+  //'inside api call');
   const res: AxiosResponse = await baseClient.get(Endpoints.availableSlots, {
     params: {clinicId: params},
   });

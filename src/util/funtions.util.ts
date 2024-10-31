@@ -74,3 +74,21 @@ export function toQueryString(params: any) {
     .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params[key]))
     .join('&');
 }
+
+export enum StatusName {
+  upcoming = 'upcoming',
+  cancelled = 'cancelled',
+  completed = 'completed',
+}
+
+export const getCountByStatus = (
+  inputArray: Record<string, string>[],
+  status: string,
+): number => {
+  for (let i = 0; i < inputArray.length; i++) {
+    if (inputArray[i][status] !== undefined) {
+      return parseInt(inputArray[i][status], 10);
+    }
+  }
+  return 0; // Return 0 if the status is not found in the array
+};

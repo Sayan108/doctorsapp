@@ -15,7 +15,7 @@ function* fetchDoctorDetails(
 ): Generator<any, void, any> {
   try {
     const res = yield call(doctorDetails, action.payload);
-    // console.log('doctordetails1234',res.data);
+    // //'doctordetails1234',res.data);
     yield put(doctorDetailsSuccess(res.data));
   } catch (err) {
     yield put(doctorDetailsFailed(err));

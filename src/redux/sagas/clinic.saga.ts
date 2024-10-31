@@ -34,7 +34,7 @@ function* fetchClinicList(
   try {
     const params = action.payload;
     const res: any = yield call(getClinicList, params);
-    // console.log('thi is res.data.data', res.data.data);
+    // //'thi is res.data.data', res.data.data);
     yield put(clinicListSuccess(res.data.data));
   } catch (error) {
     yield put(clinicListFailed(error));

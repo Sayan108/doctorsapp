@@ -52,7 +52,7 @@ const MyProfile = ({navigation}: {navigation: any}) => {
   };
 
   useEffect(() => {
-    // console.log('profileDetails', profileDetails);
+    // //'profileDetails', profileDetails);
     if (
       profileDetails.fullname.length === 0 ||
       profileDetails.phoneNumber.length === 0
@@ -68,7 +68,7 @@ const MyProfile = ({navigation}: {navigation: any}) => {
     }
   }, [profileDetails]);
 
-  // console.log('istextChanged', isTextChanged);
+  // //'istextChanged', isTextChanged);
 
   return (
     <Layout>

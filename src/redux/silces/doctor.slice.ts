@@ -28,7 +28,7 @@ export const doctorSlice = createSlice({
         languagesSpoken: action.payload.languagesSpoken,
         specialization: action.payload.specialization,
       };
-      // console.log('obj', obj)
+      // //'obj', obj)
       return obj;
     },
 

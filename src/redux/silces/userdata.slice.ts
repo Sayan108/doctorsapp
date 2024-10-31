@@ -1,5 +1,6 @@
 import {type PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {
+  IDashboardOverViewData,
   // IDateSlots,
   // IDateSlotsInitialStates,
   // ITimeslots,
@@ -15,7 +16,7 @@ import {IPatientInitialState} from '../constants/patient.constant';
 import {AppointmentStatus} from '../../config/enum';
 export interface IDashboardData {
   upcommingAppoinment: IAppointment;
-  dashboardData: any;
+  dashboardData: IDashboardOverViewData;
 }
 // Redux Toolkit slice
 export const userDataSlice = createSlice({
@@ -42,7 +43,8 @@ export const userDataSlice = createSlice({
       return {
         ...state,
         dashboardData: {
-          upcomingAppoinment: action?.payload?.upcommingAppoinment,
+          ...state.dashboardData,
+          upcomingAppoinment: action.payload.upcommingAppoinment,
           dashboardData: action.payload.dashboardData,
           loading: false,
           error: {},
@@ -153,7 +155,7 @@ export const userDataSlice = createSlice({
      * @param action : payloadaction has the new datas for updating userdata
      */
     updateAppointmentForm: (state: UserData, action: PayloadAction<any>) => {
-      // console.log('action.payload123',action.payload)
+      // //'action.payload123',action.payload)
       return {
         ...state,
 
@@ -170,7 +172,7 @@ export const userDataSlice = createSlice({
       state: UserData,
       action: PayloadAction<IAppointment>,
     ) => {
-      // console.log('updateappointmentList', action.payload);
+      // //'updateappointmentList', action.payload);
       return {
         ...state,
         appointmentList: {

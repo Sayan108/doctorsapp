@@ -9,6 +9,6 @@ export const addPatient = (payload: any) => {
 
 export const getPatientList = async () => {
   const res: AxiosResponse = await baseClient.get(Endpoints.patientList);
-  // console.log('result patientList',res)
+  // //'result patientList',res)
   return res;
 };

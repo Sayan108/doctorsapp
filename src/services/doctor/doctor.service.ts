@@ -6,6 +6,6 @@ export const doctorDetails = async (params: any) => {
   const res: AxiosResponse = await baseClient.get(Endpoints.doctorDetails, {
     params,
   });
-  // console.log(res.data);
+  // //res.data);
   return res.data;
 };

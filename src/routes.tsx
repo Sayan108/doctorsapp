@@ -14,17 +14,21 @@ import AppointmentDetails from './screens/appointment/appoinmentDetails';
 import PasswordLoginScreen from './screens/login/passwordLogin';
 import AddAppointment from './screens/appointment/adddAppoinment';
 import {useTheme} from 'react-native-paper';
+import {headerText} from './redux/redux.constants';
 
 const Routes = () => {
   const {isAuthenticated} = useSelector((state: RootState) => state.auth);
+  const homeScreenTab = useSelector(
+    (state: RootState) => state.application.homeScreenTab,
+  );
   const Stack = createNativeStackNavigator();
 
   const theme = useTheme();
-
+  //homeScreenTab, 'geting homescreentab');
   return (
     <NavigationContainer>
       <Stack.Navigator
-        // initialRouteName="home"
+        initialRouteName="home"
         screenOptions={{
           // headerShown: false,
           headerStyle: {backgroundColor: theme.colors.surface},
@@ -38,13 +42,17 @@ const Routes = () => {
           <Stack.Screen
             name="login"
             component={PasswordLoginScreen}
-            options={{headerTitle: 'Login',headerBackVisible:false}}
+            options={{headerTitle: 'Login', headerBackVisible: false}}
           />
 
           <Stack.Screen
             name="home"
             component={isAuthenticated ? HomeScreen : PasswordLoginScreen}
-            options={{headerTitle: 'Home',headerBackVisible:false}}
+            options={{
+              headerTitle: headerText[homeScreenTab],
+              headerBackVisible: false,
+            }}
+            navigationKey={'home'}
           />
           <Stack.Screen
             name="appointmentlist"

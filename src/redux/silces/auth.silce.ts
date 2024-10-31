@@ -46,7 +46,7 @@ export const authSlice = createSlice({
       };
     },
     authSuccess: (state: IAuthState, action: PayloadAction<IUserDetails>) => {
-      // console.log(action.payload);
+      // //action.payload);
       return {
         ...state,
         isAuthenticated: true,
@@ -73,7 +73,7 @@ export const authSlice = createSlice({
     },
 
     updateUserRequested: (state: IAuthState) => {
-      // console.log('updateUserRequested', state);
+      // //'updateUserRequested', state);
       return {
         ...state,
         isLoading: true,
@@ -81,7 +81,7 @@ export const authSlice = createSlice({
     },
 
     updateUserSuccess: (state: IAuthState, action: PayloadAction<any>) => {
-      // console.log(action.payload, 'update user ');
+      // //action.payload, 'update user ');
       return {
         ...state,
         isLoading: false,

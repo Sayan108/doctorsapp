@@ -37,8 +37,14 @@ import {
   IUpdateAppointment,
 } from '../constants/appointment.constant';
 import {AxiosResponse} from 'axios';
-import {formatDateString, serializeError} from '../../util/funtions.util';
+import {
+  formatDateString,
+  getCountByStatus,
+  serializeError,
+  StatusName,
+} from '../../util/funtions.util';
 import {availableSlots} from '../../services/clinic/clinic.service';
+import {IDashboardOverViewData} from '../constants/userdata.constants';
 
 // function* fetchUpcomingAppointment(
 //   action: ActionType<typeof upcomingAppointmentRequested>,
@@ -104,9 +110,9 @@ function* cancelSelectedAppointment(
     yield put(removeFromAppoinmentListSuccess(action.payload));
 
     return;
-  } catch (err) {
+  } catch (err: any) {
     err = serializeError(err);
-    removeFromAppoinmentListFailed();
+    removeFromAppoinmentListFailed(err);
   }
 }
 
@@ -130,9 +136,9 @@ function* fetchDateTimeSlot(action: ActionType<typeof dateTimeSlotRequested>) {
     yield put(dateTimeSlotSuccess(data));
 
     return;
-  } catch (err) {
+  } catch (err: any) {
     err = serializeError(err);
-    yield put(dateTimeSlotFailure());
+    yield put(dateTimeSlotFailure(err));
   }
 }
 
@@ -146,21 +152,33 @@ function* fetchDashboardData(
       action.payload.accessToken,
     );
     const data = res?.data?.data;
-    const dashboardData = {
-      totalAppointments: data?.totalAppointments,
+    console.log(data, 'api response data');
+
+    const dashboardData: IDashboardOverViewData = {
+      totalAppointments: data?.totalAppointmentCount,
       todaysAppointments: data?.todaysAppointments,
+      upcomingAppointments: getCountByStatus(
+        data?.statusWiseCount,
+        StatusName.upcoming,
+      ),
+      cancelledAppointments: getCountByStatus(
+        data?.statusWiseCount,
+        StatusName.cancelled,
+      ),
     };
     const newData: IDashboardData = {
       upcommingAppoinment: data?.latestAppointment,
       dashboardData,
     };
-    console.log(newData);
+
+    console.log(newData, 'updated data');
+    //newData);
     yield put(dashboardDataSuccess(newData));
 
     return;
   } catch (err) {
     err = serializeError(err);
-    console.log(err);
+    //err);
     yield put(dashboardDataFailure(err));
   }
 }

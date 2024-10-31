@@ -1,6 +1,8 @@
 import {type PayloadAction, createSlice} from '@reduxjs/toolkit';
-import { IApplicationStatesInitialStates, IApplicationStates } from '../constants/userdata.constants';
-
+import {
+  IApplicationStatesInitialStates,
+  IApplicationStates,
+} from '../constants/userdata.constants';
 
 // Redux Toolkit slice
 export const applicationSlice = createSlice({
@@ -10,7 +12,7 @@ export const applicationSlice = createSlice({
   reducers: {
     changehomeScreenTab: (
       state: IApplicationStates,
-      action: PayloadAction<any>,
+      action: PayloadAction<number>,
     ) => {
       return {
         ...state,

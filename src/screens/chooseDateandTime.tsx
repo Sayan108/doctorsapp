@@ -70,7 +70,7 @@ const ChooseDateandTime = ({
       bookingHourId: selectedTimeSlot?.id,
       bookingDayId: selectedDateId?.id,
     };
-    console.log(new Date(selectedDateId?.value), 'updated data');
+    //new Date(selectedDateId?.value), 'updated data');
 
     dispatch(updateAppointmentRequested(payload));
     navigation.navigate('appointmentdetails');

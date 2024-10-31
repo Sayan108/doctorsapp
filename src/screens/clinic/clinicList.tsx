@@ -59,7 +59,7 @@ export const ClinicList = () => {
             styles.container,
             {backgroundColor: theme.colors.background},
           ]}>
-          <Text style={styles.title}>Clinic List</Text>
+          {/* <Text style={styles.title}>Clinic List</Text> */}
           <ScrollView contentContainerStyle={styles.scrollView}>
             {clinicList?.map((item, index) => (
               <View key={index} style={styles.clinicContainer}>

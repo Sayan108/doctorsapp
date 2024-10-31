@@ -19,7 +19,7 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
     (state: RootState) => state.userdata.dashboardData,
   );
 
-  console.log(upcomingAppointment);
+  //upcomingAppointment);
 
   return (
     <Provider theme={theme}>
@@ -44,7 +44,6 @@ const AppointmentCard = ({navigation}: {navigation: any}) => {
             style={[
               styles.surface,
               {backgroundColor: theme.colors.surfaceVariant},
-              
             ]}>
             <View style={styles.iconContainer}>
               <Icon
