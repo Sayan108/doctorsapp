@@ -199,24 +199,21 @@ export const userDataSlice = createSlice({
       state: UserData,
       action: PayloadAction<string>,
     ) => {
-      const filteredAppoinmentList: IAppointment[] = [];
-      for (let index = 0; index < state.appointmentList.data.length; index++) {
-        const appointment = state.appointmentList.data[index];
-        if (appointment.appointmentId === action.payload) {
-          appointment.status = AppointmentStatus.Cancelled;
-        }
-        filteredAppoinmentList.push(appointment);
-      }
-
+      console.log(action.payload);
       return {
         ...state,
         appointmentList: {
           ...state.appointmentList,
-          data: filteredAppoinmentList,
+          data: state.appointmentList.data.map(appointment =>
+            appointment.appointmentId === action.payload
+              ? {...appointment, status: AppointmentStatus.Cancelled}
+              : appointment,
+          ),
           loading: false,
         },
       };
     },
+
     removeFromAppoinmentListFailed: (state: UserData) => {
       return {
         ...state,

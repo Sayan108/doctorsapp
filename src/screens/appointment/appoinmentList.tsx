@@ -63,8 +63,6 @@ const AppointmentList = (props: any) => {
     (state: RootState) => state.userdata.appointmentList.data,
   );
 
-  console.log(appointmentList[0], 'getting appointmentlist');
-
   //updating upcoming appointment
   // useEffect(() => {
   //   const upcomingAppointmentList =

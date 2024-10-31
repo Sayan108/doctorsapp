@@ -45,6 +45,7 @@ import {
 } from '../../util/funtions.util';
 import {availableSlots} from '../../services/clinic/clinic.service';
 import {IDashboardOverViewData} from '../constants/userdata.constants';
+import {AppointmentStatus} from '../../config/enum';
 
 // function* fetchUpcomingAppointment(
 //   action: ActionType<typeof upcomingAppointmentRequested>,
@@ -105,9 +106,15 @@ function* cancelSelectedAppointment(
     const params: IUpdateAppointment = {
       isDeleted: true,
       appointmentId: action.payload,
+      status: AppointmentStatus.Cancelled,
     };
     const res: AxiosResponse = yield call(updateAppointment, params);
-    yield put(removeFromAppoinmentListSuccess(action.payload));
+    console.log(action.payload);
+    const data = res;
+    console.log(data, 'getting api response');
+    if (data) {
+      yield put(removeFromAppoinmentListSuccess(action.payload));
+    }
 
     return;
   } catch (err: any) {
@@ -152,7 +159,6 @@ function* fetchDashboardData(
       action.payload.accessToken,
     );
     const data = res?.data?.data;
-    console.log(data, 'api response data');
 
     const dashboardData: IDashboardOverViewData = {
       totalAppointments: data?.totalAppointmentCount,
@@ -171,7 +177,6 @@ function* fetchDashboardData(
       dashboardData,
     };
 
-    console.log(newData, 'updated data');
     //newData);
     yield put(dashboardDataSuccess(newData));
 
