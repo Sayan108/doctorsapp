@@ -277,7 +277,7 @@ export const userDataSlice = createSlice({
         patientData: IPatientInitialState,
         clinicId: '',
         status: 0,
-        problem: null,
+        problems: null,
         ...state.currentAppointmentDetails.data,
       };
       return {

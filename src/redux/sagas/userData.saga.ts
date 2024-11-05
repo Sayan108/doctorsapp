@@ -16,7 +16,7 @@ import {
   IDashboardData,
   removeFromAppoinmentListFailed,
   removeFromAppoinmentListRequested,
-  removeFromAppoinmentListSuccess,
+  removeFromAppointmentListSuccess,
   updateAppointmentFailed,
   updateAppointmentRequested,
   updateAppointmentSuccess,
@@ -113,7 +113,7 @@ function* cancelSelectedAppointment(
     const data = res;
     console.log(data, 'getting api response');
     if (data) {
-      yield put(removeFromAppoinmentListSuccess(action.payload));
+      yield put(removeFromAppointmentListSuccess(action.payload));
     }
 
     return;

@@ -1,4 +1,4 @@
-import {View,  StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {ActivityIndicator, Button, Text, useTheme} from 'react-native-paper';
@@ -73,7 +73,7 @@ const ChooseDateandTime = ({
     //new Date(selectedDateId?.value), 'updated data');
 
     dispatch(updateAppointmentRequested(payload));
-    navigation.navigate('appointmentdetails');
+    navigation.navigate('appointmentlist');
   };
 
   useEffect(() => {
@@ -96,15 +96,14 @@ const ChooseDateandTime = ({
         />
       ) : (
         <>
-          <Text variant='titleMedium' >{'Choose date'}</Text>
+          <Text variant="titleMedium">{'Choose date'}</Text>
           <ChipsGrid
             data={dateSlots}
             onSelect={handleDateSelect}
             selectedId={selectedDateId}
             type="date"
-            
           />
-          <Text variant='titleMedium'>{'Choose time'}</Text>
+          <Text variant="titleMedium">{'Choose time'}</Text>
           <ChipsGrid
             data={selectedTimeSlots}
             onSelect={handleTimeSlotSelect}
@@ -114,8 +113,7 @@ const ChooseDateandTime = ({
           <Button
             mode="contained"
             onPress={handleButtonClick}
-            style={[styles.button,theme.colors.primary]}
-            >
+            style={[styles.button, theme.colors.primary]}>
             Reschedule
           </Button>
         </>
