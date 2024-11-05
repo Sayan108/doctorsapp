@@ -15,7 +15,7 @@ import MarkAsDoneDialog from '../../components/markAsDoneDialog';
 import {RootState} from '../../redux';
 import {colors} from '../../styles';
 import {Text} from 'react-native-paper';
-import {formatDateString} from '../../util/funtions.util';
+import {formatDateString, parseJSONOBJ} from '../../util/funtions.util';
 import {StackActions} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {IUpdateAppointment} from '../../redux/constants/appointment.constant';
@@ -54,6 +54,9 @@ const AppointmentDetails = ({
   const {data} = useSelector(
     (state: RootState) => state.userdata.currentAppointmentDetails,
   );
+
+  const comment = parseJSONOBJ(data?.comment ?? '') ?? {};
+  console.log(comment, 'getting comment');
 
   //data, 'appoinment details');
 
@@ -286,7 +289,133 @@ const AppointmentDetails = ({
                       </Text>{' '}
                       {data?.checkupHour}
                     </Text>
+                    {data?.problem && (
+                      <>
+                        <Text
+                          variant="titleMedium"
+                          style={{
+                            color: theme.colors.onSurface,
+                            marginLeft: 10,
+                          }}>
+                          Problem
+                        </Text>
+                        <View
+                          style={[
+                            styles.section,
+                            {backgroundColor: theme.colors.surfaceVariant},
+                          ]}>
+                          <Text
+                            variant="bodyMedium"
+                            style={{color: theme.colors.onSurfaceVariant}}>
+                            {data?.problem}
+                          </Text>
+                        </View>
+                      </>
+                    )}
                   </View>
+                  {Object.keys(comment)?.length > 0 &&
+                    (comment?.symptoms?.length > 0 ||
+                      comment?.vitals?.length > 0 ||
+                      comment?.medications?.length > 0 ||
+                      comment?.suggestions?.length > 0) && (
+                      <ScrollView style={{marginVertical: 10}}>
+                        <Text
+                          style={{
+                            fontSize: 18,
+                            fontWeight: 'bold',
+                            marginBottom: 10,
+                          }}>
+                          Doctor's Comment
+                        </Text>
+
+                        <View
+                          style={[
+                            {
+                              backgroundColor: theme.colors.surfaceVariant,
+                              padding: 10,
+                              borderRadius: 8,
+                            },
+                          ]}>
+                          {comment?.symptoms &&
+                            comment?.symptoms?.length > 0 && (
+                              <View style={{}}>
+                                <Text
+                                  variant="bodyMedium"
+                                  style={{
+                                    color: theme.colors.onSurfaceVariant,
+                                    fontWeight: 'bold',
+                                  }}>
+                                  Symptoms
+                                </Text>
+                                <Text
+                                  variant="bodyMedium"
+                                  style={{
+                                    color: theme.colors.onSurfaceVariant,
+                                  }}>
+                                  {comment?.symptoms}
+                                </Text>
+                              </View>
+                            )}
+                          {comment?.vitals && comment?.vitals?.length > 0 && (
+                            <View style={{}}>
+                              <Text
+                                variant="bodyMedium"
+                                style={{
+                                  color: theme.colors.onSurfaceVariant,
+                                  fontWeight: 'bold',
+                                }}>
+                                Vitals
+                              </Text>
+                              <Text
+                                variant="bodyMedium"
+                                style={{color: theme.colors.onSurfaceVariant}}>
+                                {comment?.vitals}
+                              </Text>
+                            </View>
+                          )}
+                          {comment?.medications &&
+                            comment?.medications?.length > 0 && (
+                              <View style={{}}>
+                                <Text
+                                  variant="bodyMedium"
+                                  style={{
+                                    color: theme.colors.onSurfaceVariant,
+                                    fontWeight: 'bold',
+                                  }}>
+                                  Medications
+                                </Text>
+                                <Text
+                                  variant="bodyMedium"
+                                  style={{
+                                    color: theme.colors.onSurfaceVariant,
+                                  }}>
+                                  {comment?.medications}
+                                </Text>
+                              </View>
+                            )}
+                          {comment?.suggestions &&
+                            comment?.suggestions?.length > 0 && (
+                              <View style={{}}>
+                                <Text
+                                  variant="bodyMedium"
+                                  style={{
+                                    color: theme.colors.onSurfaceVariant,
+                                    fontWeight: 'bold',
+                                  }}>
+                                  Suggestions
+                                </Text>
+                                <Text
+                                  variant="bodyMedium"
+                                  style={{
+                                    color: theme.colors.onSurfaceVariant,
+                                  }}>
+                                  {comment?.suggestions}
+                                </Text>
+                              </View>
+                            )}
+                        </View>
+                      </ScrollView>
+                    )}
 
                   {/* payment details
             <Text
@@ -339,13 +468,13 @@ const AppointmentDetails = ({
                         <Text
                           variant="bodyMedium"
                           style={{color: theme.colors.onSurfaceVariant}}>
-                          {data?.problem ?? 'very big problem'}
+                          {data?.problem}
                         </Text>
                       </View>
                     </>
                   )}
 
-                  {data?.comment && (
+                  {/* {data?.comment && (
                     <>
                       <Text
                         variant="titleMedium"
@@ -367,7 +496,7 @@ const AppointmentDetails = ({
                         </Text>
                       </View>
                     </>
-                  )}
+                  )} */}
                   <Text
                     variant="titleMedium"
                     style={{

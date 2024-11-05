@@ -25,8 +25,9 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
   };
 
   useEffect(() => {
+    dispatch(changehomeScreenTab(index));
     if (index === 2) dispatch(appointmentListRequested({doctorId}));
-  }, [index]);
+  }, [index, dispatch]);
 
   const homePageRoute = () => (
     <HomePageComponent

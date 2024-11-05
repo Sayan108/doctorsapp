@@ -57,7 +57,7 @@ const Routes = () => {
           <Stack.Screen
             name="appointmentlist"
             component={isAuthenticated ? AppointmentList : PasswordLoginScreen}
-            options={{headerTitle: 'AppointmentList'}}
+            options={{headerTitle: 'Appointment List'}}
           />
           <Stack.Screen
             name="addappoinment"
@@ -82,6 +82,7 @@ const Routes = () => {
               isAuthenticated ? AppointmentDetails : PasswordLoginScreen
             }
             initialParams={{id: -1}}
+            options={{headerTitle: 'Appointment Details'}}
           />
         </Stack.Group>
       </Stack.Navigator>

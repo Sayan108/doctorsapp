@@ -195,7 +195,7 @@ export const userDataSlice = createSlice({
         },
       };
     },
-    removeFromAppoinmentListSuccess: (
+    removeFromAppointmentListSuccess: (
       state: UserData,
       action: PayloadAction<string>,
     ) => {
@@ -204,7 +204,7 @@ export const userDataSlice = createSlice({
         ...state,
         appointmentList: {
           ...state.appointmentList,
-          data: state.appointmentList.data.map(appointment =>
+          data: state.appointmentList.data.map((appointment: IAppointment) =>
             appointment.appointmentId === action.payload
               ? {...appointment, status: AppointmentStatus.Cancelled}
               : appointment,
@@ -322,7 +322,7 @@ export const {
   updateAppointmentFailed,
   removeFromAppoinmentListFailed,
   removeFromAppoinmentListRequested,
-  removeFromAppoinmentListSuccess,
+  removeFromAppointmentListSuccess,
   dateTimeSlotRequested,
   dateTimeSlotSuccess,
   dateTimeSlotFailure,

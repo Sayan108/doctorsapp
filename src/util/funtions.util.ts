@@ -92,3 +92,8 @@ export const getCountByStatus = (
   }
   return 0; // Return 0 if the status is not found in the array
 };
+
+export const parseJSONOBJ = (stringifiedJson: string) => {
+  if (!stringifiedJson) return {};
+  return JSON.parse(stringifiedJson);
+};
