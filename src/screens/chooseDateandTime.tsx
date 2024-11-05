@@ -1,7 +1,7 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {View,  StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {ActivityIndicator, Button} from 'react-native-paper';
+import {ActivityIndicator, Button, Text, useTheme} from 'react-native-paper';
 
 import ChipsGrid from '../components/gridRadioButtons';
 import {colors} from '../styles';
@@ -85,8 +85,10 @@ const ChooseDateandTime = ({
     }
   }, [dateSlots, clinicid]);
 
+  const theme = useTheme();
+
   return (
-    <Layout navigation={handleNavigation} headerText="Choose date and time">
+    <Layout>
       {loading || !selectedTimeSlot || !selectedDateId ? (
         <ActivityIndicator
           size="large"
@@ -94,14 +96,15 @@ const ChooseDateandTime = ({
         />
       ) : (
         <>
-          <Text style={styles.subtitle}>{'Choose date'}</Text>
+          <Text variant='titleMedium' >{'Choose date'}</Text>
           <ChipsGrid
             data={dateSlots}
             onSelect={handleDateSelect}
             selectedId={selectedDateId}
             type="date"
+            
           />
-          <Text style={styles.subtitle}>{'Choose time'}</Text>
+          <Text variant='titleMedium'>{'Choose time'}</Text>
           <ChipsGrid
             data={selectedTimeSlots}
             onSelect={handleTimeSlotSelect}
@@ -111,8 +114,8 @@ const ChooseDateandTime = ({
           <Button
             mode="contained"
             onPress={handleButtonClick}
-            style={styles.button}
-            labelStyle={styles.buttonLabel}>
+            style={[styles.button,theme.colors.primary]}
+            >
             Reschedule
           </Button>
         </>
@@ -125,10 +128,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: 'white',
   },
   header: {
-    backgroundColor: 'transparent',
     elevation: 0,
     flexDirection: 'row',
     alignItems: 'center',
@@ -137,18 +138,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '400',
     marginLeft: 30,
-    color: colors.textColor,
   },
   subtitle: {
     fontSize: 18,
     fontWeight: '400',
     marginLeft: 20,
-    color: colors.textColor,
   },
 
   button: {
     marginTop: 24,
-    backgroundColor: colors.primaryColor,
     width: '50%',
     alignSelf: 'center',
   },
