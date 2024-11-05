@@ -64,14 +64,6 @@ const AppointmentDetails = ({
     dispatch(availableSlotsRequested(id));
     navigation.navigate('reschedule');
   };
-  // const handelMarkAsDone = ()=>{
-  //   const payload:IUpdateAppointment = {
-  //     appointmentId: data?.appointmentId?data.appointmentId:'',
-  //     status:AppointmentStatus.Completed
-  //   }
-
-  //   dispatch(updateAppointmentRequested(payload));
-  // }
 
   return (
     <Layout>
@@ -339,7 +331,7 @@ const AppointmentDetails = ({
                       </View>
                     </>
                   )}
-                  {Object.keys(comment)?.length > 0 &&
+                  {/* {Object.keys(comment)?.length > 0 &&
                     (comment?.symptoms?.length > 0 ||
                       comment?.vitals?.length > 0 ||
                       comment?.medications?.length > 0 ||
@@ -438,65 +430,116 @@ const AppointmentDetails = ({
                             )}
                         </View>
                       </ScrollView>
+                    )} */}
+
+                  {Object.keys(comment)?.length > 0 &&
+                    (comment?.symptoms?.length > 0 ||
+                      comment?.vitals?.length > 0 ||
+                      comment?.medications?.length > 0 ||
+                      comment?.suggestions?.length > 0) && (
+                      <ScrollView style={{marginVertical: 10}}>
+                        <Text
+                          variant="titleMedium"
+                          style={{
+                            color: theme.colors.onSurface,
+                            marginLeft: 10,
+                            marginBottom: 10,
+                          }}>
+                          Doctor's Comment
+                        </Text>
+
+                        <View
+                          style={[
+                            styles.section,
+                            {backgroundColor: theme.colors.surfaceVariant},
+                          ]}>
+                          {comment?.symptoms &&
+                            comment?.symptoms?.length > 0 && (
+                              <View style={{marginBottom: 8}}>
+                                <Text
+                                  variant="bodyMedium"
+                                  style={{
+                                    color: theme.colors.onSurfaceVariant,
+                                    fontWeight: 'bold',
+                                    marginBottom: 4,
+                                  }}>
+                                  Symptoms
+                                </Text>
+                                <Text
+                                  variant="bodyMedium"
+                                  style={{
+                                    color: theme.colors.onSurfaceVariant,
+                                  }}>
+                                  {comment?.symptoms}
+                                </Text>
+                              </View>
+                            )}
+                          {comment?.vitals && comment?.vitals?.length > 0 && (
+                            <View style={{marginBottom: 8}}>
+                              <Text
+                                variant="bodyMedium"
+                                style={{
+                                  color: theme.colors.onSurfaceVariant,
+                                  fontWeight: 'bold',
+                                  marginBottom: 4,
+                                }}>
+                                Vitals
+                              </Text>
+                              <Text
+                                variant="bodyMedium"
+                                style={{
+                                  color: theme.colors.onSurfaceVariant,
+                                }}>
+                                {comment?.vitals}
+                              </Text>
+                            </View>
+                          )}
+                          {comment?.medications &&
+                            comment?.medications?.length > 0 && (
+                              <View style={{marginBottom: 8}}>
+                                <Text
+                                  variant="bodyMedium"
+                                  style={{
+                                    color: theme.colors.onSurfaceVariant,
+                                    fontWeight: 'bold',
+                                    marginBottom: 4,
+                                  }}>
+                                  Medications
+                                </Text>
+                                <Text
+                                  variant="bodyMedium"
+                                  style={{
+                                    color: theme.colors.onSurfaceVariant,
+                                  }}>
+                                  {comment?.medications}
+                                </Text>
+                              </View>
+                            )}
+                          {comment?.suggestions &&
+                            comment?.suggestions?.length > 0 && (
+                              <View style={{marginBottom: 8}}>
+                                <Text
+                                  variant="bodyMedium"
+                                  style={{
+                                    color: theme.colors.onSurfaceVariant,
+                                    fontWeight: 'bold',
+                                    marginBottom: 4,
+                                  }}>
+                                  Suggestions
+                                </Text>
+                                <Text
+                                  variant="bodyMedium"
+                                  style={{
+                                    color: theme.colors.onSurfaceVariant,
+                                  }}>
+                                  {comment?.suggestions}
+                                </Text>
+                              </View>
+                            )}
+                        </View>
+                      </ScrollView>
                     )}
 
-                  {/* payment details
-            <Text
-              variant="titleMedium"
-              style={{
-                color: theme.colors.onSurface,
-                marginLeft: 10,
-              }}>
-              Payment Details
-            </Text> */}
-
-                  {/* payment section */}
-                  {/* <View
-              style={[
-                styles.section,
-                {backgroundColor: theme.colors.surfaceVariant},
-              ]}>
-              <Text
-                variant="bodyMedium"
-                style={{color: theme.colors.onSurfaceVariant}}>
-                Payment id: {data?.?.paymentId}
-              </Text>
-              <Text
-                variant="bodyMedium"
-                style={{color: theme.colors.onSurfaceVariant}}>
-                Payment Method: {data?.paymentDetails?.paymentType}
-              </Text>
-              <Text
-                variant="bodyMedium"
-                style={{color: theme.colors.onSurfaceVariant}}>
-                Total Amount: {data?.paymentDetails?.ammount}
-              </Text>
-            </View> */}
-                  {/* Problem details */}
-
-                  {/* {data?.comment && (
-                    <>
-                      <Text
-                        variant="titleMedium"
-                        style={{
-                          color: theme.colors.onSurface,
-                          marginLeft: 10,
-                        }}>
-                        Comment
-                      </Text>
-                      <View
-                        style={[
-                          styles.section,
-                          {backgroundColor: theme.colors.surfaceVariant},
-                        ]}>
-                        <Text
-                          variant="bodyMedium"
-                          style={{color: theme.colors.onSurfaceVariant}}>
-                          {data?.comment ?? 'very big problem'}
-                        </Text>
-                      </View>
-                    </>
-                  )} */}
                   <Text
                     variant="titleMedium"
                     style={{
