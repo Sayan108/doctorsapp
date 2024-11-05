@@ -134,8 +134,6 @@ const AddAppointment = ({navigation}: {navigation: any}) => {
           setAppointmentDetails({...appointmentDetails, patientPhone: text});
         }}
         style={styles.input}
-        placeholder="1234567890"
-        placeholderTextColor="gray"
         keyboardType="phone-pad"
       />
       <HelperText

@@ -69,11 +69,13 @@ const Routes = () => {
               isAuthenticated ? ChooseDateAndTime : PasswordLoginScreen
             }
             initialParams={{id: -1}}
+            options={{headerTitle: 'Reschedule'}}
           />
 
           <Stack.Screen
             name="myprofile"
             component={isAuthenticated ? MyProfile : PasswordLoginScreen}
+            options={{headerTitle: 'My Profile'}}
           />
 
           <Stack.Screen

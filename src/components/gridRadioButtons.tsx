@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, useWindowDimensions, StyleSheet} from 'react-native';
-import {Chip, Text} from 'react-native-paper';
+import {Chip, Text, useTheme} from 'react-native-paper';
 import {colors} from '../styles';
 
 interface ChipsGridProps {
@@ -27,6 +27,8 @@ const ChipsGrid: React.FC<ChipsGridProps> = ({
     return textWidth + 32; // Adding padding to the chip
   };
 
+  const theme = useTheme()
+
   const renderChips = () => {
     return data?.map((chip: any, index: number) => (
       <Chip
@@ -37,8 +39,8 @@ const ChipsGrid: React.FC<ChipsGridProps> = ({
             //  width: calculateChipWidth(chip.value),
             backgroundColor:
               chip?.value === selectedId?.value
-                ? 'rgba(245, 71, 73, 0.3)'
-                : 'white',
+                ? theme.colors.primaryContainer
+                : theme.colors.surface,
           },
         ]}
         onPress={() => handleChipPress(chip)}

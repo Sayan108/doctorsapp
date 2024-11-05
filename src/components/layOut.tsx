@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
   content: {
     paddingTop: 10,
     flexGrow: 1,
+    margin:4
   },
 });
 
