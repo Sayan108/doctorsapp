@@ -1,6 +1,6 @@
 import {View, StyleSheet, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {Appbar, List, useTheme} from 'react-native-paper';
+import {Appbar, Divider, List, useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '../../styles';
 import {Text} from 'react-native-paper';
@@ -53,7 +53,7 @@ const HomePageComponent = (props: any) => {
   return (
     <View style={[styles.container, {backgroundColor: theme.colors.surface}]}>
       {/* appbar */}
-      {/* <Appbar.Header>
+      <Appbar.Header>
         <Icon
           name="account-circle-outline"
           size={35}
@@ -62,7 +62,10 @@ const HomePageComponent = (props: any) => {
             setvisible(!visible);
           }}
         />
-      </Appbar.Header> */}
+        <Text style={{alignItems: 'center', fontSize: 20, paddingLeft: '35%'}}>
+          Home
+        </Text>
+      </Appbar.Header>
 
       {visible ? (
         <View

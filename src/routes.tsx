@@ -30,7 +30,7 @@ const Routes = () => {
       <Stack.Navigator
         initialRouteName="home"
         screenOptions={{
-          // headerShown: false,
+          headerShown: false,
           headerStyle: {backgroundColor: theme.colors.surface},
           headerTintColor: theme.colors.onSurface,
           headerTitleAlign: 'center',
